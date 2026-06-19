@@ -49,7 +49,7 @@ namespace ThreatlockerAssetManagementSystem.Controllers
             return Ok(user);
         }
 
-        [Authorize(Policy = "AssetManagerOrHigher")]
+        [Authorize(Policy = "AssetManager+")]
         [HttpGet("AssetManager")]
         public ActionResult<User> Manager()
         {

@@ -5,7 +5,7 @@
         public static IServiceCollection AddRoleAuthorization(this IServiceCollection services)
         {
             services.AddAuthorizationBuilder()
-                .AddPolicy("AssetManagerOrHigher", policy =>
+                .AddPolicy("AssetManager+", policy =>
                 {
                     policy.RequireAssertion(context => 
                         context.User.IsInRole("AssetManager") ||
