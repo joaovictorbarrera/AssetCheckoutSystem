@@ -2,6 +2,7 @@
 using ThreatlockerAssetManagementSystem.Data;
 using ThreatlockerAssetManagementSystem.DTOs.Pagination;
 using ThreatlockerAssetManagementSystem.DTOs.Users;
+using ThreatlockerAssetManagementSystem.Enums;
 using ThreatlockerAssetManagementSystem.Models.Entities;
 
 namespace ThreatlockerAssetManagementSystem.Repositories
@@ -50,6 +51,22 @@ namespace ThreatlockerAssetManagementSystem.Repositories
             };
         }
 
+        public async Task<User> CreateUserAsync(CreateUserRequest request)
+        {
+            User user = new()
+            {
+                EmailAddress = request.EmailAddress,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Role = request.Role
+            };
+
+            _context.Users.Add(user);
+
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
         public Task<User?> GetUserByEmailAsync(string email)
         {
             return _context.Users
@@ -69,5 +86,33 @@ namespace ThreatlockerAssetManagementSystem.Repositories
                     u.SetProperty(x => x.LastLoginAt, DateTime.UtcNow)
                 );
         }
+
+        public async Task<User?> UpdateUserRole(Guid id, Role role)
+        {
+            User? user = await GetUserByIdAsync(id);
+
+            if (user == null) return null;
+
+            user.Role = role;
+
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<User?> UpdateUserActive(Guid id, bool isActive)
+        {
+            User? user = await GetUserByIdAsync(id);
+
+            if (user == null) return null;
+
+            user.IsActive = isActive;
+
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        
     }
 }

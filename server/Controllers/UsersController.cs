@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using ThreatlockerAssetManagementSystem.DTOs.Pagination;
 using ThreatlockerAssetManagementSystem.DTOs.Users;
+using ThreatlockerAssetManagementSystem.Enums;
+using ThreatlockerAssetManagementSystem.Helpers;
 using ThreatlockerAssetManagementSystem.Models.Entities;
 using ThreatlockerAssetManagementSystem.Repositories;
 
@@ -27,21 +30,40 @@ namespace ThreatlockerAssetManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<ActionResult<User>> CreateUser([FromBody] CreateUserRequest request)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (!Enum.IsDefined(typeof(Role), request.Role))
+                return BadRequest("Invalid role");
+
+            bool userExists = await _userRepository.GetUserByEmailAsync(request.EmailAddress) != null;
+            if (userExists) return BadRequest("Email Address is taken");
+
+            User user = await _userRepository.CreateUserAsync(request);
+
+            return Ok(user);
         }
 
         [HttpPatch("{id}/role")]
-        public async Task<IActionResult> UpdateUserRole(Guid id)
+        public async Task<ActionResult<User>> UpdateUserRole(Guid id, [FromBody] UpdateUserRoleRequest request)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            if (!Enum.IsDefined(typeof(Role), request.Role))
+                return BadRequest("Invalid role");
+
+            User? user = await _userRepository.UpdateUserRole(id, request.Role);
+
+            if (user == null) return BadRequest("Invalid user id");
+
+            return Ok(user);
         }
 
         [HttpPatch("{id}/active")]
-        public async Task<IActionResult> UpdateUserActiveStatus(Guid id)
+        public async Task<IActionResult> UpdateUserActiveStatus(Guid id, UpdateUserActiveRequest request)
         {
-            return StatusCode(StatusCodes.Status501NotImplemented);
+            User? user = await _userRepository.UpdateUserActive(id, request.IsActive);
+
+            if (user == null) return BadRequest("Invalid user id");
+
+            return Ok(user);
         }
     }
 }
