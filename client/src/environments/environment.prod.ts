@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://tlassetapi.up.railway.app/api'
+    apiUrl: 'https://asset-management-api.up.railway.app/'
 }
