@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ThreatlockerAssetManagementSystem.DTOs.Pagination;
-using ThreatlockerAssetManagementSystem.DTOs.Users;
-using ThreatlockerAssetManagementSystem.Enums;
-using ThreatlockerAssetManagementSystem.Models.Entities;
-using ThreatlockerAssetManagementSystem.Repositories;
+using AssetManagementSystem.DTOs.Pagination;
+using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.Enums;
+using AssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Repositories;
 
-namespace ThreatlockerAssetManagementSystem.Controllers
+namespace AssetManagementSystem.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/users")]

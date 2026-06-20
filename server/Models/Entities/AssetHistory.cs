@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.Models.Entities
+﻿namespace AssetManagementSystem.Models.Entities
 {
     public class AssetHistory
     {

@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using ThreatlockerAssetManagementSystem.DTOs.Auth;
-using ThreatlockerAssetManagementSystem.Extensions;
-using ThreatlockerAssetManagementSystem.Models.Entities;
-using ThreatlockerAssetManagementSystem.Models.Services;
-using ThreatlockerAssetManagementSystem.Repositories;
+using AssetManagementSystem.DTOs.Auth;
+using AssetManagementSystem.Extensions;
+using AssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Models.Services;
+using AssetManagementSystem.Repositories;
 
-namespace ThreatlockerAssetManagementSystem.Controllers
+namespace AssetManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

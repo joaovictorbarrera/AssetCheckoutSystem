@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ThreatlockerAssetManagementSystem.Data;
+using AssetManagementSystem.Data;
 
 #nullable disable
 
-namespace ThreatlockerAssetManagementSystem.Migrations
+namespace AssetManagementSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260618213036_IsActiveInsteadOfActive")]
@@ -25,7 +25,7 @@ namespace ThreatlockerAssetManagementSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.Asset", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.Asset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace ThreatlockerAssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.AssetHistory", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.AssetHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,7 +233,7 @@ namespace ThreatlockerAssetManagementSystem.Migrations
                     b.ToTable("AssetHistories");
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.CheckoutRequest", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.CheckoutRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -447,7 +447,7 @@ namespace ThreatlockerAssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.User", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -504,41 +504,41 @@ namespace ThreatlockerAssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.Asset", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.Asset", b =>
                 {
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("AssignedToUserId");
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.AssetHistory", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.AssetHistory", b =>
                 {
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.Asset", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.Asset", null)
                         .WithMany()
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ThreatlockerAssetManagementSystem.Models.Entities.CheckoutRequest", b =>
+            modelBuilder.Entity("AssetManagementSystem.Models.Entities.CheckoutRequest", b =>
                 {
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.Asset", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.Asset", null)
                         .WithMany()
                         .HasForeignKey("AssignedAssetId");
 
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("RequestedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ThreatlockerAssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("ReviewedByUserId");
                 });

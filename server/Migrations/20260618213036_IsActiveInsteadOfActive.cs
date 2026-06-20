@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ThreatlockerAssetManagementSystem.Migrations
+namespace AssetManagementSystem.Migrations
 {
     /// <inheritdoc />
     public partial class IsActiveInsteadOfActive : Migration

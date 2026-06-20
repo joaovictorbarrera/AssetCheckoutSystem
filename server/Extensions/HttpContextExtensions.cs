@@ -1,6 +1,6 @@
-﻿using ThreatlockerAssetManagementSystem.Models.Entities;
+﻿using AssetManagementSystem.Models.Entities;
 
-namespace ThreatlockerAssetManagementSystem.Extensions
+namespace AssetManagementSystem.Extensions
 {
     public static class HttpContextExtensions
     {

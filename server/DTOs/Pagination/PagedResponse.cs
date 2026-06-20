@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.DTOs.Pagination
+﻿namespace AssetManagementSystem.DTOs.Pagination
 {
     public class PagedResponse<T>
     {

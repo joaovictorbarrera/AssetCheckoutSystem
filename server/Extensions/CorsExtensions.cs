@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.Extensions
+﻿namespace AssetManagementSystem.Extensions
 {
     public static class CorsExtensions
     {

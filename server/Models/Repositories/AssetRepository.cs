@@ -1,4 +1,4 @@
-﻿using ThreatlockerAssetManagementSystem.Data;
+﻿using AssetManagementSystem.Data;
 
 namespace AssetManagementSystem.Models.Repositories
 {

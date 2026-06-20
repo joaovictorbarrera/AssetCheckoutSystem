@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ThreatlockerAssetManagementSystem.Controllers
+namespace AssetManagementSystem.Controllers
 {
     [Authorize]
     [Route("api/checkout-requests")]

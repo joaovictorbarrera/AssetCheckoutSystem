@@ -2,11 +2,11 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
-using ThreatlockerAssetManagementSystem.Data;
-using ThreatlockerAssetManagementSystem.Models.Entities;
-using ThreatlockerAssetManagementSystem.Repositories;
+using AssetManagementSystem.Data;
+using AssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Repositories;
 
-namespace ThreatlockerAssetManagementSystem.Extensions
+namespace AssetManagementSystem.Extensions
 {
     public static class AuthenticationExtensions
     {

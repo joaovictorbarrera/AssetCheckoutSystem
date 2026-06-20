@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.DTOs.Users
+﻿namespace AssetManagementSystem.DTOs.Users
 {
     public class UpdateUserActiveRequest
     {

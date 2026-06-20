@@ -1,7 +1,7 @@
 ﻿using System.Net.Mail;
-using ThreatlockerAssetManagementSystem.Enums;
+using AssetManagementSystem.Enums;
 
-namespace ThreatlockerAssetManagementSystem.Helpers
+namespace AssetManagementSystem.Helpers
 {
     public static class ValidationHelper
     {

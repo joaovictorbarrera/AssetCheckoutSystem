@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ThreatlockerAssetManagementSystem.Enums;
+using AssetManagementSystem.Enums;
 
-namespace ThreatlockerAssetManagementSystem.DTOs.Users
+namespace AssetManagementSystem.DTOs.Users
 {
     public class CreateUserRequest
     {

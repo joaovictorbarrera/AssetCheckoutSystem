@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ThreatlockerAssetManagementSystem.Controllers
+namespace AssetManagementSystem.Controllers
 {
     [ApiController]
     public class EchoController : ControllerBase

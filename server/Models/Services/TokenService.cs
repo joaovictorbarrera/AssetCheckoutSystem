@@ -2,9 +2,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ThreatlockerAssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Models.Entities;
 
-namespace ThreatlockerAssetManagementSystem.Models.Services
+namespace AssetManagementSystem.Models.Services
 {
     public class TokenService
     {

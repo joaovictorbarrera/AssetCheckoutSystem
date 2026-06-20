@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ThreatlockerAssetManagementSystem.Data;
+using AssetManagementSystem.Data;
 
-namespace ThreatlockerAssetManagementSystem.Extensions
+namespace AssetManagementSystem.Extensions
 {
     public static class MigrationExtensions
     {

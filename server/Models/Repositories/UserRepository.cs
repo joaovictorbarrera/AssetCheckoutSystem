@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ThreatlockerAssetManagementSystem.Data;
-using ThreatlockerAssetManagementSystem.DTOs.Pagination;
-using ThreatlockerAssetManagementSystem.DTOs.Users;
-using ThreatlockerAssetManagementSystem.Enums;
-using ThreatlockerAssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Data;
+using AssetManagementSystem.DTOs.Pagination;
+using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.Enums;
+using AssetManagementSystem.Models.Entities;
 
-namespace ThreatlockerAssetManagementSystem.Repositories
+namespace AssetManagementSystem.Repositories
 {
     public class UserRepository
     {

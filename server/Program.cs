@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using ThreatlockerAssetManagementSystem.Extensions;
-using ThreatlockerAssetManagementSystem.Models.Services;
-using ThreatlockerAssetManagementSystem.Repositories;
+using AssetManagementSystem.Extensions;
+using AssetManagementSystem.Models.Services;
+using AssetManagementSystem.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

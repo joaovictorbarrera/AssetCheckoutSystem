@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ThreatlockerAssetManagementSystem.Models.Entities;
+using AssetManagementSystem.Models.Entities;
 
-namespace ThreatlockerAssetManagementSystem.Data
+namespace AssetManagementSystem.Data
 {
     public class AppDbContext : DbContext
     {

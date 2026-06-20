@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.DTOs.Auth
+﻿namespace AssetManagementSystem.DTOs.Auth
 {
     public class LoginRequest
     {

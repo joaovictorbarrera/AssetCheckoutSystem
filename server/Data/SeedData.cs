@@ -1,7 +1,7 @@
-﻿using ThreatlockerAssetManagementSystem.Enums;
-using ThreatlockerAssetManagementSystem.Models.Entities;
+﻿using AssetManagementSystem.Enums;
+using AssetManagementSystem.Models.Entities;
 
-namespace ThreatlockerAssetManagementSystem.Data
+namespace AssetManagementSystem.Data
 {
     public static class SeedData
     {

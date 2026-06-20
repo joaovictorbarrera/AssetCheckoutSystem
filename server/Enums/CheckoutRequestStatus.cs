@@ -1,4 +1,4 @@
-﻿namespace ThreatlockerAssetManagementSystem.Enums
+﻿namespace AssetManagementSystem.Enums
 {
     public enum CheckoutRequestStatus
     {

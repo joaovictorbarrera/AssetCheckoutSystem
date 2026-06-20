@@ -1,6 +1,6 @@
-﻿using ThreatlockerAssetManagementSystem.Enums;
+﻿using AssetManagementSystem.Enums;
 
-namespace ThreatlockerAssetManagementSystem.Models.Entities
+namespace AssetManagementSystem.Models.Entities
 {
     public class User
     {
