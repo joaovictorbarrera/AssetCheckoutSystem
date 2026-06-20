@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using ThreatlockerAssetManagementSystem.DTOs.Pagination;
 using ThreatlockerAssetManagementSystem.DTOs.Users;
 using ThreatlockerAssetManagementSystem.Enums;
-using ThreatlockerAssetManagementSystem.Helpers;
 using ThreatlockerAssetManagementSystem.Models.Entities;
 using ThreatlockerAssetManagementSystem.Repositories;
 
@@ -43,7 +41,7 @@ namespace ThreatlockerAssetManagementSystem.Controllers
             return Ok(user);
         }
 
-        [HttpPatch("{id}/role")]
+        [HttpPatch("{id:guid}/role")]
         public async Task<ActionResult<User>> UpdateUserRole(Guid id, [FromBody] UpdateUserRoleRequest request)
         {
             if (!Enum.IsDefined(typeof(Role), request.Role))
@@ -56,7 +54,7 @@ namespace ThreatlockerAssetManagementSystem.Controllers
             return Ok(user);
         }
 
-        [HttpPatch("{id}/active")]
+        [HttpPatch("{id:guid}/active")]
         public async Task<IActionResult> UpdateUserActiveStatus(Guid id, UpdateUserActiveRequest request)
         {
             User? user = await _userRepository.UpdateUserActive(id, request.IsActive);

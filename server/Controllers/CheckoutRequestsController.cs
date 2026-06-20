@@ -20,47 +20,47 @@ namespace ThreatlockerAssetManagementSystem.Controllers
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ArchiveCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpPatch("{id}/cancel")]
+        [HttpPatch("{id:guid}/cancel")]
         public async Task<IActionResult> CancelCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpPatch("{id}/approve")]
+        [HttpPatch("{id:guid}/approve")]
         [Authorize(Policy = "AssetManager+")]
         public async Task<IActionResult> ApproveCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpPatch("{id}/reject")]
+        [HttpPatch("{id:guid}/reject")]
         [Authorize(Policy = "AssetManager+")]
         public async Task<IActionResult> RejectCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpPatch("{id}/assign-asset")]
+        [HttpPatch("{id:guid}/assign-asset")]
         [Authorize(Policy = "AssetManager+")]
         public async Task<IActionResult> AssignCheckoutRequest(Guid id)
         {
             return StatusCode(StatusCodes.Status501NotImplemented);
         }
 
-        [HttpPatch("{id}/return")]
+        [HttpPatch("{id:guid}/return")]
         [Authorize(Policy = "AssetManager+")]
         public async Task<IActionResult> ReturnCheckoutRequest(Guid id)
         {
