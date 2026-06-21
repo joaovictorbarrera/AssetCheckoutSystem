@@ -99,8 +99,8 @@ namespace AssetManagementSystem.Data
             {
                 entity.HasKey(h => h.Id);
 
-                entity.HasOne(h => h.Asset)
-                    .WithMany(a => a.HistoryEntries)
+                entity.HasOne<Asset>()
+                    .WithMany()
                     .HasForeignKey(h => h.AssetId);
 
                 entity.HasOne(h => h.User)

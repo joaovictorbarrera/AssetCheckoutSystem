@@ -23,7 +23,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<AssetDto>>> GetAssets([FromQuery] GetAssetsRequest request)
+        public async Task<ActionResult<PagedResponse<AssetDto>>> Get([FromQuery] GetAssetsRequest request)
         {
             bool usingManagerFeatures = request.Inventory || request.ViewArchived;
 
@@ -42,7 +42,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPost]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<ActionResult<AssetDto>> CreateAsset(CreateAssetRequest request)
+        public async Task<ActionResult<AssetDto>> Create(CreateAssetRequest request)
         {
             bool assetTagExists = await _assetRepository.GetByAssetTag(request.AssetTag) != null;
             if (assetTagExists)
@@ -59,33 +59,33 @@ namespace AssetManagementSystem.Controllers
             if (!Enum.IsDefined(typeof(AssetCategory), request.Category))
                 return BadRequest("Invalid Category");
 
-            AssetDto asset = await _assetRepository.CreateAsset(request);
+            AssetDto asset = await _assetRepository.CreateAsset(request, User.GetUserId());
 
             return Ok(asset);
         }
 
         [HttpGet("available")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<ActionResult<List<AvailableAsset>>> GetAvailableAssetsByCategory(
-            [FromQuery] GetAvailableAssetsByCategoryRequest request
+        public async Task<ActionResult<List<AvailableAsset>>> GetAvailable (
+            [FromQuery] GetAvailableAssets request
         ){
             Console.WriteLine(request.Category);
             if (!Enum.IsDefined(typeof(AssetCategory), request.Category))
                 return BadRequest("Invalid Category");
 
-            List<AvailableAsset> availableAssets = await _assetRepository.GetAvailableAssetsByCategory(request);
+            List<AvailableAsset> availableAssets = await _assetRepository.GetAvailableByCategory(request);
             return Ok(availableAssets);
         }
 
         [HttpGet("fields")]
         [Authorize]
-        public ActionResult<AssetFields> GetAssetFields()
+        public ActionResult<AssetFields> GetFields()
         {
             return Ok(new AssetFields());
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<Asset>> GetAssetDetail(Guid id)
+        public async Task<ActionResult<Asset>> GetDetail(Guid id)
         {
             Asset? asset = await _assetRepository.GetById(id);
             if (asset == null) return NotFound();
@@ -95,7 +95,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPut("{id:guid}")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> UpdateAsset(Guid id, [FromBody] UpdateAssetRequest request)
+        public async Task<ActionResult<Asset>> Update(Guid id, [FromBody] UpdateAssetRequest request)
         {
             Asset? existingAsset = await _assetRepository.GetByAssetTag(request.AssetTag);
             if (existingAsset != null && request.AssetTag != request.AssetTag)
@@ -103,7 +103,7 @@ namespace AssetManagementSystem.Controllers
                 return BadRequest("Asset Tag is taken");
             }
 
-            Asset? asset = await _assetRepository.UpdateById(id, request);
+            Asset? asset = await _assetRepository.UpdateById(id, request, User.GetUserId());
             if (asset == null) return NotFound();
 
             return Ok(asset);
@@ -111,9 +111,9 @@ namespace AssetManagementSystem.Controllers
 
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ArchiveAsset(Guid id)
+        public async Task<IActionResult> Archive(Guid id)
         {
-            bool success = await _assetRepository.ArchiveById(id);
+            bool success = await _assetRepository.ArchiveById(id, User.GetUserId());
             if (!success) return NotFound();
 
             return NoContent();
@@ -121,14 +121,14 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/status")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> UpdateAssetStatus(
+        public async Task<IActionResult> UpdateStatus(
             Guid id,
             [FromBody] UpdateAssetStatusRequest request)
         {
             if (!Enum.IsDefined(typeof(AssetStatus), request.Status))
                 return BadRequest("Invalid status");
 
-            bool success = await _assetRepository.UpdateAssetStatus(id, request.Status);
+            bool success = await _assetRepository.UpdateAssetStatus(id, request.Status, User.GetUserId());
 
             if (!success)
                 return NotFound();
@@ -138,14 +138,14 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/condition")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> UpdateAssetCondition(
+        public async Task<IActionResult> UpdateCondition (
             Guid id,
             [FromBody] UpdateAssetConditionRequest request)
         {
             if (!Enum.IsDefined(typeof(AssetCondition), request.Condition))
                 return BadRequest("Invalid condition");
 
-            bool success = await _assetRepository.UpdateAssetCondition(id, request.Condition);
+            bool success = await _assetRepository.UpdateAssetCondition(id, request.Condition, User.GetUserId());
 
             if (!success)
                 return NotFound();
@@ -155,7 +155,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpGet("{id:guid}/history")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> GetAssetHistory(Guid id)
+        public async Task<ActionResult<List<AssetHistory>>> GetHistory(Guid id)
         {
             List<AssetHistory> history = await _assetRepository.GetAssetHistory(id);
 

@@ -20,7 +20,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<User>>> GetUsers([FromQuery] GetUsersRequest request)
+        public async Task<ActionResult<PagedResponse<User>>> Get([FromQuery] GetUsersRequest request)
         {
             PagedResponse<User> users = await _userRepository.GetUsersAsync(request);
 
@@ -28,7 +28,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser([FromBody] CreateUserRequest request)
+        public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
         {
             if (!Enum.IsDefined(typeof(Role), request.Role))
                 return BadRequest("Invalid role");
@@ -42,7 +42,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPatch("{id:guid}/role")]
-        public async Task<ActionResult<User>> UpdateUserRole(Guid id, [FromBody] UpdateUserRoleRequest request)
+        public async Task<ActionResult<User>> UpdateRole(Guid id, [FromBody] UpdateUserRoleRequest request)
         {
             if (!Enum.IsDefined(typeof(Role), request.Role))
                 return BadRequest("Invalid role");
@@ -55,7 +55,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPatch("{id:guid}/active")]
-        public async Task<IActionResult> UpdateUserActiveStatus(Guid id, UpdateUserActiveRequest request)
+        public async Task<IActionResult> UpdateActive(Guid id, UpdateUserActiveRequest request)
         {
             bool success = await _userRepository.UpdateUserActive(id, request.IsActive);
 

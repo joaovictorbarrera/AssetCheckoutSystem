@@ -3,6 +3,7 @@ using AssetManagementSystem.DTOs.Assets.Requests;
 using AssetManagementSystem.DTOs.Assets.Responses;
 using AssetManagementSystem.DTOs.Pagination;
 using AssetManagementSystem.Enums;
+using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -78,7 +79,7 @@ namespace AssetManagementSystem.Models.Repositories
             };
         }
 
-        public async Task<AssetDto> CreateAsset(CreateAssetRequest request)
+        public async Task<AssetDto> CreateAsset(CreateAssetRequest request, Guid createdByUserId)
         {
             Asset asset = new()
             {
@@ -91,6 +92,8 @@ namespace AssetManagementSystem.Models.Repositories
             };
 
             _context.Assets.Add(asset);
+
+            _context.AddAssetHistory(asset.Id, createdByUserId, "Created Asset");
 
             await _context.SaveChangesAsync();
 
@@ -106,7 +109,7 @@ namespace AssetManagementSystem.Models.Repositories
             };
         }
 
-        public async Task<List<AvailableAsset>> GetAvailableAssetsByCategory(GetAvailableAssetsByCategoryRequest request)
+        public async Task<List<AvailableAsset>> GetAvailableAssetsByCategory(GetAvailableAssets request)
         {
            return await _context.Assets
                     .Where(a => a.Status == AssetStatus.Available && a.Category == request.Category)
@@ -121,13 +124,21 @@ namespace AssetManagementSystem.Models.Repositories
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<Asset?> UpdateById(Guid id, UpdateAssetRequest request)
+        public async Task<Asset?> UpdateById(Guid id, UpdateAssetRequest request, Guid updatedByUserId)
         {
             Asset? asset = await GetById(id);
             if (asset == null) return null;
 
+            if (asset.SerialNumber != request.SerialNumber)
+                _context.AddAssetHistory(id, updatedByUserId, "Updated Serial Number", asset.SerialNumber, request.SerialNumber);
             asset.SerialNumber = request.SerialNumber;
+
+            if (asset.AssetTag != request.AssetTag)
+                _context.AddAssetHistory(id, updatedByUserId, "Updated Asset Tag", asset.AssetTag, request.AssetTag);
             asset.AssetTag = request.AssetTag;
+
+            if (asset.Name != request.Name)
+                _context.AddAssetHistory(id, updatedByUserId, "Updated Asset Name", asset.Name, request.Name);
             asset.Name = request.Name;
             asset.UpdatedAt = DateTime.UtcNow;
 
@@ -136,31 +147,46 @@ namespace AssetManagementSystem.Models.Repositories
             return asset;
         }
 
-        public async Task<bool> ArchiveById(Guid id)
+        public async Task<bool> ArchiveById(Guid id, Guid archivedByUserId)
         {
-            return await _context.Assets
-                .Where(a => a.Id == id)
-                .ExecuteUpdateAsync(a => a.SetProperty(x => x.IsArchived, true)) > 0;
+            Asset? asset = await GetById(id);
+            if (asset == null) return false;
+
+            _context.AddAssetHistory(id, archivedByUserId, "Archived Asset");
+            asset.IsArchived = true;
+            asset.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public async Task<bool> UpdateAssetStatus(Guid id, AssetStatus status)
+        public async Task<bool> UpdateAssetStatus(Guid id, AssetStatus status, Guid updatedByUserId)
         {
-            return await _context.Assets
-                .Where(a => a.Id == id)
-                .ExecuteUpdateAsync(a => a
-                    .SetProperty(x => x.Status, status)
-                    .SetProperty(x => x.UpdatedAt, DateTime.UtcNow)
-                ) > 0;
+            Asset? asset = await GetById(id);
+            if (asset == null) return false;
+
+            _context.AddAssetHistory(id, updatedByUserId, "Updated Asset Status", asset.Status.ToString(), status.ToString());
+
+            asset.Status = status;
+            asset.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public async Task<bool> UpdateAssetCondition(Guid id, AssetCondition condition)
+        public async Task<bool> UpdateAssetCondition(Guid id, AssetCondition condition, Guid updatedByUserId)
         {
-            return await _context.Assets
-                .Where(a => a.Id == id)
-                .ExecuteUpdateAsync(a => a
-                    .SetProperty(x => x.Condition, condition)
-                    .SetProperty(x => x.UpdatedAt, DateTime.UtcNow)
-                ) > 0;
+            Asset? asset = await GetById(id);
+            if (asset == null) return false;
+
+            _context.AddAssetHistory(id, updatedByUserId, "Updated Asset Condition", asset.Condition.ToString(), condition.ToString());
+
+            asset.Condition = condition;
+            asset.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<AssetHistory>> GetAssetHistory(Guid id)

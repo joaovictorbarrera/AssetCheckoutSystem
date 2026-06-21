@@ -2,7 +2,7 @@
 
 namespace AssetManagementSystem.DTOs.Assets.Requests
 {
-    public class GetAvailableAssetsByCategoryRequest
+    public class GetAvailableAssets
     {
         public required AssetCategory Category { get; set; }
     }

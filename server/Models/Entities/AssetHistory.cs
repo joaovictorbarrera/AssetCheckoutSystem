@@ -5,8 +5,6 @@
         public Guid Id { get; set; } = Guid.NewGuid();
 
         public required Guid AssetId { get; set; }
-        public Asset Asset { get; set; } = null!;
-
         public required Guid UserId { get; set; }
         public User User { get; set; } = null!;
 

@@ -26,7 +26,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<CheckoutRequest>>> GetCheckoutRequests(
+        public async Task<ActionResult<PagedResponse<CheckoutRequest>>> Get(
             [FromQuery] GetCheckoutRequestsRequest request)
         {
             bool isManager =
@@ -47,7 +47,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCheckoutRequest(
+        public async Task<ActionResult<CheckoutRequest>> Create(
             [FromBody] CreateCheckoutRequestRequest request
         ){
             if (request.RequestType == CheckoutRequestType.Return)
@@ -75,7 +75,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetCheckoutRequest(Guid id)
+        public async Task<ActionResult<CheckoutRequest>> GetDetail(Guid id)
         {
             CheckoutRequest? request = await _repository.GetById(id);
 
@@ -97,7 +97,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> ArchiveCheckoutRequest(Guid id)
+        public async Task<IActionResult> Archive(Guid id)
         {
             bool success = await _repository.ArchiveById(id);
 
@@ -108,7 +108,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPatch("{id:guid}/cancel")]
-        public async Task<IActionResult> CancelCheckoutRequest(Guid id)
+        public async Task<IActionResult> Cancel(Guid id)
         {
             CheckoutRequest? request = await _repository.GetById(id);
 
@@ -131,7 +131,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/approve")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> ApproveCheckoutRequest(Guid id)
+        public async Task<IActionResult> Approve(Guid id)
         {
             CheckoutRequest? request = await _repository.GetById(id);
             Guid reviewedByUserId = User.GetUserId();
@@ -155,7 +155,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/reject")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> RejectCheckoutRequest(Guid id)
+        public async Task<IActionResult> Reject(Guid id)
         {
             CheckoutRequest? request = await _repository.GetById(id);
             Guid reviewedByUserId = User.GetUserId();
@@ -176,7 +176,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/assign-asset")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> AssignCheckoutRequest(
+        public async Task<IActionResult> Assign(
             Guid id,
             [FromBody] AssignAssetRequest request)
         {
@@ -202,7 +202,7 @@ namespace AssetManagementSystem.Controllers
             bool success = await _repository.AssignAssetById(
                 id,
                 request.AssetId,
-                checkoutRequest.RequestedByUserId);
+                User.GetUserId());
 
             if (!success)
                 return NotFound();
@@ -212,7 +212,7 @@ namespace AssetManagementSystem.Controllers
 
         [HttpPatch("{id:guid}/return")]
         [Authorize(Policy = "AssetManager+")]
-        public async Task<IActionResult> ReturnCheckoutRequest(Guid id)
+        public async Task<IActionResult> Return(Guid id)
         {
             CheckoutRequest? request = await _repository.GetById(id);
 
@@ -230,7 +230,8 @@ namespace AssetManagementSystem.Controllers
 
             bool success = await _repository.ReturnById(
                 id,
-                request.AssignedAssetId.Value);
+                request.AssignedAssetId.Value,
+                User.GetUserId());
 
             if (!success)
                 return NotFound();

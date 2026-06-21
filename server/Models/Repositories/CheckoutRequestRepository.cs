@@ -2,6 +2,7 @@
 using AssetManagementSystem.DTOs.CheckoutRequests;
 using AssetManagementSystem.DTOs.Pagination;
 using AssetManagementSystem.Enums;
+using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -137,86 +138,89 @@ namespace AssetManagementSystem.Models.Repositories
         public async Task<bool> AssignAssetById(
             Guid requestId,
             Guid assetId,
-            Guid assignedUserId)
+            Guid reviewedByUserId)
         {
-            var strategy = _context.Database.CreateExecutionStrategy();
+            CheckoutRequest? request = await _context.CheckoutRequests
+                .Include(r => r.RequestedByUser)
+                .FirstOrDefaultAsync(r =>
+                    r.Id == requestId &&
+                    r.Status == CheckoutRequestStatus.Approved);
 
-            return await strategy.ExecuteAsync(async () =>
-            {
-                await using var transaction =
-                    await _context.Database.BeginTransactionAsync();
+            Asset? asset = await _context.Assets
+                .FirstOrDefaultAsync(a =>
+                    a.Id == assetId &&
+                    a.Status == AssetStatus.Available);
 
-                int requestRows = await _context.CheckoutRequests
-                    .Where(r =>
-                        r.Id == requestId &&
-                        r.Status == CheckoutRequestStatus.Approved)
-                    .ExecuteUpdateAsync(r => r
-                        .SetProperty(x => x.AssignedAssetId, assetId)
-                        .SetProperty(x => x.Status, CheckoutRequestStatus.Fulfilled)
-                        .SetProperty(x => x.FulfilledAt, DateTime.UtcNow)
-                        .SetProperty(x => x.UpdatedAt, DateTime.UtcNow)
-                    );
+            if (request == null || asset == null)
+                return false;
 
-                int assetRows = await _context.Assets
-                    .Where(a =>
-                        a.Id == assetId &&
-                        a.Status == AssetStatus.Available)
-                    .ExecuteUpdateAsync(a => a
-                        .SetProperty(x => x.AssignedToUserId, assignedUserId)
-                        .SetProperty(x => x.Status, AssetStatus.Assigned)
-                    );
+            request.AssignedAssetId = assetId;
+            request.Status = CheckoutRequestStatus.Fulfilled;
+            request.FulfilledAt = DateTime.UtcNow;
 
-                if (requestRows == 0 || assetRows == 0)
-                {
-                    await transaction.RollbackAsync();
-                    return false;
-                }
+            _context.AddAssetHistory(
+                assetId,
+                reviewedByUserId,
+                "Updated Asset Status",
+                asset.Status.ToString(),
+                AssetStatus.Assigned.ToString());
 
-                await transaction.CommitAsync();
-                return true;
-            });
+            asset.Status = AssetStatus.Assigned;
+
+            _context.AddAssetHistory(
+                assetId,
+                reviewedByUserId,
+                $"Assigned Asset to {request.RequestedByUser!.EmailAddress}");
+
+            asset.AssignedToUserId = request.RequestedByUserId;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> ReturnById(
             Guid requestId,
-            Guid assetId)
+            Guid assetId,
+            Guid reviewedByUserId)
         {
-            var strategy = _context.Database.CreateExecutionStrategy();
+            CheckoutRequest? request = await _context.CheckoutRequests
+                .Include(r => r.RequestedByUser)
+                .FirstOrDefaultAsync(r =>
+                    r.Id == requestId &&
+                    r.Status == CheckoutRequestStatus.Pending &&
+                    r.RequestType == CheckoutRequestType.Return);
 
-            return await strategy.ExecuteAsync(async () =>
-            {
-                await using var transaction =
-                    await _context.Database.BeginTransactionAsync();
+            Asset? asset = await _context.Assets
+                .FirstOrDefaultAsync(a =>
+                    a.Id == assetId &&
+                    a.Status == AssetStatus.Assigned);
 
-                int requestRows = await _context.CheckoutRequests
-                    .Where(r =>
-                        r.Id == requestId &&
-                        r.Status == CheckoutRequestStatus.Pending &&
-                        r.RequestType == CheckoutRequestType.Return)
-                    .ExecuteUpdateAsync(r => r
-                        .SetProperty(x => x.Status, CheckoutRequestStatus.Returned)
-                        .SetProperty(x => x.ReturnedAt, DateTime.UtcNow)
-                        .SetProperty(x => x.UpdatedAt, DateTime.UtcNow)
-                    );
+            if (request == null || asset == null)
+                return false;
 
-                int assetRows = await _context.Assets
-                    .Where(a =>
-                        a.Id == assetId &&
-                        a.Status == AssetStatus.Assigned)
-                    .ExecuteUpdateAsync(a => a
-                        .SetProperty(x => x.AssignedToUserId, (Guid?)null)
-                        .SetProperty(x => x.Status, AssetStatus.Available)
-                    );
+            request.Status = CheckoutRequestStatus.Returned;
+            request.ReturnedAt = DateTime.UtcNow;
 
-                if (requestRows == 0 || assetRows == 0)
-                {
-                    await transaction.RollbackAsync();
-                    return false;
-                }
+            _context.AddAssetHistory(
+                assetId,
+                reviewedByUserId,
+                "Updated Asset Status",
+                asset.Status.ToString(),
+                AssetStatus.Available.ToString());
 
-                await transaction.CommitAsync();
-                return true;
-            });
+            asset.Status = AssetStatus.Available;
+
+            _context.AddAssetHistory(
+                assetId,
+                reviewedByUserId,
+                $"Unassigned Asset from {request.RequestedByUser!.EmailAddress}");
+
+            asset.AssignedToUserId = null;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
