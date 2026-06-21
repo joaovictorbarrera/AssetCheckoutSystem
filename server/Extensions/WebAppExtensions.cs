@@ -3,7 +3,7 @@ using AssetManagementSystem.Data;
 
 namespace AssetManagementSystem.Extensions
 {
-    public static class MigrationExtensions
+    public static class WebAppExtensions
     {
         public static void ApplyMigrations(this IHost app)
         {
