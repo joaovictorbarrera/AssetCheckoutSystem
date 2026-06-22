@@ -171,7 +171,7 @@ namespace AssetManagementSystem.Models.Repositories
             _context.AddAssetHistory(
                 assetId,
                 reviewedByUserId,
-                $"Assigned Asset to {request?.RequestedByUser?.EmailAddress ?? "Employee"}");
+                $"Assigned Asset to {request?.RequestedByUser?.EmailAddress ?? "Unknown"}");
 
             asset.AssignedToUserId = request!.RequestedByUserId;
             asset.UpdatedAt = DateTime.UtcNow;
@@ -219,7 +219,7 @@ namespace AssetManagementSystem.Models.Repositories
             _context.AddAssetHistory(
                 assetId,
                 reviewedByUserId,
-                $"Unassigned Asset from {request.RequestedByUser.EmailAddress}");
+                $"Unassigned Asset from {request?.RequestedByUser?.EmailAddress ?? "Unknown"}");
 
             asset.AssignedToUserId = null;
             asset.UpdatedAt = DateTime.UtcNow;
