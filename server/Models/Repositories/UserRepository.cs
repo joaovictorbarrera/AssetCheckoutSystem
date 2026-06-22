@@ -27,11 +27,15 @@ namespace AssetManagementSystem.Repositories
                 query = query.Where(u => u.IsActive);
             }
 
+            if (!String.IsNullOrEmpty(request.SearchText))
+            {
+                query = query.Where(u => u.FirstName.Contains(request.SearchText) ||
+                            u.LastName.Contains(request.SearchText));
+            }
+
             int totalCount = await query.CountAsync();
 
             List<User> users = await query
-                .Where(u => u.FirstName.Contains(request.SearchText) || 
-                            u.LastName.Contains(request.SearchText))
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
                 .Skip((request.PageNumber - 1) * request.PageSize)
