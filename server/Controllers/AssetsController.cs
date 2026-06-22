@@ -31,7 +31,7 @@ namespace AssetManagementSystem.Controllers
 
             var result = await _service.GetAssets(request, User.GetUserId(), isManager);
 
-            return Ok(result);
+            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
         [HttpPost]
@@ -60,7 +60,11 @@ namespace AssetManagementSystem.Controllers
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<Asset>> GetDetail(Guid id)
         {
-            var result = await _service.GetDetail(id);
+            bool isManager =
+                User.IsInRole("AssetManager") ||
+                User.IsInRole("Admin");
+
+            var result = await _service.GetDetail(id, User.GetUserId(), isManager);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 

@@ -60,12 +60,18 @@ namespace AssetManagementSystem.Services
             return ServiceResult<List<AvailableAsset>>.Success(assets);
         }
 
-        public async Task<ServiceResult<Asset>> GetDetail(Guid id)
+        public async Task<ServiceResult<Asset>> GetDetail(
+            Guid id, 
+            Guid requestorId,
+            bool isManager)
         {
             Asset? asset = await _assetRepository.GetById(id);
 
             if (asset == null)
                 return ServiceResult<Asset>.NotFound();
+
+            if (asset.AssignedToUserId != requestorId && !isManager)
+                return ServiceResult<Asset>.Forbidden("Asset is not assigned to you");
 
             return ServiceResult<Asset>.Success(asset);
         }
