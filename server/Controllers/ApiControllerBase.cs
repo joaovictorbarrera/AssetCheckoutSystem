@@ -9,19 +9,25 @@ namespace AssetManagementSystem.Controllers
         protected ActionResult ToActionResult(ServiceResult result) =>
             result.ErrorType switch
             {
-                ServiceErrorType.NotFound => NotFound(result.ErrorMessage),
-                ServiceErrorType.Forbidden => Forbid(result.ErrorMessage ?? string.Empty),
-                ServiceErrorType.BadRequest => BadRequest(result.ErrorMessage),
-                _ => StatusCode(500, "An unexpected error occurred")
+                ServiceErrorType.NotFound => NotFound(new
+                {
+                    Message = result.ErrorMessage
+                }),
+                ServiceErrorType.Forbidden => StatusCode(StatusCodes.Status403Forbidden, new
+                {
+                    Message = result.ErrorMessage
+                }),
+                ServiceErrorType.BadRequest => BadRequest(new
+                {
+                    Message = result.ErrorMessage
+                }),
+                _ => StatusCode(500, new
+                {
+                    Message = "An unexpected error occurred"
+                })
             };
 
         protected ActionResult ToActionResult<T>(ServiceResult<T> result) =>
-            result.ErrorType switch
-            {
-                ServiceErrorType.NotFound => NotFound(result.ErrorMessage),
-                ServiceErrorType.Forbidden => Forbid(result.ErrorMessage ?? string.Empty),
-                ServiceErrorType.BadRequest => BadRequest(result.ErrorMessage),
-                _ => StatusCode(500, "An unexpected error occurred")
-            };
+            ToActionResult((ServiceResult)result);
     }
 }

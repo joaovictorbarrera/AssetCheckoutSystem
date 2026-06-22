@@ -8,14 +8,14 @@ namespace AssetManagementSystem.Services
 {
     public class CheckoutRequestService
     {
-        private readonly CheckoutRequestRepository _repository;
+        private readonly CheckoutRequestRepository _requestRepository;
         private readonly AssetRepository _assetRepository;
 
         public CheckoutRequestService(
-            CheckoutRequestRepository repository,
+            CheckoutRequestRepository requestRepository,
             AssetRepository assetRepository)
         {
-            _repository = repository;
+            _requestRepository = requestRepository;
             _assetRepository = assetRepository;
         }
 
@@ -27,7 +27,7 @@ namespace AssetManagementSystem.Services
             if (request.Review && !isManager)
                 return ServiceResult<PagedResponse<CheckoutRequest>>.Forbidden("No permission to view all requests");
 
-            var result = await _repository.GetRequests(request, requestorId);
+            var result = await _requestRepository.GetRequests(request, requestorId);
 
             return ServiceResult<PagedResponse<CheckoutRequest>>.Success(result);
         }
@@ -53,7 +53,7 @@ namespace AssetManagementSystem.Services
                         "Asset is not assigned to you");
             }
 
-            CheckoutRequest created = await _repository.Create(request, requestorId);
+            CheckoutRequest created = await _requestRepository.Create(request, requestorId);
             return ServiceResult<CheckoutRequest>.Success(created);
         }
 
@@ -62,7 +62,7 @@ namespace AssetManagementSystem.Services
             Guid requestorId,
             bool isManager)
         {
-            CheckoutRequest? checkoutRequest = await _repository.GetById(id);
+            CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
                 return ServiceResult<CheckoutRequest>.NotFound();
@@ -76,7 +76,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult> Archive(Guid id)
         {
-            bool success = await _repository.ArchiveById(id);
+            bool success = await _requestRepository.ArchiveById(id);
 
             return success
                 ? ServiceResult.Success()
@@ -85,7 +85,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult> Cancel(Guid id, Guid requestorId)
         {
-            CheckoutRequest? checkoutRequest = await _repository.GetById(id);
+            CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
                 return ServiceResult.NotFound();
@@ -99,7 +99,7 @@ namespace AssetManagementSystem.Services
             if (checkoutRequest.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived requests");
 
-            bool success = await _repository.CancelById(id);
+            bool success = await _requestRepository.CancelById(id);
 
             return success
                 ? ServiceResult.Success()
@@ -108,7 +108,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult> Approve(Guid id, Guid reviewedByUserId)
         {
-            CheckoutRequest? checkoutRequest = await _repository.GetById(id);
+            CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
                 return ServiceResult.NotFound();
@@ -122,7 +122,7 @@ namespace AssetManagementSystem.Services
             if (checkoutRequest.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived requests");
 
-            bool success = await _repository.ApproveById(id, reviewedByUserId);
+            bool success = await _requestRepository.ApproveById(id, reviewedByUserId);
 
             return success
                 ? ServiceResult.Success()
@@ -131,7 +131,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult> Reject(Guid id, Guid reviewedByUserId)
         {
-            CheckoutRequest? checkoutRequest = await _repository.GetById(id);
+            CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
                 return ServiceResult.NotFound();
@@ -142,7 +142,7 @@ namespace AssetManagementSystem.Services
             if (checkoutRequest.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived requests");
 
-            bool success = await _repository.RejectById(id, reviewedByUserId);
+            bool success = await _requestRepository.RejectById(id, reviewedByUserId);
 
             return success
                 ? ServiceResult.Success()
@@ -154,7 +154,7 @@ namespace AssetManagementSystem.Services
             AssignAssetRequest request,
             Guid reviewedByUserId)
         {
-            CheckoutRequest? checkoutRequest = await _repository.GetById(id);
+            CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
                 return ServiceResult.NotFound();
@@ -177,7 +177,7 @@ namespace AssetManagementSystem.Services
                 return ServiceResult.BadRequest(
                     "Asset Category is incompatible with Request Category");
 
-            bool success = await _repository.AssignAssetById(
+            bool success = await _requestRepository.AssignAssetById(
                 id,
                 request.AssetId,
                 reviewedByUserId);
@@ -189,7 +189,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult> Return(Guid id, Guid reviewedByUserId)
         {
-            CheckoutRequest? request = await _repository.GetById(id);
+            CheckoutRequest? request = await _requestRepository.GetById(id);
 
             if (request == null)
                 return ServiceResult.NotFound();
@@ -215,7 +215,7 @@ namespace AssetManagementSystem.Services
             if (asset.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived assets");
 
-            bool success = await _repository.ReturnById(
+            bool success = await _requestRepository.ReturnById(
                 id,
                 request.AssignedAssetId.Value,
                 reviewedByUserId);
