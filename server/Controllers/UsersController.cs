@@ -5,63 +5,48 @@ using AssetManagementSystem.DTOs.Users;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Repositories;
+using AssetManagementSystem.Services;
 
 namespace AssetManagementSystem.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/users")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiControllerBase
     {
-        private readonly UserRepository _userRepository;
-        public UsersController(UserRepository userRepository)
+        private readonly UserService _userService;
+        public UsersController(UserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<ActionResult<PagedResponse<User>>> Get([FromQuery] GetUsersRequest request)
         {
-            PagedResponse<User> users = await _userRepository.GetUsersAsync(request);
-
-            return Ok(users);
+            var result = await _userService.Get(request);
+            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
         {
-            if (!Enum.IsDefined(typeof(Role), request.Role))
-                return BadRequest("Invalid role");
-
-            bool userExists = await _userRepository.GetUserByEmailAsync(request.EmailAddress) != null;
-            if (userExists) return BadRequest("Email Address is taken");
-
-            User user = await _userRepository.CreateUserAsync(request);
-
-            return Ok(user);
+            var result = await _userService.Create(request);
+            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
         [HttpPatch("{id:guid}/role")]
         public async Task<ActionResult<User>> UpdateRole(Guid id, [FromBody] UpdateUserRoleRequest request)
         {
-            if (!Enum.IsDefined(typeof(Role), request.Role))
-                return BadRequest("Invalid role");
 
-            bool success = await _userRepository.UpdateUserRole(id, request.Role);
-
-            if (!success) return NotFound();
-
-            return NoContent();
+            var result = await _userService.UpdateRole(id, request);
+            return result.Succeeded ? NoContent() : ToActionResult(result);
         }
 
         [HttpPatch("{id:guid}/active")]
         public async Task<IActionResult> UpdateActive(Guid id, UpdateUserActiveRequest request)
         {
-            bool success = await _userRepository.UpdateUserActive(id, request.IsActive);
-
-            if (!success) return NotFound();
-
-            return NoContent();
+            var result = await _userService.UpdateActive(id, request);
+            return result.Succeeded ? NoContent() : ToActionResult(result);
         }
     }
 }

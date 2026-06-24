@@ -9,10 +9,8 @@ namespace AssetManagementSystem.Controllers
         protected ActionResult ToActionResult(ServiceResult result) =>
             result.ErrorType switch
             {
-                ServiceErrorType.NotFound => NotFound(new
-                {
-                    Message = result.ErrorMessage
-                }),
+                ServiceErrorType.NotFound => NotFound(),
+                ServiceErrorType.Unauthorized => Unauthorized(),
                 ServiceErrorType.Forbidden => StatusCode(StatusCodes.Status403Forbidden, new
                 {
                     Message = result.ErrorMessage

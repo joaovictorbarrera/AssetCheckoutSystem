@@ -11,31 +11,20 @@ namespace AssetManagementSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : ApiControllerBase
     {
-        private readonly UserRepository _userRepository;
-        private readonly TokenService _tokenService;
+        private readonly UserService _userService;
 
-        public AuthController(UserRepository userRepository, TokenService tokenService)
+        public AuthController(UserService userService)
         {
-            _userRepository = userRepository;
-            _tokenService = tokenService;
+            _userService = userService;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginRequest loginData)
+        public async Task<ActionResult<TokenDto>> Login([FromBody] LoginRequest request)
         {
-            // There is intentionally no check for password.
-            // Managing passwords is outside the scope of this project.
-            User? user = await _userRepository.GetUserByEmailAsync(loginData.EmailAddress);
-
-            if (user == null || !user.IsActive) return Unauthorized();
-
-            string token = _tokenService.CreateToken(user);
-
-            await _userRepository.UpdateLastLoginAsync(user.Id);
-
-            return Ok(new { AuthorizationToken = token });
+            var result = await _userService.Login(request);
+            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
         [Authorize]

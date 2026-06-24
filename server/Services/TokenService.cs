@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AssetManagementSystem.Models.Entities;
+using AssetManagementSystem.DTOs.Auth;
 
 namespace AssetManagementSystem.Services
 {
@@ -15,7 +16,7 @@ namespace AssetManagementSystem.Services
             _configuration = configuration;
         }
 
-        public string CreateToken(User user)
+        public TokenDto CreateToken(User user)
         {
             string jwtKey = _configuration["JwtKey"]
                 ?? throw new Exception("JwtKey missing from configuration.");
@@ -34,12 +35,20 @@ namespace AssetManagementSystem.Services
                 key,
                 SecurityAlgorithms.HmacSha256);
 
+            var expires = DateTime.UtcNow.AddDays(expirationDays);
+
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(expirationDays),
+                expires: expires,
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            TokenDto tokenDto = new()
+            {
+                AuthorizationToken = new JwtSecurityTokenHandler().WriteToken(token)
+                ExpirationDate = expires
+            };
+
+            return tokenDto;
         }
 
         public Guid? GetUserIdFromToken(string token)

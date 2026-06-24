@@ -2,16 +2,17 @@ using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Models.Repositories;
 using AssetManagementSystem.Repositories;
 using AssetManagementSystem.Services;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+    .AddNewtonsoftJson(options =>
     {
-        options.JsonSerializerOptions.Converters.Add(
-            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false)
+        options.SerializerSettings.Converters.Add(
+            new Newtonsoft.Json.Converters.StringEnumConverter(
+                new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy(),
+                allowIntegerValues: false
+            )
         );
     });
 
@@ -20,7 +21,8 @@ builder.Services.AddScoped<UserRepository>()
                 .AddScoped<CheckoutRequestRepository>()
                 .AddScoped<TokenService>()
                 .AddScoped<CheckoutRequestService>()
-                .AddScoped<AssetService>();
+                .AddScoped<AssetService>()
+                .AddScoped<UserService>();
 
 builder.Services.AddDatabase(builder.Configuration, builder.Environment)
                 .AddCustomCors(builder.Configuration, builder.Environment)
