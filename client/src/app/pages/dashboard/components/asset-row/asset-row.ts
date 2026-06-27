@@ -14,8 +14,8 @@ export class AssetRow {
   constructor(private requestService: CheckoutRequestService) {}
 
   handleReturnRequest() {
-    if (window.confirm("Are you sure you want to return this asset?")) {
-      let reason = window.prompt("What is the reason for return?")
+    let reason = window.prompt("What is the reason for return?")
+    if (reason) {
       this.asset.isPendingReturn = true
       this.requestService.create({
         requestType: "return",

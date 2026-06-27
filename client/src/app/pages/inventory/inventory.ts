@@ -9,10 +9,11 @@ import { InventoryTable } from "./components/inventory-table/inventory-table";
 import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/paginated.response';
 import { Asset } from '../../core/DTOs/asset.dto';
 import { TablePagination } from "../../core/components/table-components/table-pagination/table-pagination";
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-inventory',
-  imports: [Page, PageHeader, Dropdown, SearchBar, InventoryTable, TablePagination],
+  imports: [Page, PageHeader, Dropdown, SearchBar, InventoryTable, TablePagination, NgIcon],
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss',
 })

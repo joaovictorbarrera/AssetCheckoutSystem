@@ -1,13 +1,19 @@
 <app-page>
     <app-page-header>
-        <h1 class="text-3xl text-center">My Requests</h1>
+        <div class="flex items-center w-full relative">
+            <button class="bg-accent text-text-primary px-4 py-2 rounded flex items-center gap-0.5 hover:bg-accent-hover">
+                <ng-icon name="heroPlus" size="20" />
+                <span class="pb-px">New Request</span>
+            </button>
+            <h1 class="text-3xl absolute left-1/2 transform -translate-x-1/2">My Requests</h1>
+        </div>
     </app-page-header>
     <div class="flex gap-5 justify-center p-5 items-end">
-        <app-dropdown class="w-50" [enableAll]="true" [name]="`Type`" [list]="this.requestFields().types" (dropdownChanged)="handleTypeChange($event)" />
+        <app-dropdown class="w-50" [enableAll]="true" [label]="`Type`" [list]="this.requestFields().types" (dropdownChanged)="handleTypeChange($event)" />
 
-        <app-dropdown class="w-50" [enableAll]="true" [name]="`Status`" [list]="this.requestFields().statuses" (dropdownChanged)="handleStatusChange($event)" />
+        <app-dropdown class="w-50" [enableAll]="true" [label]="`Status`" [list]="this.requestFields().statuses" (dropdownChanged)="handleStatusChange($event)" />
 
-        <app-dropdown class="w-50" [enableAll]="true" [name]="`Asset Category`" [list]="this.assetFields().categories" (dropdownChanged)="handleCategoryChange($event)" />
+        <app-dropdown class="w-50" [enableAll]="true" [label]="`Asset Category`" [list]="this.assetFields().categories" (dropdownChanged)="handleCategoryChange($event)" />
 
         <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
             <input class="checkbox" type="checkbox" (change)="handleIncludeClosed($event)"/>

@@ -3,3 +3,6 @@
 <td>{{request.assignedAsset ? `${request.assignedAsset.name} \\ ${request.assignedAsset.assetTag}` : "-"}}</td>
 <td>{{request.assetCategory}}</td>
 <td>{{request.createdAt | date:'M/d/yy, h:mm a'}}</td>
+<td>
+    <button class="cancel hover:brightness-120" (click)="handleCancel()">Cancel</button>
+</td>

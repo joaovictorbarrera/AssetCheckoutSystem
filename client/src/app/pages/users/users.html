@@ -1,6 +1,12 @@
 <app-page>
     <app-page-header>
-        <h1 class="text-3xl text-center">Users</h1>
+        <div class="flex items-center w-full relative">
+            <button class="bg-accent text-text-primary px-4 py-2 rounded flex items-center gap-0.5 hover:bg-accent-hover">
+                <ng-icon name="heroPlus" size="20" />
+                <span class="pb-px">New User</span>
+            </button>
+            <h1 class="text-3xl absolute left-1/2 transform -translate-x-1/2">Users</h1>
+        </div>
     </app-page-header>
     <div class="flex gap-5 justify-center p-5 items-end">
         <app-search-bar (search)="handleSearch($event)" />

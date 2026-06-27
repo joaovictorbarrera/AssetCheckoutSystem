@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, signal } from '@angular/core';
 import Pagination from '../../../DTOs/pagination';
 import { FormsModule } from '@angular/forms';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-table-pagination',
-  imports: [FormsModule],
+  imports: [FormsModule, NgIcon],
   templateUrl: './table-pagination.html',
   styleUrl: './table-pagination.scss',
 })

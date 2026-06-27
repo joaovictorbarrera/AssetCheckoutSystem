@@ -10,6 +10,11 @@ button {
   border-radius: 0.5rem;
   cursor: pointer;
   white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover {
+  filter: brightness(120%)
 }
 
 option {
@@ -41,42 +46,41 @@ option {
 }
 
 .chip {
-    padding: 8px;
-    border-radius: .5rem;
-    text-transform: capitalize;
-    background-color: var(--chip-info-bg);
-    color: var(--chip-info-text);
-    width: min-content;
-    white-space: nowrap;
+  padding: 8px;
+  border-radius: .5rem;
+  text-transform: capitalize;
+  color: var(--chip-info-text);
+  width: min-content;
+  white-space: nowrap;
+  user-select: none;
 }
 
 .assigned {
-    background-color: var(--chip-info-bg) !important;
-    color: var(--chip-info-text) !important
+  color: var(--chip-info-text) !important
 }
 
 .maintenance, .return, .rejected {
-    background-color: var(--chip-danger-bg) !important;
-    color: var(--chip-danger-text) !important
+  color: var(--chip-danger-text) !important
 }
 
 .pending {
-    background-color: var(--chip-warning-bg) !important;
-    color: var(--chip-warning-text) !important
+  color: var(--chip-warning-text) !important
 }
 
 .fulfilled, .returned {
-    background-color: var(--chip-fulfilled-bg) !important;
-    color: var(--chip-fulfilled-text) !important
+  color: var(--chip-fulfilled-text) !important
 }
 
 .cancelled {
-    background-color: var(--chip-canceled-bg) !important;
-    color: var(--chip-canceled-text) !important
+  color: var(--chip-canceled-text) !important
+}
+
+.cancel {
+  background-color: var(--chip-canceled-bg) !important;
+  color: var(--chip-canceled-text) !important
 }
 
 .approved {
-  background-color: var(--chip-success-bg) !important;
   color: var(--chip-success-text) !important
 }
 

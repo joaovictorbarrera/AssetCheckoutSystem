@@ -1,22 +1,31 @@
-<div class="w-50 bg-sidebar h-full py-5">
-    <a routerLink="/dashboard" routerLinkActive="active">
-        <nav class="nav-item"><ng-icon name="heroComputerDesktop" />Dashboard</nav>
-    </a>
-    <a routerLink="/requests" routerLinkActive="active">
-        <nav class="nav-item"><ng-icon name="heroInboxArrowDown" />Requests</nav>
-    </a>
-    @if (isManager()) {
-        <a routerLink="/inventory" routerLinkActive="active">
-            <nav class="nav-item"><ng-icon name="heroServerStack"/>Inventory</nav>
+<div class="w-50 bg-sidebar h-full py-3 flex flex-col">
+    <div class="flex-1">
+        <a routerLink="/dashboard" routerLinkActive="active">
+            <nav class="nav-item"><ng-icon name="heroComputerDesktop" />Dashboard</nav>
         </a>
-        <a routerLink="/review" routerLinkActive="active">
-            <nav class="nav-item"><ng-icon name="heroListBullet"/>Review</nav>
+        <a routerLink="/requests" routerLinkActive="active">
+            <nav class="nav-item"><ng-icon name="heroInboxArrowDown" />Requests</nav>
         </a>
-    }
-    @if (isAdmin()) {
-        <a routerLink="/users" routerLinkActive="active">
-            <nav class="nav-item"><ng-icon name="heroUser" />Users</nav>
-        </a>
-    }
+        @if (isManager()) {
+            <a routerLink="/inventory" routerLinkActive="active">
+                <nav class="nav-item"><ng-icon name="heroServerStack"/>Inventory</nav>
+            </a>
+            <a routerLink="/review" routerLinkActive="active">
+                <nav class="nav-item"><ng-icon name="heroListBullet"/>Review</nav>
+            </a>
+        }
+        @if (isAdmin()) {
+            <a routerLink="/users" routerLinkActive="active">
+                <nav class="nav-item"><ng-icon name="heroUser" />Users</nav>
+            </a>
+        }
+    </div>
+    <div class="border-t border-border px-3 py-2">
+        <div class="text-text-secondary text-xs uppercase tracking-wide mb-2">Role</div>
+        <div class="flex items-center gap-2 text-accent">
+            <ng-icon name="heroShieldCheck" size="20" />
+            <span class="font-semibold text-base">{{ currentRole() }}</span>
+        </div>
+    </div>
 </div>
 

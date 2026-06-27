@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CheckoutRequest } from '../../../../core/DTOs/checkout-request.dto';
 import { DatePipe } from '@angular/common';
+import { CheckoutRequestService } from '../../../../core/services/checkout-requests.service';
 
 @Component({
   selector: 'tr[app-request-row]',
@@ -10,4 +11,18 @@ import { DatePipe } from '@angular/common';
 })
 export class RequestRow {
   @Input() request!: CheckoutRequest
+  @Output() cancelled = new EventEmitter<string>();
+
+  constructor(private requestService: CheckoutRequestService) {}
+
+  handleCancel() {
+    if (window.confirm("Are you sure you want to cancel this request?")) {
+      this.requestService.cancel(this.request.id).subscribe({
+        next: () => this.cancelled.emit(this.request.id),
+        error: err => window.alert(err.message)
+      })
+    }
+  }
 }
+
+

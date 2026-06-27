@@ -8,10 +8,11 @@ import { UserService } from '../../core/services/user.service';
 import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/paginated.response';
 import User from '../../core/DTOs/user.dto';
 import UserFields from '../../core/DTOs/user-fields.dto';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-users',
-  imports: [PageHeader, Page, SearchBar, UsersTable, TablePagination],
+  imports: [PageHeader, Page, SearchBar, UsersTable, TablePagination, NgIcon],
   templateUrl: './users.html',
   styleUrl: './users.scss',
 })

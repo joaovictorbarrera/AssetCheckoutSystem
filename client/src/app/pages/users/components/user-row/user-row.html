@@ -2,10 +2,11 @@
 <td>{{ user.firstName }} {{ user.lastName }}</td>
 <td>
     <app-dropdown
+        #roleDropdown
         class="w-40"
         [enableAll]="false"
-        [name]="''"
-        [defaultSelected]="user.role"
+        [label]="''"
+        [initialSelection]="user.role"
         [list]="roles"
         (dropdownChanged)="handleRoleChange($event)"
     />
@@ -16,7 +17,7 @@
             class="checkbox"
             type="checkbox"
             [checked]="user.isActive"
-            (change)="toggleActive()"
+            (change)="toggleActive($event)"
         />
         <span>{{ user.isActive ? 'Active' : 'Inactive' }}</span>
     </label>

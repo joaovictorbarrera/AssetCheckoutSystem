@@ -23,4 +23,8 @@ export class CheckoutRequestService {
     getFields() {
         return this.http.get(`${this.apiUrl}/fields`)
     }
+
+    cancel(id: string) {
+        return this.http.patch(`${this.apiUrl}/${id}/cancel`, {})
+    }
 }

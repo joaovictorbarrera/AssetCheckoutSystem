@@ -37,7 +37,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CheckoutRequest>> Create(
+        public async Task<ActionResult> Create(
             [FromBody] CreateCheckoutRequestRequest request)
         {
             if (HttpContext.Items["User"] is not User user)
@@ -46,7 +46,7 @@ namespace AssetManagementSystem.Controllers
             }
             Requestor requestor = user.GetRequestor();
             var result = await _requestService.Create(request, requestor);
-            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
+            return result.Succeeded ? Created() : ToActionResult(result);
         }
 
         [HttpGet("fields")]

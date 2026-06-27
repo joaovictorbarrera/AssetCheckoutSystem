@@ -8,7 +8,7 @@
     cursor: pointer;
 
     &:hover {
-        border: 2px solid var(--color-accent-hover);
+        border: 2px solid var(--accent-active);
         transition: all 300ms;
     }
 }

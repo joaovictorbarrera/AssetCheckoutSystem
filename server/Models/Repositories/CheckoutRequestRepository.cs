@@ -112,7 +112,7 @@ namespace AssetManagementSystem.Models.Repositories
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<CheckoutRequest> Create(CreateCheckoutRequestRequest request, Guid userId)
+        public async Task Create(CreateCheckoutRequestRequest request, Guid userId)
         {
             CheckoutRequest checkoutRequest = new()
             {
@@ -127,8 +127,6 @@ namespace AssetManagementSystem.Models.Repositories
             _context.CheckoutRequests.Add(checkoutRequest);
 
             await _context.SaveChangesAsync();
-
-            return checkoutRequest;
         }
 
         public async Task<bool> ArchiveById(Guid id)

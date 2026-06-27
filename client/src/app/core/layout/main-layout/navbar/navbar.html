@@ -1,12 +1,9 @@
 <div class="bg-navbar h-15 flex px-5 items-center">
-
-    <strong>
-    {{ currentUser()?.firstName}} {{ currentUser()?.lastName }} ({{ currentUser()?.emailAddress }})
-    </strong>
-    <div class="ml-auto flex gap-2 items-center">
-        <span class="rounded p-2 bg-accent-glow">
-            {{ currentUser()?.role }}
-        </span>
+    <div class="ml-auto flex gap-4 items-center">
+        <div class="flex flex-col text-right text-sm">
+            <strong>{{ currentUser()?.firstName}} {{ currentUser()?.lastName }}</strong>
+            <span class="text-text-secondary">{{ currentUser()?.emailAddress }}</span>
+        </div>
         <button class="bg-danger" (click)="authService.logout()">Sign Out</button>
     </div>
 </div>

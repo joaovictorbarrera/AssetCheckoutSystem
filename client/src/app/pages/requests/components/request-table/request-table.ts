@@ -16,4 +16,9 @@ export class RequestTable {
   @Input() requests!: PaginatedResponse<CheckoutRequest>
   @Input() headers: string[] = []
   @Input() loading = false
+
+  handleCancelled(id: string) {
+    this.requests.items = this.requests.items.filter(r => r.id !== id);
+    this.requests.pagination.totalCount--;
+  }
 }

@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,27 +9,33 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './dropdown.scss',
 })
 export class Dropdown implements OnChanges {
-  @Input() name!: string
+  @Input() label!: string
   @Input() list!: string[]
-  @Input() defaultSelected?: string
+  @Input() initialSelection?: string
   @Input() enableAll = false
   @Output() dropdownChanged = new EventEmitter<string>()
 
-  value = ''
+  currentValue = ''
+  private initialValue = ''
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['defaultSelected'] && this.defaultSelected !== undefined) {
-      this.value = this.defaultSelected
-      return
-    }
-
-    if (changes['enableAll'] && this.enableAll) {
-      this.value = 'all'
-      return
+    if (changes['initialSelection'] && this.initialSelection !== undefined) {
+      this.currentValue = this.initialSelection
+      this.initialValue = this.initialSelection
+    } else if (changes['enableAll'] && this.enableAll) {
+      this.currentValue = 'all'
+      this.initialValue = 'all'
     }
   }
 
-  onChange() {
-    this.dropdownChanged.emit(this.value)
+  onChange(newValue: string) {
+    this.dropdownChanged.emit(newValue)
+  }
+
+  revert() {
+    this.currentValue = this.initialValue
+    this.cdr.detectChanges()
   }
 }

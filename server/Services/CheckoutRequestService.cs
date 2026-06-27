@@ -32,29 +32,29 @@ namespace AssetManagementSystem.Services
             return ServiceResult<PagedResponse<CheckoutRequestDto>>.Success(result);
         }
 
-        public async Task<ServiceResult<CheckoutRequest>> Create(
+        public async Task<ServiceResult> Create(
             CreateCheckoutRequestRequest request,
             Requestor requestor)
         {
             if (request.RequestType == CheckoutRequestType.Return)
             {
                 if (request.AssetId == null)
-                    return ServiceResult<CheckoutRequest>.BadRequest(
+                    return ServiceResult.BadRequest(
                         "Return requests require an AssetId");
 
                 Asset? asset = await _assetRepository.GetById(request.AssetId.Value);
 
                 if (asset == null)
-                    return ServiceResult<CheckoutRequest>.BadRequest(
+                    return ServiceResult.BadRequest(
                         "Asset does not exist");
 
                 if (asset.AssignedToUserId != requestor.UserId)
-                    return ServiceResult<CheckoutRequest>.Forbidden(
+                    return ServiceResult.Forbidden(
                         "Asset is not assigned to you");
             }
 
-            CheckoutRequest created = await _requestRepository.Create(request, requestor.UserId);
-            return ServiceResult<CheckoutRequest>.Success(created);
+            await _requestRepository.Create(request, requestor.UserId);
+            return ServiceResult.Success();
         }
 
         public async Task<ServiceResult<CheckoutRequest>> GetDetail(

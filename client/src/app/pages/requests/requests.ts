@@ -10,15 +10,16 @@ import { CheckoutRequestService } from '../../core/services/checkout-requests.se
 import CheckoutRequestFields from '../../core/DTOs/checkout-request-fields.dto';
 import AssetFields from '../../core/DTOs/asset-fields.dto';
 import { AssetService } from '../../core/services/asset.service';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-requests',
-  imports: [PageHeader, Page, Dropdown, RequestTable, TablePagination],
+  imports: [PageHeader, Page, Dropdown, RequestTable, TablePagination, NgIcon],
   templateUrl: './requests.html',
   styleUrl: './requests.scss',
 })
 export class Requests implements OnInit {
-  headers = ['Type', 'Status', 'Asset', 'Category', 'Request Date']
+  headers = ['Type', 'Status', 'Asset', 'Category', 'Request Date', 'Actions']
   requests = signal(defaultPaginatedResponse<CheckoutRequest>())
   requestFields = signal<CheckoutRequestFields>({types: [], statuses: []})
   assetFields = signal<AssetFields>({categories: [], statuses: [], conditions: []})
