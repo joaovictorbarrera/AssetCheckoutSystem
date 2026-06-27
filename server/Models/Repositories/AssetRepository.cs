@@ -28,7 +28,7 @@ namespace AssetManagementSystem.Models.Repositories
         {
             IQueryable<Asset> query = _context.Assets;
 
-            if (!request.ViewArchived)
+            if (!request.IncludeArchived)
             {
                 query = query.Where(a => !a.IsArchived && a.Status != AssetStatus.Retired);
             }
@@ -71,13 +71,11 @@ namespace AssetManagementSystem.Models.Repositories
                     Id = a.Id,
                     AssetTag = a.AssetTag,
                     Name = a.Name,
-                    SerialNumber = a.SerialNumber,
                     Category = a.Category,
                     Status = a.Status,
                     Condition = a.Condition,
                     AssignedToUserId = a.AssignedToUserId,
-                    UpdatedAt = a.UpdatedAt,
-                    CreatedAt = a.CreatedAt,
+                    AssignedToUser = a.AssignedToUser,
                     IsArchived = a.IsArchived,
                     IsPendingReturn = a.Requests.Any(r => r.RequestType == CheckoutRequestType.Return && 
                                                         !r.IsArchived && 
@@ -146,13 +144,10 @@ namespace AssetManagementSystem.Models.Repositories
                     Id = a.Id,
                     AssetTag = a.AssetTag,
                     Name = a.Name,
-                    SerialNumber = a.SerialNumber,
                     Category = a.Category,
                     Status = a.Status,
                     Condition = a.Condition,
                     AssignedToUserId = a.AssignedToUserId,
-                    UpdatedAt = a.UpdatedAt,
-                    CreatedAt = a.CreatedAt,
                     IsArchived = a.IsArchived,
                     IsPendingReturn = a.Requests.Any(r => r.RequestType == CheckoutRequestType.Return &&
                                                         !r.IsArchived &&

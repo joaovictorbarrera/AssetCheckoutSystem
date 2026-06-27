@@ -41,13 +41,13 @@ export class Dashboard implements OnInit {
     this.getAssets()
   }
 
-  handleStatusChange(value: string) {
-    this.status.set(value === "all" ? "" : value)
+  handleStatusChange(status: string) {
+    this.status.set(status === "all" ? "" : status)
     this.getAssets()
   }
 
-  handleCategoryChange(value: string) {
-    this.category.set(value === "all" ? "" : value)
+  handleCategoryChange(category: string) {
+    this.category.set(category === "all" ? "" : category)
     this.getAssets()
   }
 

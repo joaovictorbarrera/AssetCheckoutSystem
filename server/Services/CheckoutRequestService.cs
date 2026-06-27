@@ -20,16 +20,16 @@ namespace AssetManagementSystem.Services
             _assetRepository = assetRepository;
         }
 
-        public async Task<ServiceResult<PagedResponse<CheckoutRequest>>> GetRequests(
+        public async Task<ServiceResult<PagedResponse<CheckoutRequestDto>>> GetRequests(
             GetCheckoutRequestsRequest request,
             Requestor requestor)
         {
             if (request.Review && !requestor.IsAssetManager)
-                return ServiceResult<PagedResponse<CheckoutRequest>>.Forbidden("No permission to view all requests");
+                return ServiceResult<PagedResponse<CheckoutRequestDto>>.Forbidden("No permission to view all requests");
 
             var result = await _requestRepository.GetRequests(request, requestor.UserId);
 
-            return ServiceResult<PagedResponse<CheckoutRequest>>.Success(result);
+            return ServiceResult<PagedResponse<CheckoutRequestDto>>.Success(result);
         }
 
         public async Task<ServiceResult<CheckoutRequest>> Create(

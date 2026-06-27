@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 export class TablePagination {
   @Input() colspan!: number
   @Input() pagination!: Pagination
+  @Input() name!: string
   @Output() paginationChanged = new EventEmitter<{ pageSize: number; pageNumber: number }>();
 
   pageNumber = signal(this.pagination?.pageNumber ?? 1)

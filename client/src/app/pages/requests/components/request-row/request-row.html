@@ -1,0 +1,5 @@
+<td><span [classList]="request.requestType + ' chip'">{{ request.requestType }}</span></td>
+<td><span [classList]="request.status + ' chip'">{{request.status + (request.isArchived ? ' (Archived)' : '')}}</span></td>
+<td>{{request.assignedAsset ? `${request.assignedAsset.name} \\ ${request.assignedAsset.assetTag}` : "-"}}</td>
+<td>{{request.assetCategory}}</td>
+<td>{{request.createdAt | date:'M/d/yy, h:mm a'}}</td>

@@ -23,7 +23,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<CheckoutRequest>>> Get(
+        public async Task<ActionResult<PagedResponse<CheckoutRequestDto>>> Get(
             [FromQuery] GetCheckoutRequestsRequest request)
         {
             if (HttpContext.Items["User"] is not User user)
@@ -47,6 +47,12 @@ namespace AssetManagementSystem.Controllers
             Requestor requestor = user.GetRequestor();
             var result = await _requestService.Create(request, requestor);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
+        }
+
+        [HttpGet("fields")]
+        public ActionResult<CheckoutRequestFields> GetFields()
+        {
+            return Ok(new CheckoutRequestFields());
         }
 
         [HttpGet("{id:guid}")]

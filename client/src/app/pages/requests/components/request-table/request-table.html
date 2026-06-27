@@ -4,10 +4,10 @@
 
         <tbody>
             @if (!loading) {
-                @for (asset of assets.items; track asset.id) {
-                    <tr class="cursor-pointer" app-asset-row [asset]="asset"></tr>
+                @for (request of requests.items; track request.id) {
+                    <tr class="cursor-pointer" app-request-row [request]="request"></tr>
                 }
-                @if (assets.items.length === 0) {
+                @if (requests.items.length === 0) {
                     <tr>
                         <td [attr.colspan]="headers.length" class="text-center"><p class="p-2">Nothing to display</p></td>
                     </tr>

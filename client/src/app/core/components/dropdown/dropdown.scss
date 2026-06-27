@@ -1,11 +1,10 @@
 .dropdown {
     background-color: var(--color-bg-secondary);
     border-radius: 0.5rem;
-    border: 2px solid var(--color-bg-elevated);
+    border: 2px solid var(--chip-border);
     padding-block: 8px;
     padding-inline: 12px;
     outline: none;
-    width: 200px;
     cursor: pointer;
 
     &:hover {

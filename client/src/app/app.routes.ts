@@ -5,11 +5,11 @@ import { Dashboard } from './pages/dashboard/dashboard';
 import { Requests } from './pages/requests/requests';
 import { Inventory } from './pages/inventory/inventory';
 import { Users } from './pages/users/users';
-import { Review } from './pages/review/review';
 import { Unauthorized } from './pages/unauthorized/unauthorized';
 import { Login } from './pages/login/login';
 import { roleGuard } from './core/guards/role.guard';
 import { Role } from './core/enums/role';
+import { Review } from './pages/review/review';
 
 export const routes: Routes = [
   {

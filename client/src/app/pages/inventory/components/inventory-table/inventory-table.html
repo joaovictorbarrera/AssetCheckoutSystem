@@ -5,7 +5,7 @@
         <tbody>
             @if (!loading) {
                 @for (asset of assets.items; track asset.id) {
-                    <tr class="cursor-pointer" app-asset-row [asset]="asset"></tr>
+                    <tr class="cursor-pointer" app-inventory-row [asset]="asset" [assetFields]="assetFields"></tr>
                 }
                 @if (assets.items.length === 0) {
                     <tr>

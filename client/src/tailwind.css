@@ -69,6 +69,12 @@
 
   --chip-info-bg: rgba(46, 157, 176, 0.13);
   --chip-info-text: #7ACFDE;
+
+  --chip-fulfilled-bg: rgba(138, 96, 219, 0.14);
+  --chip-fulfilled-text: #C49BFF;
+
+  --chip-canceled-bg: rgba(134, 146, 158, 0.16);
+  --chip-canceled-text: #B0BEC5;
 }
 
 @theme {
@@ -140,6 +146,12 @@
 
   --color-chip-info-bg: var(--chip-info-bg);
   --color-chip-info-text: var(--chip-info-text);
+
+  --color-chip-fulfilled-bg: var(--chip-fulfilled-bg);
+  --color-chip-fulfilled-text: var(--chip-fulfilled-text);
+
+  --color-chip-canceled-bg: var(--chip-canceled-bg);
+  --color-chip-canceled-text: var(--chip-canceled-text);
 
   --color-chip-ring: var(--chip-active-ring);
 }

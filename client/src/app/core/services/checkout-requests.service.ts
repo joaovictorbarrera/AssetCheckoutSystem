@@ -19,4 +19,8 @@ export class CheckoutRequestService {
     create(request: any) {
         return this.http.post(this.apiUrl, request)
     }
+
+    getFields() {
+        return this.http.get(`${this.apiUrl}/fields`)
+    }
 }

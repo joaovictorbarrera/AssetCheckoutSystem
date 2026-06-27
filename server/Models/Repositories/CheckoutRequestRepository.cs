@@ -1,4 +1,5 @@
 ﻿using AssetManagementSystem.Data;
+using AssetManagementSystem.DTOs.Assets.Responses;
 using AssetManagementSystem.DTOs.CheckoutRequests;
 using AssetManagementSystem.DTOs.Pagination;
 using AssetManagementSystem.Enums;
@@ -20,7 +21,7 @@ namespace AssetManagementSystem.Models.Repositories
             _context = context;
         }
 
-        public async Task<PagedResponse<CheckoutRequest>> GetRequests(
+        public async Task<PagedResponse<CheckoutRequestDto>> GetRequests(
             GetCheckoutRequestsRequest request,
             Guid currentUserId)
         {
@@ -33,22 +34,61 @@ namespace AssetManagementSystem.Models.Repositories
             if (!request.IncludeClosedRequests)
             {
                 query = query.Where(r =>
-                    r.Status == CheckoutRequestStatus.Pending ||
-                    r.Status == CheckoutRequestStatus.Approved &&
+                    (r.Status == CheckoutRequestStatus.Pending ||
+                    r.Status == CheckoutRequestStatus.Approved) &&
                     !r.IsArchived);
+            }
+
+            if (request.AssetCategory != null)
+            {
+                query = query.Where(r => r.AssetCategory == request.AssetCategory);
+            }
+
+            if (request.Status != null)
+            {
+                query = query.Where(r => r.Status == request.Status);
+            }
+
+            if (request.Type != null)
+            {
+                query = query.Where(r => r.RequestType == request.Type);
             }
 
             int totalCount = await query.CountAsync();
 
-            List<CheckoutRequest> items = await query
-                .OrderByDescending(r => r.CreatedAt)
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .ToListAsync();
+            List<CheckoutRequestDto> items = await query
+            .OrderByDescending(r => r.CreatedAt)
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize)
+            .Select(r => new CheckoutRequestDto
+            {
+                Id = r.Id,
+                RequestType = r.RequestType,
+                RequestedByUserId = r.RequestedByUserId,
+                RequestedByUser = r.RequestedByUser,
+                AssetCategory = r.AssetCategory,
+                Status = r.Status,
+                AssignedAssetId = r.AssignedAssetId,
+                IsArchived = r.IsArchived,
+                CreatedAt = r.CreatedAt,
+                AssignedAsset = r.AssignedAsset == null ? null : new AssetDto
+                {
+                    Id = r.AssignedAsset.Id,
+                    AssetTag = r.AssignedAsset.AssetTag,
+                    Name = r.AssignedAsset.Name,
+                    Category = r.AssignedAsset.Category,
+                    Status = r.AssignedAsset.Status,
+                    Condition = r.AssignedAsset.Condition,
+                    AssignedToUserId = r.AssignedAsset.AssignedToUserId,
+                    IsArchived = r.AssignedAsset.IsArchived,
+                    IsPendingReturn = true
+                }
+            })
+            .ToListAsync();
 
             int totalPages = PaginationHelper.GetTotalPageCount(totalCount, request.PageSize);
 
-            return new PagedResponse<CheckoutRequest>
+            return new PagedResponse<CheckoutRequestDto>
             {
                 Items = items,
                 Pagination = new PaginationMetadata

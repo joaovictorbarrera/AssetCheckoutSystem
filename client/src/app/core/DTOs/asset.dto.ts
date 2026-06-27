@@ -5,13 +5,10 @@ export interface Asset {
   assetTag: string
   name: string
   category: string
-  serialNumber?: string | null
   status: string
   condition: string
   assignedToUserId?: string | null
   assignedToUser?: User | null
-  updatedAt?: string | null
   isArchived: boolean
-  createdAt: string
   isPendingReturn: boolean
 }

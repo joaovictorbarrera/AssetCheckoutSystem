@@ -23,7 +23,10 @@ export class AssetRow {
         assetId: this.asset.id,
         reason
       }).subscribe({
-
+        error: err => {
+          this.asset.isPendingReturn = false
+          window.alert(err.message)
+        }
       })
     }
   }

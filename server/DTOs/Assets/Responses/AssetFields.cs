@@ -4,8 +4,10 @@ namespace AssetManagementSystem.DTOs.Assets.Responses
 {
     public class AssetFields
     {
-        public List<string> Conditions { get; set; } = [.. Enum.GetNames(typeof(AssetCondition))];
-        public List<string> Statuses { get; set; } = [.. Enum.GetNames(typeof(AssetStatus))];
-        public List<string> Categories { get; set; } = [.. Enum.GetNames(typeof(AssetCategory))];
+        public List<string> Conditions { get; } = [.. Enum.GetNames(typeof(AssetCondition)).Select(t => t.ToLower())];
+
+        public List<string> Statuses { get; } = [.. Enum.GetNames(typeof(AssetStatus)).Select(t => t.ToLower())];
+
+        public List<string> Categories { get; } = [.. Enum.GetNames(typeof(AssetCategory)).Select(t => t.ToLower())];
     }
 }

@@ -3,17 +3,19 @@ import { TableHeader } from "../../../../core/components/table-components/table-
 import PaginatedResponse from '../../../../core/DTOs/paginated.response';
 import { Asset } from '../../../../core/DTOs/asset.dto';
 import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinning-wheel";
-import { AssetRow } from "../asset-row/asset-row";
+import { InventoryRow } from "../inventory-row/inventory-row";
 import { TableWrapper } from "../../../../core/components/table-wrapper/table-wrapper";
+import AssetFields from '../../../../core/DTOs/asset-fields.dto';
 
 @Component({
-  selector: 'app-assets-table',
-  imports: [TableHeader, SpinningWheel, AssetRow, TableWrapper],
-  templateUrl: './assets-table.html',
-  styleUrl: './assets-table.scss',
+  selector: 'app-inventory-table',
+  imports: [TableHeader, SpinningWheel, InventoryRow, TableWrapper],
+  templateUrl: './inventory-table.html',
+  styleUrl: './inventory-table.scss',
 })
-export class AssetsTable {
+export class InventoryTable {
   @Input() assets!: PaginatedResponse<Asset>
   @Input() headers: string[] = []
   @Input() loading: boolean = false
+  @Input() assetFields!: AssetFields
 }

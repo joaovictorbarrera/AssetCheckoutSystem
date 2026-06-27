@@ -14,6 +14,6 @@ namespace AssetManagementSystem.DTOs.Assets.Requests
 
         // ALL below are protected by Manager+ Role
         public bool Inventory { get; set; } = false;
-        public bool ViewArchived { get; set; } = false;
+        public bool IncludeArchived { get; set; } = false;
     }
 }

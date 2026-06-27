@@ -21,7 +21,7 @@ namespace AssetManagementSystem.Services
             GetAssetsRequest request,
             Requestor requestor)
         {
-            bool managerFeatures = request.Inventory || request.ViewArchived;
+            bool managerFeatures = request.Inventory || request.IncludeArchived;
             if (managerFeatures && !requestor.IsAssetManager)
                 return ServiceResult<PagedResponse<AssetDto>>.Forbidden("No permission to view all assets");
 

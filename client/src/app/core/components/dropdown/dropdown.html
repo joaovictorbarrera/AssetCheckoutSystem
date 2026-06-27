@@ -1,11 +1,13 @@
 <label class="flex flex-col">
-    <span class="text-sm p-1 text-text-muted">{{name}}</span>
+    @if (name) {
+        <span class="text-sm p-1 text-text-muted">{{name}}</span>
+    }
     <select (change)="onChange()" [(ngModel)]="value" name="conditions" class="dropdown">
         <option value="all">
             All
         </option>
         @for (item of list; track item) {
-            <option [value]="item"]>{{item}}</option>
+            <option [value]="item">{{item | titlecase}}</option>
         }
     </select>
 </label>

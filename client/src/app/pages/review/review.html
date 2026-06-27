@@ -1,5 +1,19 @@
 <app-page>
     <app-page-header>
-        <h1 class="text-3xl text-center">All Requests</h1>
+        <h1 class="text-3xl text-center">Review</h1>
     </app-page-header>
+    <div class="flex gap-5 justify-center p-5 items-end">
+        <app-dropdown class="w-50" [name]="`Type`" [list]="this.requestFields().types" (dropdownChanged)="handleTypeChange($event)" />
+
+        <app-dropdown class="w-50" [name]="`Status`" [list]="this.requestFields().statuses" (dropdownChanged)="handleStatusChange($event)" />
+
+        <app-dropdown class="w-50" [name]="`Asset Category`" [list]="this.assetFields().categories" (dropdownChanged)="handleCategoryChange($event)" />
+
+        <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
+            <input class="checkbox" type="checkbox" (change)="handleIncludeClosed($event)"/>
+            <span>Include Closed Requests</span>
+        </div>
+    </div>
+    <app-request-table [headers]="headers" [requests]="requests()" [loading]="loadingRequests()" />
+    <app-table-pagination [name]="'Requests'" [colspan]="headers.length" [pagination]="requests().pagination" (paginationChanged)="handlePaginationChange($event)" />
 </app-page>
