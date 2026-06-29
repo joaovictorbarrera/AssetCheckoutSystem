@@ -1,11 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SubmitButton } from '../../submit-button/submit-button';
-import { UserService } from '../../../services/user.service';
-import { DrawerService } from '../../../services/drawer.service';
+import { UserService } from '../../../services/api/user.service';
+import { DrawerService } from '../../../services/util/drawer.service';
 import UserFields from '../../../DTOs/user/user-fields.dto';
 import { Dropdown } from '../../dropdown/dropdown';
-import { UserEventsService } from '../../../services/user-events.service';
+import { UserEventsService } from '../../../services/events/user-events.service';
 
 @Component({
   selector: 'app-user-create',

@@ -1,10 +1,10 @@
 import { Component, HostListener, Input, signal, ViewChild } from '@angular/core';
 import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
-import { CheckoutRequestService } from '../../../../core/services/checkout-requests.service';
+import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
 import { Dropdown } from '../../../../core/components/dropdown/dropdown';
 import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto';
-import { AssetService } from '../../../../core/services/asset.service';
-import { DrawerService } from '../../../../core/services/drawer.service';
+import { AssetService } from '../../../../core/services/api/asset.service';
+import { DrawerService } from '../../../../core/services/util/drawer.service';
 import { AssetDetail } from '../../../../core/components/drawers/asset-detail/asset-detail';
 
 @Component({

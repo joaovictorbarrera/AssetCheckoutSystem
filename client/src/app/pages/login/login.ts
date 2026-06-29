@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SubmitButton } from '../../core/components/submit-button/submit-button';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '../../core/services/api/auth.service';
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterModule, SubmitButton],

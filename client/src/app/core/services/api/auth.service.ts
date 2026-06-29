@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import UserDto from '../DTOs/user/user.dto';
+import { environment } from '../../../../environments/environment';
+import UserDto from '../../DTOs/user/user.dto';
 import { Router } from '@angular/router';
-import { Role } from '../enums/role';
+import { Role } from '../../enums/role';
 
 @Injectable({
   providedIn: 'root',

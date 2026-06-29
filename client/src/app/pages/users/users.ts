@@ -4,14 +4,14 @@ import { Page } from '../components/page/page';
 import { SearchBar } from '../../core/components/search-bar/search-bar';
 import { UsersTable } from './components/users-table/users-table';
 import { TablePagination } from '../../core/components/table-components/table-pagination/table-pagination';
-import { UserService } from '../../core/services/user.service';
+import { UserService } from '../../core/services/api/user.service';
 import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/shared/paginated.response';
 import UserDto from '../../core/DTOs/user/user.dto';
 import UserFields from '../../core/DTOs/user/user-fields.dto';
 import { NgIcon } from '@ng-icons/core';
 import { UserCreate } from '../../core/components/drawers/user-create/user-create';
-import { DrawerService } from '../../core/services/drawer.service';
-import { UserEventsService } from '../../core/services/user-events.service';
+import { DrawerService } from '../../core/services/util/drawer.service';
+import { UserEventsService } from '../../core/services/events/user-events.service';
 
 @Component({
   selector: 'app-users',

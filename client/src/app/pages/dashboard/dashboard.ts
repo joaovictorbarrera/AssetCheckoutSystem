@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { Page } from "../components/page/page";
 import { PageHeader } from '../components/page-header/page-header';
-import { AssetService } from '../../core/services/asset.service';
+import { AssetService } from '../../core/services/api/asset.service';
 import AssetFields from '../../core/DTOs/asset/asset-fields.dto';
 import { Dropdown } from "../../core/components/dropdown/dropdown";
 import { SearchBar } from "../../core/components/search-bar/search-bar";

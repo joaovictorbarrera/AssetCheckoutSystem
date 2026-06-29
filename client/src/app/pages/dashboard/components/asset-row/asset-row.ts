@@ -1,7 +1,7 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
-import { CheckoutRequestService } from '../../../../core/services/checkout-requests.service';
-import { DrawerService } from '../../../../core/services/drawer.service';
+import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
+import { DrawerService } from '../../../../core/services/util/drawer.service';
 import { AssetDetail } from '../../../../core/components/drawers/asset-detail/asset-detail';
 
 @Component({

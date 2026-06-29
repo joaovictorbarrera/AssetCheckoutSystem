@@ -1,5 +1,5 @@
 <form
-    class="flex flex-col w-full h-full justify-center items-center p-10 relative"
+    class="flex flex-col w-full h-full justify-center items-center p-7 relative"
     #userForm="ngForm"
     (ngSubmit)="submit(userForm)"
 >
@@ -7,7 +7,7 @@
         <h2 class="text-3xl font-bold inline">Create New User</h2>
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">First Name</p>
+                <p>First Name</p>
                 <input
                     [(ngModel)]="firstName"
                     class="drawer-input"
@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Last Name</p>
+                <p>Last Name</p>
                 <input
                     [(ngModel)]="lastName"
                     class="drawer-input"
@@ -31,7 +31,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Email Address</p>
+                <p>Email Address</p>
                 <input
                     [(ngModel)]="emailAddress"
                     class="drawer-input"
@@ -43,7 +43,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Role</p>
+                <p>Role</p>
                 <app-dropdown
                     [list]="userFields().roles"
                     [initialSelection]="selectedRole()"

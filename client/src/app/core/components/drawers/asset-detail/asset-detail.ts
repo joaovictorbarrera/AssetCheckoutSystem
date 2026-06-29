@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
-import { AssetService } from '../../../services/asset.service';
+import { AssetService } from '../../../services/api/asset.service';
 import { AssetDetailDto } from '../../../DTOs/asset/asset-detail.dto';
 import { SpinningWheel } from '../../spinning-wheel/spinning-wheel';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services/api/auth.service';
 import { DatePipe } from '@angular/common';
 import { Dropdown } from '../../dropdown/dropdown';
 import AssetFields from '../../../DTOs/asset/asset-fields.dto';
-import { DrawerService } from '../../../services/drawer.service';
-import { AssetEventsService } from '../../../services/asset-events.service';
+import { DrawerService } from '../../../services/util/drawer.service';
+import { AssetEventsService } from '../../../services/events/asset-events.service';
 
 @Component({
   selector: 'app-asset-detail',

@@ -1,7 +1,7 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { Page } from "../components/page/page";
 import { PageHeader } from '../components/page-header/page-header';
-import { AssetService } from '../../core/services/asset.service';
+import { AssetService } from '../../core/services/api/asset.service';
 import AssetFields from '../../core/DTOs/asset/asset-fields.dto';
 import { Dropdown } from "../../core/components/dropdown/dropdown";
 import { SearchBar } from "../../core/components/search-bar/search-bar";
@@ -10,7 +10,7 @@ import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/sha
 import { AssetDto } from '../../core/DTOs/asset/asset.dto';
 import { TablePagination } from "../../core/components/table-components/table-pagination/table-pagination";
 import { NgIcon } from '@ng-icons/core';
-import { AssetEventsService } from '../../core/services/asset-events.service';
+import { AssetEventsService } from '../../core/services/events/asset-events.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

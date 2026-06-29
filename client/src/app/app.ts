@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { PageLoadingService } from './core/services/page-loading.service';
+import { PageLoadingService } from './core/services/util/page-loading.service';
 import { SpinningWheel } from './core/components/spinning-wheel/spinning-wheel';
 
 @Component({

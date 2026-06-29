@@ -1,10 +1,10 @@
 import { Component, Input, signal, ViewChild } from '@angular/core'
 import { DatePipe } from '@angular/common'
 import { Dropdown } from '../../../../core/components/dropdown/dropdown'
-import { AuthService } from '../../../../core/services/auth.service'
+import { AuthService } from '../../../../core/services/api/auth.service'
 import UserDto from '../../../../core/DTOs/user/user.dto'
 import { Role } from '../../../../core/enums/role'
-import { UserService } from '../../../../core/services/user.service'
+import { UserService } from '../../../../core/services/api/user.service'
 
 @Component({
   selector: 'tr[app-user-row]',

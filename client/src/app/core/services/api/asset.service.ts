@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { environment } from '../../../environments/environment'
-import PaginatedResponse from '../DTOs/shared/paginated.response'
-import { AssetDto } from '../DTOs/asset/asset.dto'
-import { AssetDetailDto } from '../DTOs/asset/asset-detail.dto'
+import { environment } from '../../../../environments/environment'
+import PaginatedResponse from '../../DTOs/shared/paginated.response'
+import { AssetDto } from '../../DTOs/asset/asset.dto'
+import { AssetDetailDto } from '../../DTOs/asset/asset-detail.dto'
 
 @Injectable({
     providedIn: 'root',

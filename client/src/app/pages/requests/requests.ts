@@ -6,11 +6,14 @@ import { RequestTable } from "./components/request-table/request-table";
 import { TablePagination } from "../../core/components/table-components/table-pagination/table-pagination";
 import { CheckoutRequestDto } from '../../core/DTOs/checkout-request/checkout-request.dto';
 import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/shared/paginated.response';
-import { CheckoutRequestService } from '../../core/services/checkout-requests.service';
+import { CheckoutRequestService } from '../../core/services/api/checkout-requests.service';
 import CheckoutRequestFields from '../../core/DTOs/checkout-request/checkout-request-fields.dto';
 import AssetFields from '../../core/DTOs/asset/asset-fields.dto';
-import { AssetService } from '../../core/services/asset.service';
+import { AssetService } from '../../core/services/api/asset.service';
 import { NgIcon } from '@ng-icons/core';
+import { CheckoutRequestEventsService } from '../../core/services/events/checkout-request-events.service';
+import { DrawerService } from '../../core/services/util/drawer.service';
+import { RequestCreate } from '../../core/components/drawers/request-create/request-create';
 
 @Component({
   selector: 'app-requests',
@@ -35,12 +38,15 @@ export class Requests implements OnInit {
 
   constructor(
     private requestService: CheckoutRequestService,
-    private assetService: AssetService
+    private assetService: AssetService,
+    private requestEventsService: CheckoutRequestEventsService,
+    private drawer: DrawerService
   ) {}
 
   ngOnInit(): void {
     this.getFields()
     this.getRequests()
+    this.requestEventsService.checkoutRequestsChanged$.subscribe(() => this.getRequests())
   }
 
   handleStatusChange(status: string) {
@@ -104,5 +110,9 @@ export class Requests implements OnInit {
         this.loadingRequests.set(false)
       }
     })
+  }
+
+  openCreateRequest() {
+    this.drawer.open(RequestCreate, {})
   }
 }
