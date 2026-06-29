@@ -4,10 +4,10 @@
     (ngSubmit)="submit(userForm)"
 >
     <div class="flex flex-col gap-8 w-full h-full">
-        <h2 class="text-3xl font-bold inline">Create New User</h2>
+        <h2 class="text-2xl font-bold inline">Create New User</h2>
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
-                <p>First Name</p>
+                <p>First Name *</p>
                 <input
                     [(ngModel)]="firstName"
                     class="drawer-input"
@@ -19,7 +19,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p>Last Name</p>
+                <p>Last Name *</p>
                 <input
                     [(ngModel)]="lastName"
                     class="drawer-input"
@@ -31,7 +31,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p>Email Address</p>
+                <p>Email Address *</p>
                 <input
                     [(ngModel)]="emailAddress"
                     class="drawer-input"
@@ -43,7 +43,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <p>Role</p>
+                <p>Role *</p>
                 <app-dropdown
                     [list]="userFields().roles"
                     [initialSelection]="selectedRole()"

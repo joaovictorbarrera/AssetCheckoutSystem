@@ -12,6 +12,8 @@ import { TablePagination } from "../../core/components/table-components/table-pa
 import { NgIcon } from '@ng-icons/core';
 import { AssetEventsService } from '../../core/services/events/asset-events.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DrawerService } from '../../core/services/util/drawer.service';
+import { AssetCreate } from '../../core/components/drawers/asset-create/asset-create';
 
 @Component({
   selector: 'app-inventory',
@@ -21,7 +23,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class Inventory implements OnInit {
   assetFields = signal<AssetFields>({categories: [], statuses: [], conditions: []})
-  headers = ["Asset Tag", "Name", "Category", "Status", "Assigned To", "Condition"]
+  headers = ["Asset Tag", "Name", "Status", "Assigned To", "Category", "Condition"]
   assets = signal(defaultPaginatedResponse<AssetDto>())
 
   category = signal("")
@@ -39,7 +41,8 @@ export class Inventory implements OnInit {
   constructor(
     private assetService: AssetService,
     private assetEvents: AssetEventsService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
+    private drawer: DrawerService
   ) {}
 
   ngOnInit(): void {
@@ -114,5 +117,9 @@ export class Inventory implements OnInit {
         this.loadingAssets.set(false)
       }
     })
+  }
+
+  openCreateAsset() {
+    this.drawer.open(AssetCreate, {})
   }
 }

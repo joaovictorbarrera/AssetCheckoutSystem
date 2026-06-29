@@ -250,6 +250,7 @@ namespace AssetManagementSystem.Models.Repositories
         public async Task<List<AssetHistory>> GetAssetHistory(Guid id)
         {
             return await _context.AssetHistories
+                .Include(h => h.User)
                 .Where(h => h.AssetId == id)
                 .OrderBy(h => h.CreatedAt)
                 .ToListAsync();

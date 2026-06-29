@@ -14,11 +14,20 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+.btn:disabled {
+  filter: brightness(75%);
+}
+
+.btn:disabled:hover {
+  cursor: default;
+  filter: brightness(75%);
+}
+
 .btn-accent {
   background-color: var(--color-accent);
 }
 
-.btn-accent:hover {
+.btn-accent:not(:disabled):hover {
   background-color: var(--color-accent-hover);
 }
 
@@ -26,7 +35,7 @@ body {
   background-color: var(--color-danger);
 }
 
-.btn-danger:hover {
+.btn-danger:not(:disabled):hover {
   filter: brightness(120%);
 }
 
@@ -34,7 +43,7 @@ body {
   background-color: var(--chip-canceled-bg);
 }
 
-.btn-cancel:hover {
+.btn-cancel:not(:disabled):hover {
   filter: brightness(120%);
 }
 

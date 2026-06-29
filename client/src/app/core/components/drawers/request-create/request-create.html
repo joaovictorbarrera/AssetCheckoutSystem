@@ -4,14 +4,14 @@
     (ngSubmit)="submit(userForm)"
 >
     <div class="flex flex-col gap-8 w-full h-full">
-        <h2 class="text-3xl font-bold inline">Create New Request</h2>
+        <h2 class="text-2xl font-bold inline">Create New Request</h2>
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
-                <span>Type:</span>
+                <span>Type</span>
                 <span class="text-text-secondary">Checkout</span>
             </div>
             <div class="flex flex-col gap-2">
-                <span>Category</span>
+                <span>Category *</span>
                 <app-dropdown
                     [initialSelection]="category()"
                     [list]="assetFields().categories"
@@ -19,12 +19,12 @@
                 />
             </div>
             <div class="flex flex-col gap-2">
-                <span>Reason</span>
+                <span>Reason *</span>
                 <textarea
                     required
                     class="bg-bg-primary min-h-30 max-h-60 p-2 outline-none focus-within:border-2 focus-within:border-accent"
                     [(ngModel)]="reason"
-                    placeholder="What's the reason for this request?"
+                    placeholder="What's the reason for your request?"
                     name="reason"
                 ></textarea>
             </div>

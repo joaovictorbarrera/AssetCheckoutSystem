@@ -45,7 +45,6 @@ export class RequestCreate implements OnInit {
   }
 
   submit(form: NgForm) {
-    console.log("submitted")
     if (form.invalid) return
     this.loading.set(true)
     this.requestService.create({

@@ -13,7 +13,6 @@ namespace AssetManagementSystem.DTOs.Assets.Requests
         public required string Name { get; set; }
 
         [MaxLength(50)]
-        [MinLength(1)]
         public string? SerialNumber { get; set; }
     }
 }

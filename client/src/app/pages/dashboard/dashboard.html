@@ -1,6 +1,8 @@
 <app-page>
     <app-page-header>
-        <h1 class="text-3xl text-center">My Assets</h1>
+        <h1 class="text-3xl flex w-full text-center gap-2 items-end justify-center">
+            <ng-icon name="heroComputerDesktop" />Asset Dashboard
+        </h1>
     </app-page-header>
     <div class="flex gap-5 justify-center p-5 items-end">
         <app-dropdown class="w-50" [enableAll]="true" [label]="`Status`" [list]="['Assigned', 'Maintenance']" (dropdownChanged)="handleStatusChange($event)" />

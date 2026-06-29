@@ -9,10 +9,11 @@ import { AssetsTable } from "./components/assets-table/assets-table";
 import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/shared/paginated.response';
 import { AssetDto } from '../../core/DTOs/asset/asset.dto';
 import { TablePagination } from "../../core/components/table-components/table-pagination/table-pagination";
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Page, PageHeader, Dropdown, SearchBar, AssetsTable, TablePagination],
+  imports: [Page, PageHeader, Dropdown, SearchBar, AssetsTable, TablePagination, NgIcon],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

@@ -1,6 +1,8 @@
 <app-page>
     <app-page-header>
-        <h1 class="text-3xl text-center">Review</h1>
+        <h1 class="text-3xl text-center flex gap-2 justify-center items-end">
+            <ng-icon name="heroListBullet"/>Review
+        </h1>
     </app-page-header>
     <div class="flex gap-5 justify-center p-5 items-end">
         <app-dropdown class="w-50" [enableAll]="true" [label]="`Type`" [list]="this.requestFields().types" (dropdownChanged)="handleTypeChange($event)" />

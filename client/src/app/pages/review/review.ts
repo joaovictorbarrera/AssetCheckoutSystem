@@ -10,10 +10,11 @@ import CheckoutRequestFields from '../../core/DTOs/checkout-request/checkout-req
 import AssetFields from '../../core/DTOs/asset/asset-fields.dto';
 import { AssetService } from '../../core/services/api/asset.service';
 import { ReviewTable } from './components/review-table/review-table';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-review',
-  imports: [PageHeader, Page, Dropdown, ReviewTable, TablePagination],
+  imports: [PageHeader, Page, Dropdown, ReviewTable, TablePagination, NgIcon],
   templateUrl: './review.html',
   styleUrl: './review.scss',
 })
