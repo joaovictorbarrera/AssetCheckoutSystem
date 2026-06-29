@@ -11,7 +11,7 @@ import { AssetEventsService } from '../../../services/events/asset-events.servic
 
 @Component({
   selector: 'app-asset-detail',
-  imports: [SpinningWheel, DatePipe, Dropdown],
+  imports: [SpinningWheel, DatePipe],
   templateUrl: './asset-detail.html',
   styleUrl: './asset-detail.scss',
 })

@@ -2,12 +2,14 @@
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
     outline: none;
+    background-color: var(--bg-secondary);
 }
 
 .search-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--bg-secondary);
 }
 
 .search-bar, .search-button {
