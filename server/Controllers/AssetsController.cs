@@ -106,6 +106,21 @@ namespace AssetManagementSystem.Controllers
             return result.Succeeded ? NoContent() : ToActionResult(result);
         }
 
+        [HttpPatch("{id:guid}/category")]
+        [Authorize(Policy = "AssetManager+")]
+        public async Task<IActionResult> UpdateCategory(
+            Guid id,
+            [FromBody] UpdateAssetCategoryRequest request)
+        {
+            if (HttpContext.Items["User"] is not User user)
+            {
+                return BadRequest("User context is missing.");
+            }
+            Requestor requestor = user.GetRequestor();
+            var result = await _service.UpdateCategory(id, request, requestor);
+            return result.Succeeded ? NoContent() : ToActionResult(result);
+        }
+
         [HttpPatch("{id:guid}/status")]
         [Authorize(Policy = "AssetManager+")]
         public async Task<IActionResult> UpdateStatus(

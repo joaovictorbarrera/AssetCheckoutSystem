@@ -37,7 +37,7 @@ namespace AssetManagementSystem.Services
             if (await _assetRepository.IsTagTakenAndNotId(request.AssetTag, Guid.Empty))
                 return ServiceResult<Guid>.BadRequest("Asset Tag is taken");
 
-            Guid newAssetId = await _assetRepository.CreateAsset(request, requestor.UserId);
+            Guid newAssetId = await _assetRepository.Create(request, requestor.UserId);
             return ServiceResult<Guid>.Success(newAssetId);
         }
 
@@ -104,22 +104,22 @@ namespace AssetManagementSystem.Services
             UpdateAssetStatusRequest request,
             Requestor requestor)
         {
-            Asset? existing = await _assetRepository.GetById(id);
+            Asset? asset = await _assetRepository.GetById(id);
 
-            if (existing == null)
+            if (asset == null)
                 return ServiceResult.NotFound();
 
-            if (existing.IsArchived)
+            if (asset.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived assets");
 
             if (request.Status == AssetStatus.Assigned)
                 return ServiceResult.BadRequest("Incorrect way to assign");
 
             bool shouldUnassign = request.Status == AssetStatus.Available
-                && existing.AssignedToUserId != null;
+                && asset.AssignedToUserId != null;
 
-            await _assetRepository.UpdateAssetStatus(
-                existing,
+            await _assetRepository.UpdateStatus(
+                asset,
                 request.Status,
                 requestor.UserId,
                 shouldUnassign);
@@ -132,15 +132,33 @@ namespace AssetManagementSystem.Services
             UpdateAssetConditionRequest request,
             Requestor requestor)
         {
-            Asset? existing = await _assetRepository.GetById(id);
+            Asset? asset = await _assetRepository.GetById(id);
 
-            if (existing == null)
+            if (asset == null)
                 return ServiceResult.NotFound();
 
-            if (existing.IsArchived)
+            if (asset.IsArchived)
                 return ServiceResult.BadRequest("Cannot update archived assets");
 
-            await _assetRepository.UpdateAssetCondition(existing, request.Condition, requestor.UserId);
+            await _assetRepository.UpdateCondition(asset, request.Condition, requestor.UserId);
+
+            return ServiceResult.Success();
+        }
+
+        public async Task<ServiceResult> UpdateCategory(
+            Guid id,
+            UpdateAssetCategoryRequest request,
+            Requestor requestor)
+        {
+            Asset? asset = await _assetRepository.GetById(id);
+
+            if (asset == null)
+                return ServiceResult.NotFound();
+
+            if (asset.IsArchived)
+                return ServiceResult.BadRequest("Cannot update archived assets");
+
+            await _assetRepository.UpdateCategory(asset, request.Category, requestor.UserId);
 
             return ServiceResult.Success();
         }

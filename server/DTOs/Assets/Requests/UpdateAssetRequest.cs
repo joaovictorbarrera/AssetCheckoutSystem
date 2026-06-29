@@ -1,6 +1,4 @@
-﻿using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace AssetManagementSystem.DTOs.Assets.Requests
 {
@@ -17,9 +15,5 @@ namespace AssetManagementSystem.DTOs.Assets.Requests
         [MaxLength(50)]
         [MinLength(1)]
         public string? SerialNumber { get; set; }
-
-        public required AssetCategory Category { get; set; }
-        public required AssetStatus Status { get; set; }
-        public required AssetCondition Condition { get; set; }
     }
 }

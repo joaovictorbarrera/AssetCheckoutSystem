@@ -56,4 +56,8 @@ export class AssetService {
     updateCondition(id: string, condition: string) {
         return this.http.patch(`${this.apiUrl}/${id}/condition`, { condition })
     }
+
+    updateCategory(id: string, category: string) {
+        return this.http.patch(`${this.apiUrl}/${id}/category`, { category })
+    }
 }

@@ -42,6 +42,11 @@
                 </div>
 
                 <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Category</p>
+                    <span class="capitalize">{{assetDetails()!.category}}</span>
+                </div>
+
+                <div class="flex flex-col gap-2">
                     <p class="text-text-secondary">Assigned To</p>
                     @if (!assetDetails()?.userId) {
                         <span>Not Assigned</span>
@@ -51,39 +56,13 @@
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Category</p>
-                    @if (authService.isManager) {
-                        <app-dropdown
-                            [initialSelection]="assetDetails()!.category"
-                            [list]="assetFields().categories"
-                        />
-                    } @else {
-                        <span class="capitalize">{{assetDetails()!.category}}</span>
-                    }
-                </div>
-
-                <div class="flex flex-col gap-2">
                     <p class="text-text-secondary">Status</p>
-                    @if (authService.isManager) {
-                        <app-dropdown
-                            [initialSelection]="assetDetails()!.status"
-                            [list]="assetFields().statuses"
-                        />
-                    } @else {
-                        <span class="capitalize">{{assetDetails()!.status}}</span>
-                    }
+                    <span class="capitalize">{{assetDetails()!.status}}</span>
                 </div>
 
                 <div class="flex flex-col gap-2">
                     <p class="text-text-secondary">Condition</p>
-                    @if (authService.isManager) {
-                        <app-dropdown
-                            [initialSelection]="assetDetails()!.condition"
-                            [list]="assetFields().conditions"
-                        />
-                    } @else {
-                        <span class="capitalize">{{assetDetails()!.condition}}</span>
-                    }
+                    <span class="capitalize">{{assetDetails()!.condition}}</span>
                 </div>
 
                 @if (assetDetails()?.updatedAt) {
@@ -111,6 +90,7 @@
     @if (authService.isManager) {
         <div class="bg-bg-elevated absolute w-full bottom-0 left-0 flex gap-2 p-5">
             <button class="btn btn-accent self-start w-30">Save</button>
+            <button class="btn btn-cancel w-30" (click)="drawer.close()">Cancel</button>
             @if (authService.isAdmin) {
                 <button (click)="handleArchive()" class="btn btn-danger self-start w-30">Archive</button>
             }

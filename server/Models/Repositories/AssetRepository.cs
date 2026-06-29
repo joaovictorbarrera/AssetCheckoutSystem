@@ -8,6 +8,7 @@ using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AssetManagementSystem.Models.Repositories
 {
@@ -87,7 +88,7 @@ namespace AssetManagementSystem.Models.Repositories
             };
         }
 
-        public async Task<Guid> CreateAsset(CreateAssetRequest request, Guid createdByUserId)
+        public async Task<Guid> Create(CreateAssetRequest request, Guid createdByUserId)
         {
             Asset asset = new()
             {
@@ -154,8 +155,6 @@ namespace AssetManagementSystem.Models.Repositories
                 _context.AddAssetHistory(asset.Id, updatedByUserId, "Updated Asset Name", asset.Name, request.Name);
             asset.Name = request.Name;
 
-
-
             asset.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
@@ -172,7 +171,7 @@ namespace AssetManagementSystem.Models.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAssetStatus(
+        public async Task UpdateStatus(
             Asset asset,
             AssetStatus status,
             Guid updatedByUserId,
@@ -193,12 +192,22 @@ namespace AssetManagementSystem.Models.Repositories
                 string userEmail = asset.AssignedToUser?.EmailAddress ?? "Unknown";
                 _context.AddAssetHistory(asset.Id, updatedByUserId, $"Unassigned Asset from {userEmail}");
                 asset.AssignedToUserId = null;
+
+                // need to mark any open related requests for this asset as 'archived'
+                await _context.CheckoutRequests
+                    .Where(r => r.AssignedAssetId == asset.Id
+                        && r.RequestType == CheckoutRequestType.Return
+                        && r.Status == CheckoutRequestStatus.Pending
+                        && !r.IsArchived)
+                    .ExecuteUpdateAsync(s => s
+                        .SetProperty(r => r.IsArchived, true)
+                        .SetProperty(r => r.UpdatedAt, DateTime.UtcNow));
             }
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAssetCondition(Asset asset, AssetCondition condition, Guid updatedByUserId)
+        public async Task UpdateCondition(Asset asset, AssetCondition condition, Guid updatedByUserId)
         {
             _context.AddAssetHistory(
                 asset.Id,
@@ -213,10 +222,36 @@ namespace AssetManagementSystem.Models.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateCategory(Asset asset, AssetCategory category, Guid updatedByUserId)
+        {
+            _context.AddAssetHistory(
+                asset.Id,
+                updatedByUserId,
+                "Updated Asset Category",
+                asset.Category.ToString(),
+                category.ToString());
+
+            asset.Category = category;
+            asset.UpdatedAt = DateTime.UtcNow;
+
+            // Must update any related open requests for consistency
+            await _context.CheckoutRequests
+                    .Where(r => r.AssignedAssetId == asset.Id
+                        && r.RequestType == CheckoutRequestType.Return
+                        && r.Status == CheckoutRequestStatus.Pending
+                        && !r.IsArchived)
+                    .ExecuteUpdateAsync(s => s
+                        .SetProperty(r => r.AssetCategory, category)
+                        .SetProperty(r => r.UpdatedAt, DateTime.UtcNow));
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<AssetHistory>> GetAssetHistory(Guid id)
         {
             return await _context.AssetHistories
                 .Where(h => h.AssetId == id)
+                .OrderBy(h => h.CreatedAt)
                 .ToListAsync();
         }
     }

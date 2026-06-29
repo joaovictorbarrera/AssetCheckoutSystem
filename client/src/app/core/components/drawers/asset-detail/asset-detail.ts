@@ -22,11 +22,17 @@ export class AssetDetail implements OnInit {
   assetDetails = signal<AssetDetailDto | null>(null)
   loadingDetails = signal(true)
 
+  get availableStatuses() {
+    return this.assetDetails()?.status === 'assigned'
+      ? this.assetFields().statuses
+      : this.assetFields().statuses.filter(s => s !== 'assigned');
+  }
+
   constructor(
     private assetService: AssetService,
     public authService: AuthService,
     private assetEvents: AssetEventsService,
-    private drawerService: DrawerService
+    public drawer: DrawerService
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +62,7 @@ export class AssetDetail implements OnInit {
   handleArchive() {
     this.assetService.archive(this.assetId).subscribe({
       next: () => {
-        this.drawerService.close()
+        this.drawer.close()
         this.assetEvents.emitAssetsChanged()
       },
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")

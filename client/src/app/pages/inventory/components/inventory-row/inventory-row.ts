@@ -18,8 +18,6 @@ export class InventoryRow {
   @Input() assetFields!: AssetFields
   @ViewChild('statusDropdown') statusDropdown!: Dropdown
 
-  excludedStatuses = ['assigned']
-
   get availableStatuses() {
     return this.asset.status === 'assigned'
       ? this.assetFields.statuses
@@ -28,6 +26,7 @@ export class InventoryRow {
 
   showStatusSuccess = signal(false)
   showConditionSuccess = signal(false)
+  showCategorySuccess = signal(false)
 
   constructor(
     private assetService: AssetService,
@@ -68,6 +67,19 @@ export class InventoryRow {
           this.asset.condition = condition
           this.showConditionSuccess.set(true)
           setTimeout(() => this.showConditionSuccess.set(false), 3000)
+        },
+        error: err => {
+          window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
+        }
+    })
+  }
+
+  handleCategoryChange(category: string) {
+    this.assetService.updateCategory(this.asset.id, category).subscribe({
+        next: () => {
+          this.asset.category = category
+          this.showCategorySuccess.set(true)
+          setTimeout(() => this.showCategorySuccess.set(false), 3000)
         },
         error: err => {
           window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
