@@ -16,8 +16,8 @@ namespace AssetManagementSystem.DTOs.CheckoutRequests
 
         public User? ReviewedByUser { get; set; }
 
-        public Guid? AssignedAssetId { get; set; }
         public AssetCategory AssetCategory { get; set; } 
+        public Guid? AssignedAssetId { get; set; }
         public string? AssignedAssetName { get; set; }
         public string? AssignedAssetTag { get; set; }
 

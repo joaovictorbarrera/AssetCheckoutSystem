@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../../environments/environment'
-
+import { CheckoutRequestDetailDto } from '../../DTOs/checkout-request/checkout-request-detail.dto'
 @Injectable({
     providedIn: 'root',
 })
@@ -16,9 +16,9 @@ export class CheckoutRequestService {
         })
     }
 
-    // getDetail(id: string) {
-    //     return this.http.get<CheckoutRequestDetail>(`${this.apiUrl}/${id}`)
-    // }
+    getDetail(id: string) {
+        return this.http.get<CheckoutRequestDetailDto>(`${this.apiUrl}/${id}`)
+    }
 
     getFields() {
         return this.http.get(`${this.apiUrl}/fields`)

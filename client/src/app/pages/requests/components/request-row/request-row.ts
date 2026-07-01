@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { CheckoutRequestDto } from '../../../../core/DTOs/checkout-request/checkout-request.dto';
 import { DatePipe } from '@angular/common';
 import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
+import { DrawerService } from '../../../../core/services/util/drawer.service';
+import { CheckoutRequestDetail } from '../../../../core/components/drawers/checkout-request-detail/checkout-request-detail';
 
 @Component({
   selector: 'tr[app-request-row]',
@@ -13,7 +15,10 @@ export class RequestRow {
   @Input() request!: CheckoutRequestDto
   @Output() cancelled = new EventEmitter<string>();
 
-  constructor(private requestService: CheckoutRequestService) {}
+  constructor(
+    private requestService: CheckoutRequestService,
+    private drawer: DrawerService
+  ) {}
 
   handleCancel() {
     if (window.confirm("Are you sure you want to cancel this request?")) {
@@ -22,6 +27,11 @@ export class RequestRow {
         error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
       })
     }
+  }
+
+  @HostListener("click")
+  openRequestDetail() {
+    this.drawer.open(CheckoutRequestDetail, { requestId: this.request.id})
   }
 }
 

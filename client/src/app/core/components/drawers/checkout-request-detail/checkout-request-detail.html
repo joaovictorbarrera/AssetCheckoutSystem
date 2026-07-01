@@ -1,0 +1,96 @@
+<div class="flex flex-col w-full h-full justify-center items-center p-8 gap-5">
+    @if (!this.loadingDetails() && this.requestDetails()) {
+        <header>
+            <h2 class="text-2xl font-bold inline capitalize">
+                {{`${requestDetails()!.requestType} Request${requestDetails()!.isArchived ? ' (Archived)' : ''} `}}
+            </h2>
+        </header>
+        <div class="flex w-full h-full flex-col gap-5">
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Request Type</p>
+                <span class="capitalize">{{this.requestDetails()?.requestType}}</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Asset Category</p>
+                <span class="capitalize">{{this.requestDetails()?.assetCategory}}</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Requested By</p>
+                <span class="capitalize">
+                    {{`${this.requestDetails()?.requestedByUser?.firstName} ${this.requestDetails()?.requestedByUser?.lastName}`}}
+                </span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Reason</p>
+                <span>
+                    {{this.requestDetails()?.reason}}
+                </span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Status</p>
+                <span class="capitalize">{{this.requestDetails()?.status}}</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p class="text-text-secondary">Requested At</p>
+                <span class="capitalize">{{this.requestDetails()?.createdAt | date:'M/d/yy, h:mm a'}}</span>
+            </div>
+
+            @if (this.requestDetails()?.status === 'returned' || this.requestDetails()?.status === 'fulfilled') {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Asset Name</p>
+                    <span>{{this.requestDetails()?.assignedAssetName}}</span>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Asset Tag</p>
+                    <span>{{this.requestDetails()?.assignedAssetTag}}</span>
+                </div>
+            }
+
+            @if (this.requestDetails()?.status === "approved") {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Approved At</p>
+                    <span class="capitalize">{{this.requestDetails()?.approvedAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+
+            @if (this.requestDetails()?.status === "rejected") {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Rejected At</p>
+                    <span class="capitalize">{{this.requestDetails()?.rejectedAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+
+            @if (this.requestDetails()?.status === "fulfilled") {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Fulfilled At</p>
+                    <span class="capitalize">{{this.requestDetails()?.fulfilledAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+
+            @if (this.requestDetails()?.status === "returned") {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Returned At</p>
+                    <span class="capitalize">{{this.requestDetails()?.returnedAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+
+            @if (this.requestDetails()?.updatedAt) {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary">Last Updated</p>
+                    <span class="capitalize">{{this.requestDetails()?.updatedAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+        </div>
+    } @else {
+        <div class="flex gap-1 items-center">
+            <app-spinning-wheel></app-spinning-wheel>
+            <span>Loading...</span>
+        </div>
+    }
+</div>

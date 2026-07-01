@@ -20,7 +20,7 @@ export class AssetDetail implements OnInit {
   page = signal('details')
 
   assetDetails = signal<AssetDetailDto | null>(null)
-  loadingDetails = signal(true)
+  loadingDetails = signal(false)
 
   constructor(
     private assetService: AssetService,
@@ -36,6 +36,9 @@ export class AssetDetail implements OnInit {
   handleOpenHistory() { this.page.set('history') }
 
   getDetail() {
+    if (this.loadingDetails()) return
+    this.loadingDetails.set(true)
+
     this.assetService.getDetail(this.assetId).subscribe({
       next: data => {
         this.assetDetails.set(data)
