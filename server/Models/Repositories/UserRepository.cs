@@ -33,6 +33,11 @@ namespace AssetManagementSystem.Repositories
                             u.LastName.Contains(request.SearchText));
             }
 
+            if (request.Role != null)
+            {
+                query = query.Where(u => u.Role == request.Role);
+            }
+
             int totalCount = await query.CountAsync();
 
             List<User> users = await query

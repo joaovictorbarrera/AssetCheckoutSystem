@@ -1,10 +1,13 @@
-import { Component, Input, signal, ViewChild } from '@angular/core'
+import { Component, Input, OnInit, signal, ViewChild } from '@angular/core'
 import { DatePipe } from '@angular/common'
 import { Dropdown } from '../../../../core/components/dropdown/dropdown'
 import { AuthService } from '../../../../core/services/api/auth.service'
 import UserDto from '../../../../core/DTOs/user/user.dto'
 import { Role } from '../../../../core/enums/role'
 import { UserService } from '../../../../core/services/api/user.service'
+import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair'
+import { toLabelValuePairs } from '../../../../core/utils/label.utils'
+import { Labels } from '../../../../core/constants/labels'
 
 @Component({
   selector: 'tr[app-user-row]',
@@ -12,7 +15,7 @@ import { UserService } from '../../../../core/services/api/user.service'
   templateUrl: './user-row.html',
   styleUrl: './user-row.scss',
 })
-export class UserRow {
+export class UserRow implements OnInit {
   @Input() user!: UserDto
   @Input() roles: string[] = []
   @ViewChild('roleDropdown') roleDropdown!: Dropdown
@@ -20,7 +23,13 @@ export class UserRow {
   showRoleSuccess = signal(false)
   showActiveSuccess = signal(false)
 
+  rolesList: LabelValuePair[] = []
+
   constructor(private authService: AuthService, private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.rolesList = toLabelValuePairs(this.roles, Labels.roles)
+  }
 
   get isCurrentUser(): boolean {
     return this.authService.currentUser()?.emailAddress === this.user.emailAddress

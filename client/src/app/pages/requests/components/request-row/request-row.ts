@@ -1,9 +1,10 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { CheckoutRequestDto } from '../../../../core/DTOs/checkout-request/checkout-request.dto';
 import { DatePipe } from '@angular/common';
 import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
 import { DrawerService } from '../../../../core/services/util/drawer.service';
 import { CheckoutRequestDetail } from '../../../../core/components/drawers/checkout-request-detail/checkout-request-detail';
+import { Labels } from '../../../../core/constants/labels';
 
 @Component({
   selector: 'tr[app-request-row]',
@@ -11,14 +12,24 @@ import { CheckoutRequestDetail } from '../../../../core/components/drawers/check
   templateUrl: './request-row.html',
   styleUrl: './request-row.scss',
 })
-export class RequestRow {
+export class RequestRow implements OnInit {
   @Input() request!: CheckoutRequestDto
-  @Output() cancelled = new EventEmitter<string>();
+  @Output() cancelled = new EventEmitter<string>()
+
+  requestTypeLabel = ''
+  requestStatusLabel = ''
+  assetCategoryLabel = ''
 
   constructor(
     private requestService: CheckoutRequestService,
     private drawer: DrawerService
   ) {}
+
+  ngOnInit(): void {
+    this.requestTypeLabel = Labels.requestTypes[this.request.requestType]
+    this.requestStatusLabel = Labels.requestStatuses[this.request.status]
+    this.assetCategoryLabel = Labels.assetCategories[this.request.assetCategory]
+  }
 
   handleCancel() {
     if (window.confirm("Are you sure you want to cancel this request?")) {

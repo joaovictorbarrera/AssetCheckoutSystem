@@ -1,6 +1,7 @@
 import { TitleCasePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import LabelValuePair from '../../DTOs/shared/label-value-pair';
 
 @Component({
   selector: 'app-dropdown',
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Dropdown implements OnChanges {
   @Input() label!: string
-  @Input() list!: string[]
+  @Input() list!: LabelValuePair[]
   @Input() initialSelection?: string
   @Input() enableAll = false
   @Output() dropdownChanged = new EventEmitter<string>()

@@ -87,7 +87,7 @@
             @if (authService.isAdmin) {
                 <app-submit-button
                     [type]="'button'"
-                    (click)="handleArchive()"
+                    (click)="archive()"
                     [color]="'danger'"
                     class="w-30"
                     [text]="'Archive'"

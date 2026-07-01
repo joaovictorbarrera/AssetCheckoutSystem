@@ -48,13 +48,13 @@
   --chip-danger-text: #b80000;
 
   --chip-info-bg: rgba(46, 157, 176, 0.13);
-  --chip-info-text: #7ACFDE;
+  --chip-info-text: #63e1f7;
 
   --chip-fulfilled-bg: rgba(0, 34, 255, 0.14);
-  --chip-fulfilled-text: #2567ff;
+  --chip-fulfilled-text: #B0BEC5;
 
   --chip-canceled-bg: rgba(134, 146, 158, 0.16);
-  --chip-canceled-text: #B0BEC5;
+  --chip-canceled-text: #4f4f4f;
 }
 
 @theme {

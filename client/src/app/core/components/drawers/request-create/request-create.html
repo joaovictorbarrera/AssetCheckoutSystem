@@ -14,7 +14,7 @@
                 <span>Category *</span>
                 <app-dropdown
                     [initialSelection]="category()"
-                    [list]="assetFields().categories"
+                    [list]="assetCategoryList"
                     (dropdownChanged)="handleCategoryChange($event)"
                 />
             </div>

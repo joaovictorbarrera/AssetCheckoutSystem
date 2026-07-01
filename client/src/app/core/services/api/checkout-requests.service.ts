@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { environment } from '../../../../environments/environment'
 import { CheckoutRequestDetailDto } from '../../DTOs/checkout-request/checkout-request-detail.dto'
+import { CheckoutRequestDto } from '../../DTOs/checkout-request/checkout-request.dto'
+import PaginatedResponse from '../../DTOs/shared/paginated.response'
+import CheckoutRequestFields from '../../DTOs/checkout-request/checkout-request-fields.dto'
 @Injectable({
     providedIn: 'root',
 })
@@ -11,7 +14,7 @@ export class CheckoutRequestService {
     constructor(private http: HttpClient) {}
 
     getCheckoutRequests(request: any = {}) {
-        return this.http.get(this.apiUrl, {
+        return this.http.get<PaginatedResponse<CheckoutRequestDto>>(this.apiUrl, {
             params: request,
         })
     }
@@ -21,11 +24,11 @@ export class CheckoutRequestService {
     }
 
     getFields() {
-        return this.http.get(`${this.apiUrl}/fields`)
+        return this.http.get<CheckoutRequestFields>(`${this.apiUrl}/fields`)
     }
 
     create(request: any) {
-        return this.http.post(this.apiUrl, request)
+        return this.http.post<void>(this.apiUrl, request)
     }
 
     archive(id: string) {
@@ -33,7 +36,7 @@ export class CheckoutRequestService {
     }
 
     cancel(id: string) {
-        return this.http.patch(`${this.apiUrl}/${id}/cancel`, {})
+        return this.http.patch<void>(`${this.apiUrl}/${id}/cancel`, {})
     }
 
     approve(id: string) {

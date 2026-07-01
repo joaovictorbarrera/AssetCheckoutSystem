@@ -112,7 +112,7 @@ namespace AssetManagementSystem.Models.Repositories
         {
             return await _context.Assets
                 .Where(a => a.Status == AssetStatus.Available && a.Category == category && !a.IsArchived)
-                .Select(a => new AvailableAsset { Id = a.Id, Name = a.Name })
+                .Select(a => new AvailableAsset { Id = a.Id, Name = a.Name, AssetTag = a.AssetTag })
                 .ToListAsync();
         }
 

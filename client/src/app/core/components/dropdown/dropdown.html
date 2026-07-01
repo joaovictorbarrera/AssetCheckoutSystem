@@ -6,8 +6,8 @@
     @if (enableAll) {
       <option value="all">All</option>
     }
-    @for (item of list; track item) {
-      <option [value]="item">{{ item | titlecase }}</option>
+    @for (pair of list; track pair.value) {
+      <option [value]="pair.value">{{ pair.label| titlecase }}</option>
     }
   </select>
 </span>

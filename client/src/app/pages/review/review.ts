@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { PageHeader } from "../../core/components/page-components/page-header/page-header";
 import { PageWrapper } from "../../core/components/page-components/page-wrapper/page-wrapper";
 import { Dropdown } from "../../core/components/dropdown/dropdown";
@@ -11,6 +11,11 @@ import AssetFields from '../../core/DTOs/asset/asset-fields.dto';
 import { AssetService } from '../../core/services/api/asset.service';
 import { ReviewTable } from './components/review-table/review-table';
 import { NgIcon } from '@ng-icons/core';
+import { CheckoutRequestEventsService } from '../../core/services/events/checkout-request-events.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import LabelValuePair from '../../core/DTOs/shared/label-value-pair';
+import { toLabelValuePairs } from '../../core/utils/label.utils';
+import { Labels } from '../../core/constants/labels';
 
 @Component({
   selector: 'app-review',
@@ -33,14 +38,23 @@ export class Review implements OnInit {
 
   loadingRequests = signal(false)
 
+  assetCategoriesList: LabelValuePair[] = []
+  requestStatusesList: LabelValuePair[] = []
+  requestTypesList: LabelValuePair[] = []
+
   constructor(
     private requestService: CheckoutRequestService,
-    private assetService: AssetService
+    private assetService: AssetService,
+    private requestEventsService: CheckoutRequestEventsService,
+    private destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
     this.getFields()
     this.getRequests()
+    this.requestEventsService.checkoutRequestsChanged$
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(() => this.getRequests())
   }
 
   handleStatusChange(status: string) {
@@ -72,12 +86,19 @@ export class Review implements OnInit {
 
   getFields() {
     this.requestService.getFields().subscribe({
-      next: fields => this.requestFields.set(fields as CheckoutRequestFields),
+      next: fields => {
+        this.requestFields.set(fields)
+        this.requestStatusesList = toLabelValuePairs(fields.statuses, Labels.requestStatuses)
+        this.requestTypesList = toLabelValuePairs(fields.types, Labels.requestTypes)
+      },
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
     })
 
     this.assetService.getFields().subscribe({
-      next: fields => this.assetFields.set(fields as AssetFields),
+      next: fields => {
+        this.assetFields.set(fields)
+        this.assetCategoriesList = toLabelValuePairs(fields.categories, Labels.assetCategories)
+      },
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
     })
   }

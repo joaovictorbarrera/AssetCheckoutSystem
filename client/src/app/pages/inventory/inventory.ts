@@ -14,6 +14,9 @@ import { AssetEventsService } from '../../core/services/events/asset-events.serv
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerService } from '../../core/services/util/drawer.service';
 import { AssetCreate } from '../../core/components/drawers/asset-create/asset-create';
+import { toLabelValuePairs } from '../../core/utils/label.utils';
+import { Labels } from '../../core/constants/labels';
+import LabelValuePair from '../../core/DTOs/shared/label-value-pair';
 
 @Component({
   selector: 'app-inventory',
@@ -37,6 +40,10 @@ export class Inventory implements OnInit {
   pageNumber = signal(1)
 
   loadingAssets = signal(false)
+
+  assetCategoriesList: LabelValuePair[] = []
+  assetStatusesList: LabelValuePair[] = []
+  assetConditionsList: LabelValuePair[] = []
 
   constructor(
     private assetService: AssetService,
@@ -87,7 +94,12 @@ export class Inventory implements OnInit {
 
   getFields() {
     this.assetService.getFields().subscribe({
-      next: res => this.assetFields.set(res as AssetFields),
+      next: res => {
+        this.assetFields.set(res)
+        this.assetCategoriesList = toLabelValuePairs(res.categories, Labels.assetCategories)
+        this.assetStatusesList = toLabelValuePairs(res.statuses, Labels.assetStatuses)
+        this.assetConditionsList = toLabelValuePairs(res.conditions, Labels.assetConditions)
+      },
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
     })
   }

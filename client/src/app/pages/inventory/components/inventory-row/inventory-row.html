@@ -4,7 +4,7 @@
     <app-dropdown
         #statusDropdown
         [initialSelection]="asset.status"
-        [list]="availableStatuses"
+        [list]="assetStatusesList"
         (dropdownChanged)="handleStatusChange($event)"
     />
     @if (showStatusSuccess()) {
@@ -16,7 +16,7 @@
 <td class="capitalize">
     <app-dropdown
         [initialSelection]="asset.category"
-        [list]="assetFields.categories"
+        [list]="assetCategoriesList"
         (dropdownChanged)="handleCategoryChange($event)"
     />
     @if (showCategorySuccess()) {
@@ -26,7 +26,7 @@
 <td>
     <app-dropdown
         [initialSelection]="asset.condition"
-        [list]="assetFields.conditions"
+        [list]="assetConditionsList"
         (dropdownChanged)="handleConditionChange($event)"
     />
     @if (showConditionSuccess()) {

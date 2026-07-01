@@ -4,7 +4,7 @@
     <app-dropdown
         #roleDropdown
         [initialSelection]="user.role"
-        [list]="roles"
+        [list]="rolesList"
         (dropdownChanged)="handleRoleChange($event)"
     />
     @if (showRoleSuccess()) {

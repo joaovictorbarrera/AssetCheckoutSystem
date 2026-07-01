@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { PageWrapper } from "../../core/components/page-components/page-wrapper/page-wrapper";
 import { PageHeader } from '../../core/components/page-components/page-header/page-header';
 import { AssetService } from '../../core/services/api/asset.service';
@@ -10,6 +10,11 @@ import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/sha
 import { AssetDto } from '../../core/DTOs/asset/asset.dto';
 import { TablePagination } from "../../core/components/table-components/table-pagination/table-pagination";
 import { NgIcon } from '@ng-icons/core';
+import { AssetEventsService } from '../../core/services/events/asset-events.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toLabelValuePairs } from '../../core/utils/label.utils';
+import { Labels } from '../../core/constants/labels';
+import LabelValuePair from '../../core/DTOs/shared/label-value-pair';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,11 +35,20 @@ export class Dashboard implements OnInit {
 
   loadingAssets = signal(false)
 
-  constructor(private assetService: AssetService) {}
+  constructor(
+    private assetService: AssetService,
+    private assetEvents: AssetEventsService,
+    private destroyRef: DestroyRef
+  ) {}
+
+  assetCategoriesList: LabelValuePair[] = []
 
   ngOnInit(): void {
     this.getFields()
     this.getAssets()
+    this.assetEvents.assetsChanged$
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(() => this.getAssets());
   }
 
   handleSearch(searchText: string) {
@@ -60,7 +74,10 @@ export class Dashboard implements OnInit {
 
   getFields() {
     this.assetService.getFields().subscribe({
-      next: res => this.assetFields.set(res as AssetFields),
+      next: res => {
+        this.assetFields.set(res)
+        this.assetCategoriesList = toLabelValuePairs(this.assetFields().categories, Labels.assetCategories)
+      },
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
     })
   }

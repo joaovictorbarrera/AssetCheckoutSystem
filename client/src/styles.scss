@@ -47,6 +47,14 @@ body {
   filter: brightness(120%);
 }
 
+.btn-success {
+  background-color: var(--success);
+}
+
+.btn-success:not(:disabled):hover {
+  filter: brightness(120%);
+}
+
 option {
   cursor: pointer;
 }

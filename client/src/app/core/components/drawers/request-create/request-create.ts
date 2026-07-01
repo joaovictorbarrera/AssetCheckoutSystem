@@ -7,6 +7,9 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { SubmitButton } from '../../submit-button/submit-button';
 import { Dropdown } from '../../dropdown/dropdown';
 import { CheckoutRequestEventsService } from '../../../services/events/checkout-request-events.service';
+import LabelValuePair from '../../../DTOs/shared/label-value-pair';
+import { toLabelValuePairs } from '../../../utils/label.utils';
+import { Labels } from '../../../constants/labels';
 
 @Component({
   selector: 'app-request-create',
@@ -20,7 +23,7 @@ export class RequestCreate implements OnInit {
   reason = ""
 
   loading = signal(false)
-  assetFields = signal<AssetFields>({categories: [], statuses: [], conditions: []})
+  assetCategoryList: LabelValuePair[] = []
 
   constructor(
     public drawer: DrawerService,
@@ -39,18 +42,19 @@ export class RequestCreate implements OnInit {
 
   getFields() {
     this.assetService.getFields().subscribe({
-      next: res => this.assetFields.set(res as AssetFields),
+      next: fields => {this.assetCategoryList = toLabelValuePairs(fields.categories, Labels.assetCategories)},
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
     })
   }
 
   submit(form: NgForm) {
     if (form.invalid) return
+    console.log(this.category())
     this.loading.set(true)
     this.requestService.create({
-      type: 'checkout',
+      requestType: 'checkout',
       reason: this.reason,
-      category: this.category()
+      assetCategory: this.category()
     }).subscribe({
       next: () => {
         this.loading.set(false)

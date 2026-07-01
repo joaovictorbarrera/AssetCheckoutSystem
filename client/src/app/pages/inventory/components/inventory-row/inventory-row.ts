@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, signal, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
 import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
 import { Dropdown } from '../../../../core/components/dropdown/dropdown';
@@ -6,6 +6,9 @@ import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto';
 import { AssetService } from '../../../../core/services/api/asset.service';
 import { DrawerService } from '../../../../core/services/util/drawer.service';
 import { AssetDetail } from '../../../../core/components/drawers/asset-detail/asset-detail';
+import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair';
+import { Labels } from '../../../../core/constants/labels';
+import { toLabelValuePairs } from '../../../../core/utils/label.utils';
 
 @Component({
   selector: 'tr[app-inventory-row]',
@@ -13,10 +16,14 @@ import { AssetDetail } from '../../../../core/components/drawers/asset-detail/as
   templateUrl: './inventory-row.html',
   styleUrl: './inventory-row.scss',
 })
-export class InventoryRow {
+export class InventoryRow implements OnInit {
   @Input() asset!: AssetDto
   @Input() assetFields!: AssetFields
   @ViewChild('statusDropdown') statusDropdown!: Dropdown
+
+  assetCategoriesList: LabelValuePair[] = []
+  assetStatusesList: LabelValuePair[] = []
+  assetConditionsList: LabelValuePair[] = []
 
   get availableStatuses() {
     return this.asset.status === 'assigned'
@@ -32,6 +39,12 @@ export class InventoryRow {
     private assetService: AssetService,
     private drawer: DrawerService
   ) {}
+
+  ngOnInit(): void {
+    this.assetCategoriesList = toLabelValuePairs(this.assetFields.categories, Labels.assetCategories)
+    this.assetStatusesList = toLabelValuePairs(this.availableStatuses, Labels.assetStatuses)
+    this.assetConditionsList = toLabelValuePairs(this.assetFields.conditions, Labels.assetConditions)
+  }
 
   handleStatusChange(status: string) {
     if (status === 'available' && this.asset.userId) {

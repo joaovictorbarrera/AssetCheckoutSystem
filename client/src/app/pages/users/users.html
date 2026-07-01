@@ -16,6 +16,13 @@
         </div>
     </app-page-header>
     <div class="flex gap-5 justify-center p-5 items-end">
+        <app-dropdown
+            class="w-50"
+            [list]="rolesList"
+            [enableAll]="true"
+            (dropdownChanged)="handleRoleChange($event)"
+        />
+
         <app-search-bar (search)="handleSearch($event)" />
 
         <div class="flex gap-2 text-text-muted text-sm items-center mb-3">

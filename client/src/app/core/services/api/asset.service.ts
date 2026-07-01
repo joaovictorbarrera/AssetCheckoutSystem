@@ -5,6 +5,8 @@ import PaginatedResponse from '../../DTOs/shared/paginated.response'
 import { AssetDto } from '../../DTOs/asset/asset.dto'
 import { AssetDetailDto } from '../../DTOs/asset/asset-detail.dto'
 import AssetHistory from '../../DTOs/asset/asset-history.dto'
+import AvailableAssetDto from '../../DTOs/asset/available-asset.dto'
+import AssetFields from '../../DTOs/asset/asset-fields.dto'
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +23,7 @@ export class AssetService {
     }
 
     getAvailable(category: string) {
-        return this.http.get(`${this.apiUrl}/available`, {
+        return this.http.get<AvailableAssetDto[]>(`${this.apiUrl}/available`, {
             params: { category },
         })
     }
@@ -31,7 +33,7 @@ export class AssetService {
     }
 
     getFields() {
-        return this.http.get(`${this.apiUrl}/fields`)
+        return this.http.get<AssetFields>(`${this.apiUrl}/fields`)
     }
 
     getHistory(id: string) {
@@ -39,7 +41,7 @@ export class AssetService {
     }
 
     create(request: any) {
-        return this.http.post(this.apiUrl, request)
+        return this.http.post<void>(this.apiUrl, request)
     }
 
     update(id: string, request: any) {
@@ -51,14 +53,14 @@ export class AssetService {
     }
 
     updateStatus(id: string, status: string) {
-        return this.http.patch(`${this.apiUrl}/${id}/status`, { status })
+        return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { status })
     }
 
     updateCondition(id: string, condition: string) {
-        return this.http.patch(`${this.apiUrl}/${id}/condition`, { condition })
+        return this.http.patch<void>(`${this.apiUrl}/${id}/condition`, { condition })
     }
 
     updateCategory(id: string, category: string) {
-        return this.http.patch(`${this.apiUrl}/${id}/category`, { category })
+        return this.http.patch<void>(`${this.apiUrl}/${id}/category`, { category })
     }
 }

@@ -39,7 +39,7 @@ export class AssetDetailForm implements OnInit {
     this.serialNumber = this.assetDetails.serialNumber
   }
 
-  handleArchive() {
+  archive() {
     if (this.loadingArchive()) return
 
     this.loadingArchive.set(true)

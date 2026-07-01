@@ -6,6 +6,9 @@ import { DrawerService } from '../../../services/util/drawer.service';
 import UserFields from '../../../DTOs/user/user-fields.dto';
 import { Dropdown } from '../../dropdown/dropdown';
 import { UserEventsService } from '../../../services/events/user-events.service';
+import LabelValuePair from '../../../DTOs/shared/label-value-pair';
+import { toLabelValuePairs } from '../../../utils/label.utils';
+import { Labels } from '../../../constants/labels';
 
 @Component({
   selector: 'app-user-create',
@@ -20,7 +23,7 @@ export class UserCreate implements OnInit {
 
   loading = signal(false)
   selectedRole = signal("employee")
-  userFields = signal<UserFields>({roles: []})
+  rolesList: LabelValuePair[] = []
 
   constructor(
     private userService: UserService,
@@ -34,7 +37,7 @@ export class UserCreate implements OnInit {
 
   getFields() {
     this.userService.getFields().subscribe({
-      next: fields => this.userFields.set(fields as UserFields),
+      next: fields => this.rolesList = toLabelValuePairs(fields.roles, Labels.roles),
       error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error"),
     });
   }
