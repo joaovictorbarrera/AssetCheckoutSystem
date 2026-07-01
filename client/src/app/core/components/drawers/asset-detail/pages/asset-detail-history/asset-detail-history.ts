@@ -3,10 +3,11 @@ import { AssetService } from '../../../../../services/api/asset.service';
 import AssetHistory from '../../../../../DTOs/asset/asset-history.dto';
 import { DatePipe } from '@angular/common';
 import { NgIcon } from "@ng-icons/core";
+import { SpinningWheel } from "../../../../spinning-wheel/spinning-wheel";
 
 @Component({
   selector: 'app-asset-detail-history',
-  imports: [DatePipe, NgIcon],
+  imports: [DatePipe, NgIcon, SpinningWheel],
   templateUrl: './asset-detail-history.html',
   styleUrl: './asset-detail-history.scss',
 })

@@ -10,5 +10,11 @@
                 <span class="history-item"><ng-icon name="heroCalendar" />{{row.createdAt | date:'M/d/yy, h:mm a'}}</span>
             </div>
         }
+        @if (loading()) {
+            <div class="flex gap-1 items-center">
+                <app-spinning-wheel></app-spinning-wheel>
+                <span>Loading...</span>
+            </div>
+        }
     </div>
 </div>

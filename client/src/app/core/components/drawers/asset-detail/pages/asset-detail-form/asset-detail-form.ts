@@ -19,20 +19,12 @@ import { AssetService } from '../../../../../services/api/asset.service';
 export class AssetDetailForm implements OnInit {
   @Input() assetDetails!: AssetDetailDto
 
-  assetFields = signal<AssetFields>({categories: [], statuses: [], conditions: []})
-
   loadingUpdate = signal(false)
   loadingArchive = signal(false)
 
   assetName = ''
   assetTag = ''
   serialNumber = ''
-
-  get availableStatuses() {
-    return this.assetDetails?.status === 'assigned'
-      ? this.assetFields().statuses
-      : this.assetFields().statuses.filter(s => s !== 'assigned');
-  }
 
   constructor(
     private assetService: AssetService,
@@ -45,14 +37,6 @@ export class AssetDetailForm implements OnInit {
     this.assetName = this.assetDetails.name
     this.assetTag = this.assetDetails.assetTag
     this.serialNumber = this.assetDetails.serialNumber
-    this.getFields()
-  }
-
-  getFields() {
-    this.assetService.getFields().subscribe({
-      next: res => this.assetFields.set(res as AssetFields),
-      error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-    })
   }
 
   handleArchive() {
