@@ -3,3 +3,9 @@
     gap: .75rem;
     align-items: center;
 }
+
+:host {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
