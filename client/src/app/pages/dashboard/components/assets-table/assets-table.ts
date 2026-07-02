@@ -5,9 +5,10 @@ import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
 import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinning-wheel";
 import { AssetRow } from "../asset-row/asset-row";
 import { TableWrapper } from "../../../../core/components/table-components/table-wrapper/table-wrapper";
+import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
 @Component({
   selector: 'app-assets-table',
-  imports: [TableHeader, SpinningWheel, AssetRow, TableWrapper],
+  imports: [TableHeader, SpinningWheel, AssetRow, TableWrapper, DataTable],
   templateUrl: './assets-table.html',
   styleUrl: './assets-table.scss',
 })

@@ -1,4 +1,5 @@
-<div class="flex flex-col w-full h-full justify-center items-center p-8 gap-5 relative">
+<div class="w-full h-full justify-center items-center relative">
+    <div class="w-full h-full flex flex-col overflow-auto p-8 gap-5">
     @if (!this.loadingDetails() && this.requestDetails()) {
         <header class="w-full">
             <h2 class="text-2xl font-bold inline capitalize">
@@ -165,4 +166,5 @@
             <span>Loading...</span>
         </div>
     }
+    </div>
 </div>

@@ -5,10 +5,11 @@ import { TableWrapper } from "../../../../core/components/table-components/table
 import { TableHeader } from "../../../../core/components/table-components/table-header/table-header";
 import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinning-wheel";
 import { RequestRow } from "../request-row/request-row";
+import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
 
 @Component({
   selector: 'app-request-table',
-  imports: [TableWrapper, TableHeader, SpinningWheel, RequestRow],
+  imports: [TableWrapper, TableHeader, SpinningWheel, RequestRow, DataTable],
   templateUrl: './request-table.html',
   styleUrl: './request-table.scss',
 })

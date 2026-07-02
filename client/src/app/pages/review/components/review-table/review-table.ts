@@ -5,10 +5,11 @@ import { ReviewRow } from '../review-row/review-row';
 import { TableWrapper } from '../../../../core/components/table-components/table-wrapper/table-wrapper';
 import { SpinningWheel } from '../../../../core/components/spinning-wheel/spinning-wheel';
 import { TableHeader } from '../../../../core/components/table-components/table-header/table-header';
+import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
 
 @Component({
   selector: 'app-review-table',
-  imports: [ReviewRow, TableWrapper, SpinningWheel, TableHeader],
+  imports: [ReviewRow, TableWrapper, SpinningWheel, TableHeader, DataTable],
   templateUrl: './review-table.html',
   styleUrl: './review-table.scss',
 })

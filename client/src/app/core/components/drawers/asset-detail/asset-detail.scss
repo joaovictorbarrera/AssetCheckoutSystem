@@ -1,6 +1,7 @@
 :host {
     width: 100%;
 }
+
 .menu {
     padding: 8px;
     color: var(--text-muted);
@@ -8,6 +9,7 @@
     cursor: pointer;
     width: 10rem;
 }
+
 .menu.active {
     color: var(--accent);
     border-bottom: 4px solid var(--accent);

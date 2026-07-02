@@ -5,10 +5,11 @@ import UserDto from '../../../../core/DTOs/user/user.dto'
 import { SpinningWheel } from '../../../../core/components/spinning-wheel/spinning-wheel'
 import { UserRow } from '../user-row/user-row'
 import { TableWrapper } from '../../../../core/components/table-components/table-wrapper/table-wrapper'
+import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
 
 @Component({
   selector: 'app-users-table',
-  imports: [TableHeader, SpinningWheel, UserRow, TableWrapper],
+  imports: [TableHeader, SpinningWheel, UserRow, TableWrapper, DataTable, DataTable],
   templateUrl: './users-table.html',
   styleUrl: './users-table.scss',
 })

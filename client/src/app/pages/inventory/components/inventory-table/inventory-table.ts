@@ -6,10 +6,11 @@ import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinni
 import { InventoryRow } from "../inventory-row/inventory-row";
 import { TableWrapper } from "../../../../core/components/table-components/table-wrapper/table-wrapper";
 import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto';
+import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
 
 @Component({
   selector: 'app-inventory-table',
-  imports: [TableHeader, SpinningWheel, InventoryRow, TableWrapper],
+  imports: [TableHeader, SpinningWheel, InventoryRow, TableWrapper, DataTable],
   templateUrl: './inventory-table.html',
   styleUrl: './inventory-table.scss',
 })
