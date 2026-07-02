@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #07101C;
-  --bg-secondary: #0A1525;
-  --bg-elevated: #0E1C2F;
+  --bg-primary: #0C1520;
+  --bg-secondary: #0F192A;
+  --bg-elevated: #132135;
 
-  --sidebar: #0A1525;
-  --navbar: #0E1C2F;
+  --sidebar: #0F192A;
+  --navbar: #132135;
 
-  --surface: #0E1C2F;
-  --surface-hover: #122038;
-  --surface-active: #162540;
+  --surface: #132135;
+  --surface-hover: #16253D;
+  --surface-active: #192946;
 
   --border: #1E2E45;
   --border-strong: #263B58;
