@@ -51,7 +51,6 @@ export class RequestCreate implements OnInit {
 
   submit(form: NgForm) {
     if (form.invalid) return
-    console.log(this.category())
     this.loading.set(true)
     this.requestService.create({
       requestType: 'checkout',
