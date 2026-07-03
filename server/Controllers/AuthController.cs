@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using AssetManagementSystem.DTOs.Auth;
+﻿using AssetManagementSystem.DTOs.Auth.Requests;
+using AssetManagementSystem.DTOs.Auth.Responses;
+using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Repositories;
 using AssetManagementSystem.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AssetManagementSystem.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ApiControllerBase
@@ -20,14 +23,24 @@ namespace AssetManagementSystem.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<TokenDto>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<AccessTokenDto>> Login([FromBody] LoginRequest request)
         {
-            var result = await _userService.Login(request);
+            var result = await _userService.Login(request, Response);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
-        [Authorize]
+        [HttpGet("refresh")]
+        public async Task<ActionResult<AccessTokenDto>> Refresh()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (refreshToken == null) return Unauthorized();
+
+            var result = await _userService.Refresh(HttpContext.GetCurrentUser(), refreshToken, Response);
+            return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
+        }
+
         [HttpGet("Me")]
         public ActionResult<User> Me()
         {
@@ -50,7 +63,6 @@ namespace AssetManagementSystem.Controllers
             return Ok();
         }
 
-        [Authorize]
         [HttpGet("Debug")]
         public IActionResult Debug()
         {

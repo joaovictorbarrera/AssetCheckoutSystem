@@ -1,10 +1,19 @@
-﻿using AssetManagementSystem.DTOs.Auth;
+﻿using AssetManagementSystem.DTOs.Auth.Internal;
+using AssetManagementSystem.DTOs.Auth.Requests;
+using AssetManagementSystem.DTOs.Auth.Responses;
 using AssetManagementSystem.DTOs.Pagination;
 using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.DTOs.Users.Internal;
+using AssetManagementSystem.DTOs.Users.Requests;
+using AssetManagementSystem.DTOs.Users.Responses;
 using AssetManagementSystem.Enums;
+using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Repositories;
+using Azure;
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace AssetManagementSystem.Services
 {
@@ -12,20 +21,26 @@ namespace AssetManagementSystem.Services
     {
         private readonly UserRepository _userRepository;
         private readonly TokenService _tokenService;
-        public UserService(UserRepository userRepository, TokenService tokenService)
-        {
+        private readonly IConfiguration _configuration;
+
+        public UserService(
+            UserRepository userRepository, 
+            TokenService tokenService,
+            IConfiguration configuration
+        ){
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _configuration = configuration;
         }
 
-        public async Task<ServiceResult<PagedResponse<User>>> Get([FromQuery] GetUsersRequest request)
+        public async Task<ServiceResult<PagedResponse<UserDto>>> Get(GetUsersRequest request)
         {
-            PagedResponse<User> users = await _userRepository.GetUsersAsync(request);
+            PagedResponse<UserDto> users = await _userRepository.GetUsersAsync(request);
 
-            return ServiceResult<PagedResponse<User>>.Success(users);
+            return ServiceResult<PagedResponse<UserDto>>.Success(users);
         }
 
-        public async Task<ServiceResult<Guid>> Create([FromBody] CreateUserRequest request)
+        public async Task<ServiceResult<Guid>> Create(CreateUserRequest request)
         {
             bool userExists = await _userRepository.GetUserByEmailAsync(request.EmailAddress) != null;
             if (userExists) return ServiceResult<Guid>.BadRequest("Email Address is taken");
@@ -35,7 +50,7 @@ namespace AssetManagementSystem.Services
             return ServiceResult<Guid>.Success(newUserId);
         }
 
-        public async Task<ServiceResult> UpdateRole(Guid id, [FromBody] UpdateUserRoleRequest request)
+        public async Task<ServiceResult> UpdateRole(Guid id, UpdateUserRoleRequest request)
         {
             bool success = await _userRepository.UpdateUserRole(id, request.Role);
 
@@ -49,22 +64,61 @@ namespace AssetManagementSystem.Services
             return success ? ServiceResult.Success() : ServiceResult.NotFound();
         }
 
-        public async Task<ServiceResult<TokenDto>> Login([FromBody] LoginRequest loginData)
+        public async Task<ServiceResult<AccessTokenDto>> Login(LoginRequest request, HttpResponse response)
         {
-            // There is intentionally no check for password.
-            // Managing passwords is outside the scope of this project.
-            User? user = await _userRepository.GetUserByEmailAsync(loginData.EmailAddress);
+            User? user = await _userRepository.GetUserByEmailAsync(request.EmailAddress);
 
+            //  || user.PasswordHash != EncryptionHelper.ToSha256(request.Password)
             if (user == null || !user.IsActive)
             {
-                return ServiceResult<TokenDto>.Unauthorized();
+                return ServiceResult<AccessTokenDto>.Unauthorized();
             }
 
-            TokenDto tokenDto = _tokenService.CreateToken(user);
+            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
+            await _userRepository.SaveRefreshToken(user, refreshTokenDto);
             await _userRepository.UpdateLastLoginAsync(user.Id);
 
-            return ServiceResult<TokenDto>.Success(tokenDto);
+            response.Cookies.Append(
+                "refreshToken",
+                refreshTokenDto.RefreshToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddDays(_configuration.GetValue("RefreshTokenExpirationDays", 7))
+                }
+            );
+
+            return ServiceResult<AccessTokenDto>.Success(tokenDto);
+        }
+
+        public async Task<ServiceResult<AccessTokenDto>> Refresh(User user, string refreshToken, HttpResponse response)
+        {
+            bool validRefreshToken = user.RefreshTokenExpiresAt >= DateTime.UtcNow && user.RefreshTokenHash == EncryptionHelper.ToSha256(refreshToken);
+
+            if (!validRefreshToken) return ServiceResult<AccessTokenDto>.Unauthorized();
+
+            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
+
+            await _userRepository.SaveRefreshToken(user, refreshTokenDto);
+
+            response.Cookies.Append(
+                "refreshToken",
+                refreshTokenDto.RefreshToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddDays(_configuration.GetValue("RefreshTokenExpirationDays", 7))
+                }
+            );
+
+            return ServiceResult<AccessTokenDto>.Success(tokenDto);
         }
     }
 }

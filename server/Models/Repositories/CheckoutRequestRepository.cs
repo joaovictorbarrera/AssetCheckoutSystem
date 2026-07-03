@@ -169,6 +169,7 @@ namespace AssetManagementSystem.Models.Repositories
             request.Status = CheckoutRequestStatus.Fulfilled;
             request.FulfilledAt = DateTime.UtcNow;
             request.UpdatedAt = DateTime.UtcNow;
+            request.ReviewedByUserId = reviewedByUserId;
 
             _context.AddAssetHistory(
                 asset.Id,
@@ -199,6 +200,7 @@ namespace AssetManagementSystem.Models.Repositories
             request.Status = CheckoutRequestStatus.Returned;
             request.ReturnedAt = DateTime.UtcNow;
             request.UpdatedAt = DateTime.UtcNow;
+            request.ReviewedByUserId = reviewedByUserId;
 
             _context.AddAssetHistory(
                 asset.Id,

@@ -6,6 +6,8 @@ using AssetManagementSystem.Enums;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Repositories;
 using AssetManagementSystem.Services;
+using AssetManagementSystem.DTOs.Users.Requests;
+using AssetManagementSystem.DTOs.Users.Responses;
 
 namespace AssetManagementSystem.Controllers
 {
@@ -21,14 +23,14 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<User>>> Get([FromQuery] GetUsersRequest request)
+        public async Task<ActionResult<PagedResponse<UserDto>>> Get([FromQuery] GetUsersRequest request)
         {
             var result = await _userService.Get(request);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Create([FromBody] CreateUserRequest request)
+        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
         {
             var result = await _userService.Create(request);
             return result.Succeeded ? 
@@ -43,7 +45,7 @@ namespace AssetManagementSystem.Controllers
         }
 
         [HttpPatch("{id:guid}/role")]
-        public async Task<ActionResult<User>> UpdateRole(Guid id, [FromBody] UpdateUserRoleRequest request)
+        public async Task<IActionResult> UpdateRole(Guid id, [FromBody] UpdateUserRoleRequest request)
         {
 
             var result = await _userService.UpdateRole(id, request);

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Helpers;
 
-namespace AssetManagementSystem.DTOs.Users
+namespace AssetManagementSystem.DTOs.Users.Responses
 {
     public class UserFields
     {

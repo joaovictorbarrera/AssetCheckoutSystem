@@ -2,7 +2,7 @@
 using AssetManagementSystem.DTOs.CheckoutRequests.Requests;
 using AssetManagementSystem.DTOs.CheckoutRequests.Responses;
 using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;

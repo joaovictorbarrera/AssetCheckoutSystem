@@ -16,7 +16,7 @@ namespace AssetManagementSystem.DTOs.Assets.Projections
                 Category = a.Category,
                 Status = a.Status,
                 Condition = a.Condition,
-                UserId = a.AssignedToUserId,
+                AssignedToUserId = a.AssignedToUserId,
                 UserFirstName = a.AssignedToUser != null ? a.AssignedToUser.FirstName : null,
                 UserLastName = a.AssignedToUser != null ? a.AssignedToUser.LastName : null,
                 IsArchived = a.IsArchived,

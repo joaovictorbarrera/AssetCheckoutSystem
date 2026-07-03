@@ -2,7 +2,7 @@
 using AssetManagementSystem.DTOs.CheckoutRequests;
 using AssetManagementSystem.DTOs.CheckoutRequests.Requests;
 using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Models.Repositories;
@@ -50,7 +50,7 @@ namespace AssetManagementSystem.Services
                     return ServiceResult<Guid>.BadRequest(
                         "Asset does not exist");
 
-                if (asset.UserId != requestor.UserId)
+                if (asset.AssignedToUserId != requestor.UserId)
                     return ServiceResult<Guid>.Forbidden(
                         "Asset is not assigned to you");
 
@@ -74,7 +74,7 @@ namespace AssetManagementSystem.Services
             if (checkoutRequest == null)
                 return ServiceResult<CheckoutRequestDetail>.NotFound();
 
-            if (!requestor.IsAssetManager && checkoutRequest.RequestedByUser.Id != requestor.UserId)
+            if (!requestor.IsAssetManager && checkoutRequest.RequestorId != requestor.UserId)
                 return ServiceResult<CheckoutRequestDetail>.Forbidden(
                     "Request does not belong to you");
 

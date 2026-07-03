@@ -1,12 +1,12 @@
 <div class="w-full h-full justify-center items-center relative">
-    <div class="w-full h-full flex flex-col overflow-auto p-8 gap-5">
+    <div class="w-full h-full flex flex-col overflow-auto p-8 gap-5 pb-24">
     @if (!this.loadingDetails() && this.requestDetails()) {
         <header class="w-full">
             <h2 class="text-2xl font-bold inline capitalize">
                 {{`${requestDetails()!.requestType} Request${requestDetails()!.isArchived ? ' (Archived)' : ''} `}}
             </h2>
         </header>
-        <div class="flex w-full h-full flex-col gap-5">
+        <div class="flex w-full flex-col gap-5">
             <div class="flex flex-col gap-2">
                 <p class="text-text-secondary">Request Type</p>
                 <span class="capitalize">{{this.requestDetails()?.requestType}}</span>
@@ -19,8 +19,8 @@
 
             <div class="flex flex-col gap-2">
                 <p class="text-text-secondary">Requested By</p>
-                <span class="capitalize">
-                    {{`${this.requestDetails()?.requestedByUser?.firstName} ${this.requestDetails()?.requestedByUser?.lastName}`}}
+                <span>
+                    {{`${this.requestDetails()?.requestorFirstName} ${this.requestDetails()?.requestorLastName} (${this.requestDetails()?.requestorEmail})`}}
                 </span>
             </div>
 
@@ -36,17 +36,12 @@
                 <span class="capitalize">{{this.requestDetails()?.status}}</span>
             </div>
 
-            @if (authService.isManager && requestDetails()?.status === 'approved') {
+            @if (this.requestDetails()?.reviewerId) {
                 <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Assign an asset:</p>
-                    @if (availableAssets().length > 0) {
-                        <app-dropdown
-                            [list]="availableAssets()"
-                            (dropdownChanged)="assetSelectionChange($event)"
-                        />
-                    } @else {
-                        <span class="text-danger">No available assets</span>
-                    }
+                    <p class="text-text-secondary">Last Actioned By</p>
+                    <span>
+                        {{`${this.requestDetails()?.reviewerFirstName} ${this.requestDetails()?.reviewerLastName} (${this.requestDetails()?.reviewerEmail})`}}
+                    </span>
                 </div>
             }
 
@@ -99,6 +94,25 @@
                 <div class="flex flex-col gap-2">
                     <p class="text-text-secondary">Last Updated</p>
                     <span class="capitalize">{{this.requestDetails()?.updatedAt | date:'M/d/yy, h:mm a'}}</span>
+                </div>
+            }
+
+            @if (authService.isManager && requestDetails()?.status === 'approved') {
+                <div class="flex flex-col gap-2">
+                    <p class="text-text-secondary flex gap-1">
+                        Assign an asset:
+                        @if (loadingAvailableAssets()) {
+                            <app-spinning-wheel />
+                        }
+                    </p>
+                    @if (availableAssets().length > 0 || loadingAvailableAssets()) {
+                        <app-dropdown
+                            [list]="availableAssets()"
+                            (dropdownChanged)="assetSelectionChange($event)"
+                        />
+                    } @else {
+                        <span class="text-danger">No available assets</span>
+                    }
                 </div>
             }
 

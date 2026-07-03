@@ -2,5 +2,5 @@
 <td><span [classList]="request.status + ' chip'">{{requestStatusLabel + (request.isArchived ? ' (Archived)' : '')}}</span></td>
 <td>{{request.assignedAssetName && request.assignedAssetTag ? `${request.assignedAssetName} \\ ${request.assignedAssetTag}` : "-"}}</td>
 <td>{{assetCategoryLabel}}</td>
-<td>{{request.requestedByUser.firstName + " " + request.requestedByUser.lastName}}</td>
+<td>{{request.requestorFirstName + " " + request.requestorLastName}}</td>
 <td>{{request.createdAt | date:'M/d/yy, h:mm a'}}</td>

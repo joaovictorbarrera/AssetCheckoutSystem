@@ -1,42 +1,35 @@
 import { Component, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { SubmitButton } from '../../core/components/submit-button/submit-button';
 import { AuthService } from '../../core/services/api/auth.service';
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterModule, SubmitButton],
+  imports: [RouterModule, SubmitButton, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
 export class Login {
-  emailAddress = new FormControl("")
+  emailAddress = ''
+  password = ''
+
   failMessage = signal<string | null>(null)
   loading = signal(false)
 
   constructor(public authService: AuthService, public router: Router) {}
 
-  login(event: any) {
+  async login(event: any) {
     event.preventDefault()
 
-    let body = { emailAddress: this.emailAddress.value ?? "" }
-
     this.loading.set(true)
-    this.authService.login(body)
-    .subscribe({
-      next: (response: any) => {
-        this.loading.set(false)
-
-        localStorage.setItem(
-        "authorizationToken",
-        response.authorizationToken);
-
-        this.router.navigate(["/"])
-      },
-      error: err => {
-        this.loading.set(false)
-        this.failMessage.set("Unable to login with this email.")
-      }
+    const error = await this.authService.login({
+      emailAddress: this.emailAddress,
+      password: this.password
     })
+
+    this.loading.set(false)
+    if (error) {
+      this.failMessage.set(error)
+    }
   }
 }

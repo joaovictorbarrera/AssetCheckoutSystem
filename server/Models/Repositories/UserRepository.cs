@@ -1,6 +1,9 @@
 ﻿using AssetManagementSystem.Data;
+using AssetManagementSystem.DTOs.Auth.Internal;
 using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.DTOs.Users.Projections;
+using AssetManagementSystem.DTOs.Users.Requests;
+using AssetManagementSystem.DTOs.Users.Responses;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
@@ -18,7 +21,7 @@ namespace AssetManagementSystem.Repositories
             _context = context;
         }
 
-        public async Task<PagedResponse<User>> GetUsersAsync(GetUsersRequest request)
+        public async Task<PagedResponse<UserDto>> GetUsersAsync(GetUsersRequest request)
         {
             IQueryable<User> query = _context.Users;
 
@@ -40,16 +43,17 @@ namespace AssetManagementSystem.Repositories
 
             int totalCount = await query.CountAsync();
 
-            List<User> users = await query
+            List<UserDto> users = await query
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
                 .Skip((request.PageNumber - 1) * request.PageSize)
                 .Take(request.PageSize)
+                .Select(UserExpressions.ToDto)
                 .ToListAsync();
 
             int totalPages = PaginationHelper.GetTotalPageCount(totalCount, request.PageSize);
 
-            return new PagedResponse<User>
+            return new PagedResponse<UserDto>
             {
                 Items = users,
                 Pagination = new PaginationMetadata
@@ -120,6 +124,12 @@ namespace AssetManagementSystem.Repositories
                 ) > 0;
         }
 
-        
+        public async Task SaveRefreshToken(User user, RefreshTokenDto refreshTokenDto)
+        {
+            user.RefreshTokenHash = EncryptionHelper.ToSha256(refreshTokenDto.RefreshToken);
+            user.RefreshTokenExpiresAt = refreshTokenDto.ExpiresAt;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

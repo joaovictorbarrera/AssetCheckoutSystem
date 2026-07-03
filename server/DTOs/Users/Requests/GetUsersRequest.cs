@@ -2,7 +2,7 @@
 using AssetManagementSystem.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.Users
+namespace AssetManagementSystem.DTOs.Users.Requests
 {
     public class GetUsersRequest : PaginatedRequest
     {

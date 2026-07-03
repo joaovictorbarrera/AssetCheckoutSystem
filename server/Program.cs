@@ -25,7 +25,7 @@ builder.Services.AddScoped<UserRepository>()
                 .AddScoped<UserService>();
 
 builder.Services.AddDatabase(builder.Configuration, builder.Environment)
-                .AddCustomCors(builder.Configuration, builder.Environment)
+                .AddCustomCors(builder.Configuration)
                 .AddJwtAuthentication(builder.Configuration)
                 .AddRoleAuthorization()
                 .AddSwagger();
@@ -33,10 +33,14 @@ builder.Services.AddDatabase(builder.Configuration, builder.Environment)
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
-app.UseCors();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -13,7 +13,7 @@ namespace AssetManagementSystem.DTOs.Assets.Responses
         public required AssetCategory Category { get; set; }
         public required AssetStatus Status { get; set; }
         public required AssetCondition Condition { get; set; }
-        public Guid? UserId { get; set; }
+        public Guid? AssignedToUserId { get; set; }
         public string? UserFirstName { get; set; }
         public string? UserLastName { get; set; }
         public bool IsArchived { get; set; } = false;

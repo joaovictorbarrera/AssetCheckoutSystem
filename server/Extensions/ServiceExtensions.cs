@@ -22,8 +22,11 @@ namespace AssetManagementSystem.Extensions
             string jwtKey = config["JwtKey"]
                                 ?? throw new Exception("JwtKey missing from configuration.");
 
-            if (config["TokenExpirationDays"] == null)
-                logger.LogWarning("TokenExpirationDays not configured. Defaulting to 7 days.");
+            if (config["AccessTokenExpirationMinutes"] == null)
+                logger.LogWarning("AccessTokenExpirationMinutes not configured. Defaulting to 15 minutes.");
+
+            if (config["RefreshTokenExpirationDays"] == null)
+                logger.LogWarning("RefreshTokenExpirationDays not configured. Defaulting to 7 days.");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -138,8 +141,7 @@ namespace AssetManagementSystem.Extensions
 
         public static IServiceCollection AddCustomCors(
             this IServiceCollection services,
-            IConfiguration config,
-            IWebHostEnvironment env)
+            IConfiguration config)
         {
             var logger = LoggerFactory.Create(builder =>
             {

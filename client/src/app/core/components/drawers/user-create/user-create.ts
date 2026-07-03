@@ -9,6 +9,7 @@ import { UserEventsService } from '../../../services/events/user-events.service'
 import LabelValuePair from '../../../DTOs/shared/label-value-pair';
 import { toLabelValuePairs } from '../../../utils/label.utils';
 import { Labels } from '../../../constants/labels';
+import { isValidEmail } from '../../../utils/validation.utils';
 
 @Component({
   selector: 'app-user-create',
@@ -34,6 +35,8 @@ export class UserCreate implements OnInit {
   ngOnInit(): void {
     this.getFields()
   }
+
+  isValidEmail(emailAddress: string): boolean { return isValidEmail(emailAddress) }
 
   getFields() {
     this.userService.getFields().subscribe({

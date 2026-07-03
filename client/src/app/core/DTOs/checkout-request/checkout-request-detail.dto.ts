@@ -1,15 +1,19 @@
-import UserDto from "../user/user.dto";
-
 export interface CheckoutRequestDetailDto {
   id: string;
   requestType: string;
 
-  requestedByUser: UserDto;
+  requestorId: string;
+  requestorFirstName: string;
+  requestorLastName: string;
+  requestorEmail: string;
 
   reason: string;
   status: string;
 
-  reviewedByUser?: UserDto;
+  reviewerId?: string;
+  reviewerFirstName?: string;
+  reviewerLastName?: string;
+  reviewerEmail?: string;
 
   assetCategory: string;
   assignedAssetId?: string;

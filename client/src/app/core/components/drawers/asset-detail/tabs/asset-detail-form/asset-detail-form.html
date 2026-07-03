@@ -80,7 +80,7 @@
             <app-submit-button
                 class="w-30"
                 [text]="'Save'"
-                [disabled]="assetDetails.isArchived"
+                [disabled]="assetDetails.isArchived || !assetName || !assetTag"
                 [loading]="loadingUpdate()"
             />
             <button class="btn btn-cancel w-30" (click)="drawer.close()">Cancel</button>

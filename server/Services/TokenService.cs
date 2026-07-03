@@ -3,7 +3,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.DTOs.Auth;
+using AssetManagementSystem.DTOs.Auth.Responses;
+using AssetManagementSystem.DTOs.Auth.Internal;
+using AssetManagementSystem.Helpers;
 
 namespace AssetManagementSystem.Services
 {
@@ -16,12 +18,12 @@ namespace AssetManagementSystem.Services
             _configuration = configuration;
         }
 
-        public TokenDto CreateToken(User user)
+        public AccessTokenDto CreateToken(User user)
         {
             string jwtKey = _configuration["JwtKey"]
                 ?? throw new Exception("JwtKey missing from configuration.");
 
-            int expirationDays =_configuration.GetValue("TokenExpirationDays", 7);
+            int expirationMinutes = _configuration.GetValue("AccessTokenExpirationMinutes", 15);
 
             var claims = new[]
             {
@@ -35,17 +37,16 @@ namespace AssetManagementSystem.Services
                 key,
                 SecurityAlgorithms.HmacSha256);
 
-            var expires = DateTime.UtcNow.AddDays(expirationDays);
+            var expires = DateTime.UtcNow.AddMinutes(expirationMinutes);
 
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: expires,
                 signingCredentials: creds);
 
-            TokenDto tokenDto = new()
+            AccessTokenDto tokenDto = new()
             {
-                AuthorizationToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpirationDate = expires
+                AuthorizationToken = new JwtSecurityTokenHandler().WriteToken(token)
             };
 
             return tokenDto;
@@ -84,6 +85,17 @@ namespace AssetManagementSystem.Services
             {
                 return null;
             }
+        }
+
+        public RefreshTokenDto CreateRefreshToken()
+        {
+            DateTime ExpirationDate = DateTime.UtcNow.AddDays(_configuration.GetValue("RefreshTokenExpirationDays", 7));
+
+            return new RefreshTokenDto
+            {
+                RefreshToken = EncryptionHelper.GenerateRandomSha256(),
+                ExpiresAt = ExpirationDate
+            };
         }
     }
 }

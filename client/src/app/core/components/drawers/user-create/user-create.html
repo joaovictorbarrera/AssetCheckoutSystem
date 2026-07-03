@@ -58,6 +58,7 @@
             class="mt-auto w-30"
             [text]="'Create'"
             [loading]="this.loading()"
+            [disabled]="!firstName || !lastName || !isValidEmail(emailAddress) || !selectedRole()"
         />
         <button class="btn btn-cancel w-30" (click)="drawer.close()">
             Cancel

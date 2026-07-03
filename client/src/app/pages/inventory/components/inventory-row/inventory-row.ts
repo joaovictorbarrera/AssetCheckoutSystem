@@ -47,7 +47,7 @@ export class InventoryRow implements OnInit {
   }
 
   handleStatusChange(status: string) {
-    if (status === 'available' && this.asset.userId) {
+    if (status === 'available' && this.asset.assignedToUserId) {
       const confirmed = window.confirm(
         'Making an asset available will unassign it from the user. Do you want to continue?'
       )
@@ -60,7 +60,7 @@ export class InventoryRow implements OnInit {
     this.assetService.updateStatus(this.asset.id, status).subscribe({
         next: () => {
           if (status === 'available') {
-            this.asset.userId = undefined
+            this.asset.assignedToUserId = undefined
             this.asset.userFirstName = undefined
             this.asset.userLastName = undefined
           }

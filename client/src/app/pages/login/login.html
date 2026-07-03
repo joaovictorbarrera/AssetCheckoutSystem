@@ -6,7 +6,21 @@
                 <p class="text-red-500">{{this.failMessage()}}</p>
             }
             <form class="flex flex-col gap-5 items-start" (submit)="login($event)">
-                <input class="w-100 drawer-input" [formControl]="emailAddress" type="email" name="emailAddress" id="emailAddressInput" placeholder="Email Address">
+                <input
+                    class="w-100 drawer-input"
+                    [(ngModel)]="emailAddress"
+                    type="email"
+                    name="emailAddress"
+                    placeholder="Email Address"
+                >
+
+                <input
+                    class="w-100 drawer-input"
+                    [(ngModel)]="password"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                >
 
                 <app-submit-button class="w-full" [text]="'Submit'" [loading]="this.loading()"></app-submit-button>
             </form>

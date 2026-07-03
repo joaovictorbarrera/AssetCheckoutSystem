@@ -5,7 +5,7 @@ export interface AssetDto {
   category: string
   status: string
   condition: string
-  userId?: string
+  assignedToUserId?: string
   userFirstName?: string,
   userLastName?: string,
   isArchived: boolean

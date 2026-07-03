@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Users
+﻿namespace AssetManagementSystem.DTOs.Users.Internal
 {
     public class Requestor
     {

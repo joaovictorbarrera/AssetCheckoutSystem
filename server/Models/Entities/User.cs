@@ -1,4 +1,4 @@
-﻿using AssetManagementSystem.DTOs.Users;
+﻿using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Helpers;
 
@@ -9,12 +9,19 @@ namespace AssetManagementSystem.Models.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public required string EmailAddress { get; set; }
         public required Role Role { get; set; }
-        public DateTime? LastLoginAt { get; set; }
         public bool IsActive { get; set; } = true;
+        public DateTime? LastLoginAt { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
+
+        public string? PasswordHash { get; set; }
+        public string? PasswordResetTokenHash { get; set; }
+        public DateTime? PasswordResetExpiresAt { get; set; }
+        public DateTime? PasswordChangedAt { get; set; }
+        public string? RefreshTokenHash { get; set; }
+        public DateTime? RefreshTokenExpiresAt { get; set; }
 
         public Requestor GetRequestor()
         {

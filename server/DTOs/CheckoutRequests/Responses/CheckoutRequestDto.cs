@@ -9,8 +9,10 @@ namespace AssetManagementSystem.DTOs.CheckoutRequests
         public Guid Id { get; set; }
         public required CheckoutRequestType RequestType { get; set; }
 
-        public required Guid RequestedByUserId { get; set; }
-        public User RequestedByUser { get; set; } = null!;
+        public required Guid RequestorId { get; set; }
+        public required string RequestorFirstName { get; set; }
+        public required string RequestorLastName { get; set; }
+        public required string RequestorEmail { get; set; }
 
         public required CheckoutRequestStatus Status { get; set; }
 

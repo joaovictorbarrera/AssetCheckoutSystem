@@ -30,6 +30,7 @@ export class CheckoutRequestDetail implements OnInit {
   loadingReturn = signal(false)
   loadingArchive = signal(false)
   loadingAssign = signal(false)
+  loadingAvailableAssets = signal(false)
 
   selectedAssetId = signal('')
 
@@ -160,11 +161,16 @@ export class CheckoutRequestDetail implements OnInit {
   }
 
   getAvailableAssets() {
+    if (this.loadingAvailableAssets()) return
+    this.loadingAvailableAssets.set(true)
+
     this.assetService.getAvailable(this.requestDetails()!.assetCategory).subscribe({
       next: data => {
+        this.loadingAvailableAssets.set(false)
         this.availableAssets.set(data.map(a => { return {label: `${a.name} (${a.assetTag})`, value: a.id} }))
       },
       error: err => {
+        this.loadingAvailableAssets.set(false)
         window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
       }
     })

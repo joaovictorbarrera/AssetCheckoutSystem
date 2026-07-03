@@ -6,17 +6,23 @@ namespace AssetManagementSystem.DTOs.CheckoutRequests
 {
     public class CheckoutRequestDetail
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
         public required CheckoutRequestType RequestType { get; set; }
 
-        public User RequestedByUser { get; set; } = null!;
+        public required Guid RequestorId { get; set; }
+        public required string RequestorFirstName { get; set; }
+        public required string RequestorLastName { get; set; }
+        public required string RequestorEmail { get; set; }
 
         public required string Reason { get; set; }
         public required CheckoutRequestStatus Status { get; set; }
 
-        public User? ReviewedByUser { get; set; }
+        public Guid? ReviewerId { get; set; }
+        public string? ReviewerFirstName { get; set; }
+        public string? ReviewerLastName { get; set; }
+        public string? ReviewerEmail { get; set; }
 
-        public AssetCategory AssetCategory { get; set; } 
+        public required AssetCategory AssetCategory { get; set; } 
         public Guid? AssignedAssetId { get; set; }
         public string? AssignedAssetName { get; set; }
         public string? AssignedAssetTag { get; set; }

@@ -1,7 +1,7 @@
 ﻿using AssetManagementSystem.DTOs.Assets.Requests;
 using AssetManagementSystem.DTOs.Assets.Responses;
 using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
+using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Models.Repositories;

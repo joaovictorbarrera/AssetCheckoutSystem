@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AssetManagementSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Users
+namespace AssetManagementSystem.DTOs.Users.Requests
 {
     public class CreateUserRequest
     {
@@ -11,11 +11,11 @@ namespace AssetManagementSystem.DTOs.Users
         public required Role Role { get; set; }
 
         [MaxLength(50)]
-        [MinLength(2)]
+        [MinLength(1)]
         public required string FirstName { get; set; }
 
         [MaxLength(50)]
-        [MinLength(2)]
+        [MinLength(1)]
         public required string LastName { get; set; }
     }
 }
