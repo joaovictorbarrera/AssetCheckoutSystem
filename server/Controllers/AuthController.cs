@@ -35,7 +35,6 @@ namespace AssetManagementSystem.Controllers
         public async Task<ActionResult<AccessTokenDto>> Refresh()
         {
             var refreshToken = Request.Cookies["refreshToken"];
-            if (refreshToken == null) Console.WriteLine("No refresh token in the request. "+DateTime.UtcNow.ToString());
             if (refreshToken == null) return Unauthorized();
 
             var result = await _userService.Refresh(HttpContext.GetCurrentUser(), refreshToken, Response);

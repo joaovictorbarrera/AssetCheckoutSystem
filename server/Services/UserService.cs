@@ -94,8 +94,6 @@ namespace AssetManagementSystem.Services
         {
             bool validRefreshToken = user.RefreshTokenExpiresAt >= DateTime.UtcNow && user.RefreshTokenHash == EncryptionHelper.ToSha256(refreshToken);
 
-            if (!validRefreshToken) Console.WriteLine("Refresh Token was Invalid. "+DateTime.UtcNow.ToString());
-
             if (!validRefreshToken) return ServiceResult<AccessTokenDto>.Unauthorized();
 
             AccessTokenDto tokenDto = _tokenService.CreateToken(user);
