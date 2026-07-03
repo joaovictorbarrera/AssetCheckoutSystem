@@ -52,7 +52,7 @@ namespace AssetManagementSystem.Extensions
 
                             Guid userId = context.Principal!.GetUserId();
 
-                            User? user = await userRepository.GetUserByIdAsync(userId);
+                            User? user = await userRepository.GetById(userId);
 
                             if (user == null || !user.IsActive)
                             {

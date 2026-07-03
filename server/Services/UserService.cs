@@ -3,17 +3,12 @@ using AssetManagementSystem.DTOs.Auth.Requests;
 using AssetManagementSystem.DTOs.Auth.Responses;
 using AssetManagementSystem.DTOs.Pagination;
 using AssetManagementSystem.DTOs.Users;
-using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.DTOs.Users.Requests;
 using AssetManagementSystem.DTOs.Users.Responses;
-using AssetManagementSystem.Enums;
 using AssetManagementSystem.Helpers;
 using AssetManagementSystem.Models.Entities;
 using AssetManagementSystem.Repositories;
-using Azure;
 using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace AssetManagementSystem.Services
 {
@@ -42,7 +37,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult<Guid>> Create(CreateUserRequest request)
         {
-            bool userExists = await _userRepository.GetUserByEmailAsync(request.EmailAddress) != null;
+            bool userExists = await _userRepository.GetByEmail(request.EmailAddress) != null;
             if (userExists) return ServiceResult<Guid>.BadRequest("Email Address is taken");
 
             Guid newUserId = await _userRepository.CreateUserAsync(request);
@@ -66,7 +61,7 @@ namespace AssetManagementSystem.Services
 
         public async Task<ServiceResult<AccessTokenDto>> Login(LoginRequest request, HttpResponse response)
         {
-            User? user = await _userRepository.GetUserByEmailAsync(request.EmailAddress);
+            User? user = await _userRepository.GetByEmail(request.EmailAddress);
 
             //  || user.PasswordHash != EncryptionHelper.ToSha256(request.Password)
             if (user == null || !user.IsActive)
@@ -99,6 +94,8 @@ namespace AssetManagementSystem.Services
         {
             bool validRefreshToken = user.RefreshTokenExpiresAt >= DateTime.UtcNow && user.RefreshTokenHash == EncryptionHelper.ToSha256(refreshToken);
 
+            if (!validRefreshToken) Console.WriteLine("Refresh Token was Invalid. "+DateTime.UtcNow.ToString());
+
             if (!validRefreshToken) return ServiceResult<AccessTokenDto>.Unauthorized();
 
             AccessTokenDto tokenDto = _tokenService.CreateToken(user);
@@ -119,6 +116,25 @@ namespace AssetManagementSystem.Services
             );
 
             return ServiceResult<AccessTokenDto>.Success(tokenDto);
+        }
+
+        public async Task<ServiceResult<PasswordResetLink>> GeneratePasswordReset(Guid userId)
+        {
+            const int resetExpirationHours = 24;
+            var frontendURL = _configuration["FrontendURL"];
+
+            var resetToken = EncryptionHelper.GenerateRandomSha256();
+            var resetTokenExpiresAt = DateTime.UtcNow.AddHours(resetExpirationHours);
+
+            bool success = await _userRepository.ResetPassword(userId, resetToken, resetTokenExpiresAt);
+
+            var passwordResetLink = new PasswordResetLink()
+            {
+                Link = $"{frontendURL}/reset-password?resetToken={resetToken}",
+                ExpiresAt = resetTokenExpiresAt
+            };
+
+            return success ? ServiceResult<PasswordResetLink>.Success(passwordResetLink) : ServiceResult<PasswordResetLink>.NotFound();
         }
     }
 }

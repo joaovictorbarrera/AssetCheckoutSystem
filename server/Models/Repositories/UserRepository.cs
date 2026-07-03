@@ -84,13 +84,13 @@ namespace AssetManagementSystem.Repositories
 
             return user.Id;
         }
-        public Task<User?> GetUserByEmailAsync(string email)
+        public Task<User?> GetByEmail(string email)
         {
             return _context.Users
                 .FirstOrDefaultAsync(u => u.EmailAddress == email);
         }
 
-        public Task<User?> GetUserByIdAsync(Guid id)
+        public Task<User?> GetById(Guid id)
         {
             return _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
@@ -130,6 +130,21 @@ namespace AssetManagementSystem.Repositories
             user.RefreshTokenExpiresAt = refreshTokenDto.ExpiresAt;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ResetPassword(Guid userId, string resetToken, DateTime resetTokenExpiresAt)
+        {
+            User? user = await GetById(userId);
+            if (user == null || !user.IsActive) return false;
+
+            user.PasswordHash = null;
+            user.PasswordResetTokenHash = EncryptionHelper.ToSha256(resetToken);
+            user.PasswordResetExpiresAt = resetTokenExpiresAt;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

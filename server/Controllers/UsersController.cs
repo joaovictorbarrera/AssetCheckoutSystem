@@ -58,5 +58,12 @@ namespace AssetManagementSystem.Controllers
             var result = await _userService.UpdateActive(id, request);
             return result.Succeeded ? NoContent() : ToActionResult(result);
         }
+
+        [HttpGet("{id:guid}/password-reset-link")]
+        public async Task<IActionResult> GeneratePasswordReset(Guid id)
+        {
+            var result = await _userService.GeneratePasswordReset(id);
+            return result.Succeeded ? Ok(result) : ToActionResult(result);
+        }
     }
 }
