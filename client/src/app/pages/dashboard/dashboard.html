@@ -1,27 +1,44 @@
 <app-page-wrapper>
-    <app-page-header>
-        <div class="flex items-center w-full relative">
-            <h1 class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex items-end justify-center gap-2">
-                <ng-icon name="heroComputerDesktop" />
-                Asset Dashboard
-            </h1>
-            <button (click)="getAssets()" class="text-accent ml-auto text-3xl cursor-pointer">
-                <ng-icon name="heroArrowPath"></ng-icon>
-            </button>
-        </div>
-    </app-page-header>
-    <div class="flex gap-5 justify-center p-5 items-end">
-        <app-dropdown class="w-50"
-            [enableAll]="true"
-            [title]="`Status`"
-            [list]="[{label: 'Assigned', value: 'assigned'}, {label: 'Maintenance', value: 'maintenance'}]"
-            (dropdownChanged)="handleStatusChange($event)"
-        />
-
-        <app-search-bar (search)="handleSearch($event)" />
-
-        <app-dropdown class="w-50" [enableAll]="true" [title]="`Category`" [list]="assetCategoriesList" (dropdownChanged)="handleCategoryChange($event)" />
+  <app-page-header>
+    <div class="flex items-center w-full relative">
+      <h1
+        class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex items-end justify-center gap-2"
+      >
+        <ng-icon name="heroComputerDesktop" />
+        Asset Dashboard
+      </h1>
+      <button (click)="getAssets()" class="text-accent ml-auto text-3xl cursor-pointer">
+        <ng-icon name="heroArrowPath"></ng-icon>
+      </button>
     </div>
-    <app-assets-table [headers]="headers" [assets]="assets()" [loading]="loadingAssets()" />
-    <app-table-pagination [name]="'Assets'" [colspan]="headers.length" [pagination]="assets().pagination" (paginationChanged)="handlePaginationChange($event)" />
+  </app-page-header>
+  <div class="flex gap-5 justify-center p-5 items-end">
+    <app-dropdown
+      class="w-50"
+      [enableAll]="true"
+      [title]="`Status`"
+      [list]="[
+        { label: 'Assigned', value: 'assigned' },
+        { label: 'Maintenance', value: 'maintenance' },
+      ]"
+      (dropdownChanged)="handleStatusChange($event)"
+    />
+
+    <app-search-bar (searchChanged)="handleSearch($event)" />
+
+    <app-dropdown
+      class="w-50"
+      [enableAll]="true"
+      [title]="`Category`"
+      [list]="assetCategoriesList"
+      (dropdownChanged)="handleCategoryChange($event)"
+    />
+  </div>
+  <app-assets-table [headers]="headers" [assets]="assets()" [loading]="loadingAssets()" />
+  <app-table-pagination
+    [name]="'Assets'"
+    [colspan]="headers.length"
+    [pagination]="assets().pagination"
+    (paginationChanged)="handlePaginationChange($event)"
+  />
 </app-page-wrapper>

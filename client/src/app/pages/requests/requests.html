@@ -1,31 +1,56 @@
 <app-page-wrapper>
-    <app-page-header>
-        <div class="flex items-center w-full relative">
-            <button (click)="openCreateRequest()" class="btn btn-accent flex items-center gap-0.5">
-                <ng-icon name="heroPlus" size="20" />
-                <span class="pb-px">New Request</span>
-            </button>
-            <h1 class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex items-end justify-center gap-2">
-                <ng-icon name="heroInboxArrowDown" />
-                Requests
-            </h1>
-            <button (click)="getRequests()" class="text-accent ml-auto text-3xl cursor-pointer">
-                <ng-icon name="heroArrowPath"></ng-icon>
-            </button>
-        </div>
-    </app-page-header>
-    <div class="flex gap-5 justify-center p-5 items-end">
-        <app-dropdown class="w-50" [enableAll]="true" [title]="`Type`" [list]="requestTypesList" (dropdownChanged)="handleTypeChange($event)" />
-
-        <app-dropdown class="w-50" [enableAll]="true" [title]="`Status`" [list]="requestStatusesList" (dropdownChanged)="handleStatusChange($event)" />
-
-        <app-dropdown class="w-50" [enableAll]="true" [title]="`Asset Category`" [list]="assetCategoriesList" (dropdownChanged)="handleCategoryChange($event)" />
-
-        <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
-            <input class="checkbox" type="checkbox" (change)="handleIncludeClosed($event)"/>
-            <span>Include Closed Requests</span>
-        </div>
+  <app-page-header>
+    <div class="flex items-center w-full relative">
+      <button (click)="openCreateRequest()" class="btn btn-accent flex items-center gap-0.5">
+        <ng-icon name="heroPlus" size="20" />
+        <span class="pb-px">New Request</span>
+      </button>
+      <h1
+        class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex items-end justify-center gap-2"
+      >
+        <ng-icon name="heroInboxArrowDown" />
+        Requests
+      </h1>
+      <button (click)="getRequests()" class="text-accent ml-auto text-3xl cursor-pointer">
+        <ng-icon name="heroArrowPath"></ng-icon>
+      </button>
     </div>
-    <app-request-table [headers]="headers" [requests]="requests()" [loading]="loadingRequests()" />
-    <app-table-pagination [name]="'Requests'" [colspan]="headers.length" [pagination]="requests().pagination" (paginationChanged)="handlePaginationChange($event)" />
+  </app-page-header>
+  <div class="flex gap-5 justify-center p-5 items-end">
+    <app-dropdown
+      class="w-50"
+      [enableAll]="true"
+      [title]="`Type`"
+      [list]="requestTypesList"
+      (dropdownChanged)="handleTypeChange($event)"
+    />
+
+    <app-dropdown
+      class="w-50"
+      [enableAll]="true"
+      [title]="`Status`"
+      [list]="requestStatusesList"
+      (dropdownChanged)="handleStatusChange($event)"
+    />
+
+    <app-dropdown
+      class="w-50"
+      [enableAll]="true"
+      [title]="`Asset Category`"
+      [list]="assetCategoriesList"
+      (dropdownChanged)="handleCategoryChange($event)"
+    />
+
+    <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
+      <input class="checkbox" type="checkbox" (change)="handleIncludeClosed($event)" />
+      <span>Include Closed Requests</span>
+    </div>
+  </div>
+  <app-request-table [headers]="headers" [requests]="requests()" [loading]="loadingRequests()" />
+  <app-table-pagination
+    [name]="'Requests'"
+    [colspan]="headers.length"
+    [pagination]="requests().pagination"
+    (paginationChanged)="handlePaginationChange($event)"
+  />
 </app-page-wrapper>

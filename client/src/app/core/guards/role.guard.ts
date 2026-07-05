@@ -1,18 +1,16 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../services/api/auth.service';
-import { Role } from '../enums/role';
+import { inject } from '@angular/core'
+import { CanActivateFn, Router } from '@angular/router'
+import { AuthService } from '../services/api/auth.service'
+import { Role } from '../enums/role'
 
 export const roleGuard: CanActivateFn = (route) => {
-    const authService = inject(AuthService)
-    const router = inject(Router)
+  const authService = inject(AuthService)
+  const router = inject(Router)
 
-    const allowedRoles = route.data?.['roles'] as Role[];
-    const userRole = authService.currentUser()?.role;
+  const allowedRoles = route.data?.['roles'] as Role[]
+  const userRole = authService.currentUser()?.role
 
-    const authorized = allowedRoles.some(
-        role => role === userRole
-    )
+  const authorized = allowedRoles.some((role) => role === userRole)
 
-    return authorized ? authorized : router.createUrlTree(['/unauthorized'])
+  return authorized ? authorized : router.createUrlTree(['/unauthorized'])
 }

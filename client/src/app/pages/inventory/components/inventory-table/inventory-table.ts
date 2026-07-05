@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { TableHeader } from "../../../../core/components/table-components/table-header/table-header";
-import PaginatedResponse from '../../../../core/DTOs/shared/paginated.response';
-import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
-import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinning-wheel";
-import { InventoryRow } from "../inventory-row/inventory-row";
-import { TableWrapper } from "../../../../core/components/table-components/table-wrapper/table-wrapper";
-import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto';
-import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
+import { Component, Input } from '@angular/core'
+import { TableHeader } from '../../../../core/components/table-components/table-header/table-header'
+import PaginatedResponse from '../../../../core/DTOs/shared/paginated.response'
+import { AssetDto } from '../../../../core/DTOs/asset/asset.dto'
+import { SpinningWheel } from '../../../../core/components/spinning-wheel/spinning-wheel'
+import { InventoryRow } from '../inventory-row/inventory-row'
+import { TableWrapper } from '../../../../core/components/table-components/table-wrapper/table-wrapper'
+import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto'
+import { DataTable } from '../../../../core/components/table-components/data-table/data-table'
 
 @Component({
   selector: 'app-inventory-table',
@@ -17,6 +17,6 @@ import { DataTable } from "../../../../core/components/table-components/data-tab
 export class InventoryTable {
   @Input() assets!: PaginatedResponse<AssetDto>
   @Input() headers: string[] = []
-  @Input() loading: boolean = false
+  @Input() loading = false
   @Input() assetFields!: AssetFields
 }

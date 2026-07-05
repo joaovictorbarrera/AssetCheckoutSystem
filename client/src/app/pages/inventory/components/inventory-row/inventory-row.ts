@@ -1,14 +1,13 @@
-import { Component, HostListener, Input, OnInit, signal, ViewChild } from '@angular/core';
-import { AssetDto } from '../../../../core/DTOs/asset/asset.dto';
-import { CheckoutRequestService } from '../../../../core/services/api/checkout-requests.service';
-import { Dropdown } from '../../../../core/components/dropdown/dropdown';
-import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto';
-import { AssetService } from '../../../../core/services/api/asset.service';
-import { DrawerService } from '../../../../core/services/util/drawer.service';
-import { AssetDetail } from '../../../../core/components/drawers/asset-detail/asset-detail';
-import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair';
-import { Labels } from '../../../../core/constants/labels';
-import { toLabelValuePairs } from '../../../../core/utils/label.utils';
+import { Component, HostListener, Input, OnInit, signal, ViewChild } from '@angular/core'
+import { AssetDto } from '../../../../core/DTOs/asset/asset.dto'
+import { Dropdown } from '../../../../core/components/dropdown/dropdown'
+import AssetFields from '../../../../core/DTOs/asset/asset-fields.dto'
+import { AssetService } from '../../../../core/services/api/asset.service'
+import { DrawerService } from '../../../../core/services/util/drawer.service'
+import { AssetDetail } from '../../../../core/components/drawers/asset-detail/asset-detail'
+import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair'
+import { Labels } from '../../../../core/constants/labels'
+import { toLabelValuePairs } from '../../../../core/utils/label.utils'
 
 @Component({
   selector: 'tr[app-inventory-row]',
@@ -28,7 +27,7 @@ export class InventoryRow implements OnInit {
   get availableStatuses() {
     return this.asset.status === 'assigned'
       ? this.assetFields.statuses
-      : this.assetFields.statuses.filter(s => s !== 'assigned');
+      : this.assetFields.statuses.filter((s) => s !== 'assigned')
   }
 
   showStatusSuccess = signal(false)
@@ -37,19 +36,25 @@ export class InventoryRow implements OnInit {
 
   constructor(
     private assetService: AssetService,
-    private drawer: DrawerService
+    private drawer: DrawerService,
   ) {}
 
   ngOnInit(): void {
-    this.assetCategoriesList = toLabelValuePairs(this.assetFields.categories, Labels.assetCategories)
+    this.assetCategoriesList = toLabelValuePairs(
+      this.assetFields.categories,
+      Labels.assetCategories,
+    )
     this.assetStatusesList = toLabelValuePairs(this.availableStatuses, Labels.assetStatuses)
-    this.assetConditionsList = toLabelValuePairs(this.assetFields.conditions, Labels.assetConditions)
+    this.assetConditionsList = toLabelValuePairs(
+      this.assetFields.conditions,
+      Labels.assetConditions,
+    )
   }
 
   handleStatusChange(status: string) {
     if (status === 'available' && this.asset.assignedToUserId) {
       const confirmed = window.confirm(
-        'Making an asset available will unassign it from the user. Do you want to continue?'
+        'Making an asset available will unassign it from the user. Do you want to continue?',
       )
       if (!confirmed) {
         this.statusDropdown.revert()
@@ -58,45 +63,45 @@ export class InventoryRow implements OnInit {
     }
 
     this.assetService.updateStatus(this.asset.id, status).subscribe({
-        next: () => {
-          if (status === 'available') {
-            this.asset.assignedToUserId = undefined
-            this.asset.userFirstName = undefined
-            this.asset.userLastName = undefined
-          }
-          this.asset.status = status
-          this.showStatusSuccess.set(true)
-          setTimeout(() => this.showStatusSuccess.set(false), 3000)
-        },
-        error: err => {
-          window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
+      next: () => {
+        if (status === 'available') {
+          this.asset.assignedToUserId = undefined
+          this.asset.userFirstName = undefined
+          this.asset.userLastName = undefined
         }
+        this.asset.status = status
+        this.showStatusSuccess.set(true)
+        setTimeout(() => this.showStatusSuccess.set(false), 3000)
+      },
+      error: (err) => {
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 
   handleConditionChange(condition: string) {
     this.assetService.updateCondition(this.asset.id, condition).subscribe({
-        next: () => {
-          this.asset.condition = condition
-          this.showConditionSuccess.set(true)
-          setTimeout(() => this.showConditionSuccess.set(false), 3000)
-        },
-        error: err => {
-          window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-        }
+      next: () => {
+        this.asset.condition = condition
+        this.showConditionSuccess.set(true)
+        setTimeout(() => this.showConditionSuccess.set(false), 3000)
+      },
+      error: (err) => {
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 
   handleCategoryChange(category: string) {
     this.assetService.updateCategory(this.asset.id, category).subscribe({
-        next: () => {
-          this.asset.category = category
-          this.showCategorySuccess.set(true)
-          setTimeout(() => this.showCategorySuccess.set(false), 3000)
-        },
-        error: err => {
-          window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-        }
+      next: () => {
+        this.asset.category = category
+        this.showCategorySuccess.set(true)
+        setTimeout(() => this.showCategorySuccess.set(false), 3000)
+      },
+      error: (err) => {
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 

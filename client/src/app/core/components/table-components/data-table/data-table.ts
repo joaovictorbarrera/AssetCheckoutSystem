@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'table[app-data-table]',
@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',
 })
-export class DataTable {
-
-}
+export class DataTable {}

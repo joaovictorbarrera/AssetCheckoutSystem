@@ -1,29 +1,41 @@
 <div class="flex flex-col w-full h-full justify-center items-center relative">
-    @if (assetDetails() && !loadingDetails()) {
-        <div class="flex flex-col gap-8 w-full overflow-auto p-8 min-h-0 flex-1">
-            <header class="flex flex-col gap-4">
-                <h2 class="text-3xl font-bold inline">
-                    {{`${assetDetails()!.name}${assetDetails()!.isArchived ? ' (Archived)' : ''} `}}
-                </h2>
+  @if (assetDetails() && !loadingDetails()) {
+  <div class="flex flex-col gap-8 w-full overflow-auto p-8 min-h-0 flex-1">
+    <header class="flex flex-col gap-4">
+      <h2 class="text-3xl font-bold inline">
+        {{ `${assetDetails()!.name}${assetDetails()!.isArchived ? ' (Archived)' : ''} ` }}
+      </h2>
 
-                <!-- Only Managers can access history tab -->
-                @if (authService.isManager) {
-                    <div class="flex">
-                        <span [class.active]="this.page() === 'details'" (click)="handleOpenDetails()" class="menu">Details</span>
-                        <span [class.active]="this.page() === 'history'" (click)="handleOpenHistory()" class="menu">History</span>
-                    </div>
-                }
-            </header>
-            @if (this.page() === 'details') {
-                <app-asset-detail-form [assetDetails]="assetDetails()!" />
-            } @else if (this.page() === 'history') {
-                <app-asset-detail-history [assetId]="assetId" />
-            }
-        </div>
-    } @else {
-        <div class="flex gap-1 items-center">
-            <app-spinning-wheel></app-spinning-wheel>
-            <span>Loading...</span>
-        </div>
+      <!-- Only Managers can access history tab -->
+      @if (authService.isManager) {
+      <div class="flex">
+        <button
+          [class.active]="this.page() === 'details'"
+          (click)="handleOpenDetails()"
+          class="menu"
+        >
+          Details
+        </button>
+        <button
+          [class.active]="this.page() === 'history'"
+          (click)="handleOpenHistory()"
+          class="menu"
+        >
+          History
+        </button>
+      </div>
+      }
+    </header>
+    @if (this.page() === 'details') {
+    <app-asset-detail-form [assetDetails]="assetDetails()!" />
+    } @else if (this.page() === 'history') {
+    <app-asset-detail-history [assetId]="assetId" />
     }
+  </div>
+  } @else {
+  <div class="flex gap-1 items-center">
+    <app-spinning-wheel></app-spinning-wheel>
+    <span>Loading...</span>
+  </div>
+  }
 </div>

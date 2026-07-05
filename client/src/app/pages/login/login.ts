@@ -1,8 +1,8 @@
-import { Component, signal } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { SubmitButton } from '../../core/components/submit-button/submit-button';
-import { AuthService } from '../../core/services/api/auth.service';
+import { Component, signal } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { Router, RouterModule } from '@angular/router'
+import { SubmitButton } from '../../core/components/submit-button/submit-button'
+import { AuthService } from '../../core/services/api/auth.service'
 @Component({
   selector: 'app-login',
   imports: [RouterModule, SubmitButton, FormsModule],
@@ -16,7 +16,10 @@ export class Login {
   failMessage = signal<string | null>(null)
   loading = signal(false)
 
-  constructor(public authService: AuthService, public router: Router) {}
+  constructor(
+    public authService: AuthService,
+    public router: Router,
+  ) {}
 
   async login(event: any) {
     event.preventDefault()
@@ -24,7 +27,7 @@ export class Login {
     this.loading.set(true)
     const error = await this.authService.login({
       emailAddress: this.emailAddress,
-      password: this.password
+      password: this.password,
     })
 
     this.loading.set(false)

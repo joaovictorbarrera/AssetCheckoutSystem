@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-spinning-wheel',
@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './spinning-wheel.html',
   styleUrl: './spinning-wheel.scss',
 })
-export class SpinningWheel {
-
-}
+export class SpinningWheel {}

@@ -6,8 +6,8 @@ export interface AssetDto {
   status: string
   condition: string
   assignedToUserId?: string
-  userFirstName?: string,
-  userLastName?: string,
+  userFirstName?: string
+  userLastName?: string
   isArchived: boolean
   isPendingReturn: boolean
 }

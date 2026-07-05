@@ -1,30 +1,32 @@
 <td>{{ user.emailAddress }}</td>
 <td>{{ user.firstName }} {{ user.lastName }}</td>
 <td>
-    <app-dropdown
-        #roleDropdown
-        [initialSelection]="user.role"
-        [list]="rolesList"
-        (dropdownChanged)="handleRoleChange($event)"
-    />
-    @if (showRoleSuccess()) {
-        <span class="text-success">Succesfully Updated Role</span>
-    }
+  <app-dropdown
+    #roleDropdown
+    [initialSelection]="user.role"
+    [list]="rolesList"
+    (dropdownChanged)="handleRoleChange($event)"
+  />
+  @if (showRoleSuccess()) {
+  <span class="text-success">Succesfully Updated Role</span>
+  }
 </td>
 <td>
-    <div class="flex gap-2 items-center w-full">
-        <input
-            class="checkbox"
-            type="checkbox"
-            [checked]="user.isActive"
-            (change)="toggleActive($event)"
-        />
-        <span>{{ user.isActive ? 'Active' : 'Inactive' }}</span>
-    </div>
-    @if (showActiveSuccess()) {
-        <span class="text-success">Succesfully Updated Status</span>
-    }
+  <div class="flex gap-2 items-center w-full">
+    <input
+      class="checkbox"
+      type="checkbox"
+      [checked]="user.isActive"
+      (change)="toggleActive($event)"
+    />
+    <span>{{ user.isActive ? 'Active' : 'Inactive' }}</span>
+  </div>
+  @if (showActiveSuccess()) {
+  <span class="text-success">Succesfully Updated Status</span>
+  }
 </td>
-<td> {{ user.lastLoginAt ? (user.lastLoginAt | date:'M/d/yy, h:mm a') : "-" }}</td>
-<td>{{ user.createdAt | date:'M/d/yy, h:mm a' }}</td>
-<td (click)="getPasswordResetLink()"><ng-icon name="heroKey" class="text-yellow-500! text-2xl cursor-pointer"></ng-icon></td>
+<td>{{ user.lastLoginAt ? (user.lastLoginAt | date: 'M/d/yy, h:mm a') : '-' }}</td>
+<td>{{ user.createdAt | date: 'M/d/yy, h:mm a' }}</td>
+<td (click)="getPasswordResetLink()">
+  <ng-icon name="heroKey" class="text-yellow-500! text-2xl cursor-pointer"></ng-icon>
+</td>

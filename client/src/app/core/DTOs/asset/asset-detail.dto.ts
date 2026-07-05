@@ -7,10 +7,10 @@ export interface AssetDetailDto {
   status: string
   condition: string
   userId?: string
-  userFirstName?: string,
-  userLastName?: string,
-  updatedAt: string,
-  createdAt: string,
+  userFirstName?: string
+  userLastName?: string
+  updatedAt: string
+  createdAt: string
   isPendingReturn: boolean
   isArchived: boolean
 }

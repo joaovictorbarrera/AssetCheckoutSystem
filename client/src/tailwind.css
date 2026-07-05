@@ -1,48 +1,48 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --bg-primary: #0C1520;
-  --bg-secondary: #0F192A;
+  --bg-primary: #0c1520;
+  --bg-secondary: #0f192a;
   --bg-elevated: #132135;
 
-  --sidebar: #0F192A;
+  --sidebar: #0f192a;
   --navbar: #132135;
 
   --surface: #132135;
-  --surface-hover: #16253D;
+  --surface-hover: #16253d;
   --surface-active: #192946;
 
-  --border: #1E2E45;
-  --border-strong: #263B58;
+  --border: #1e2e45;
+  --border-strong: #263b58;
 
-  --text-primary: #E8EFF8;
-  --text-secondary: #8A9BB5;
-  --text-muted: #4D5F78;
+  --text-primary: #e8eff8;
+  --text-secondary: #8a9bb5;
+  --text-muted: #4d5f78;
 
-  --accent: #2F80ED;
-  --accent-hover: #5B9FF5;
-  --accent-active: #1A6BD4;
+  --accent: #2f80ed;
+  --accent-hover: #5b9ff5;
+  --accent-active: #1a6bd4;
   --accent-glow: rgba(47, 128, 237, 0.2);
 
-  --success: #2EAD6B;
-  --warning: #D4882F;
-  --danger: #C44040;
-  --info: #2E9DB0;
+  --success: #2ead6b;
+  --warning: #d4882f;
+  --danger: #c44040;
+  --info: #2e9db0;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
-  --shadow-lg: 0 10px 30px rgba(0,0,0,0.7);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.7);
 
-  --chip-bg: #0E1C2F;
+  --chip-bg: #0e1c2f;
   --chip-bg-hover: #122038;
-  --chip-border: #1E2E45;
-  --chip-text: #C8D8EE;
+  --chip-border: #1e2e45;
+  --chip-text: #c8d8ee;
 
   --chip-success-bg: rgba(46, 173, 107, 0.13);
-  --chip-success-text: #5ECFA3;
+  --chip-success-text: #5ecfa3;
 
   --chip-warning-bg: rgba(212, 136, 47, 0.13);
-  --chip-warning-text: #E3B870;
+  --chip-warning-text: #e3b870;
 
   --chip-danger-bg: rgba(255, 0, 0, 0.1);
   --chip-danger-text: #b80000;
@@ -51,7 +51,7 @@
   --chip-info-text: #63e1f7;
 
   --chip-fulfilled-bg: rgba(0, 34, 255, 0.14);
-  --chip-fulfilled-text: #B0BEC5;
+  --chip-fulfilled-text: #b0bec5;
 
   --chip-canceled-bg: rgba(134, 146, 158, 0.16);
   --chip-canceled-text: #4f4f4f;

@@ -1,22 +1,24 @@
 <app-table-wrapper>
-    <table app-data-table>
-        <thead app-table-header [headers]="headers"></thead>
+  <table app-data-table>
+    <thead app-table-header [headers]="headers"></thead>
 
-        <tbody>
-            @if (!loading) {
-                @for (asset of assets.items; track asset.id) {
-                    <tr class="cursor-pointer" app-inventory-row [asset]="asset" [assetFields]="assetFields"></tr>
-                }
-                @if (assets.items.length === 0) {
-                    <tr>
-                        <td [attr.colspan]="headers.length" class="text-center"><p class="p-2">Nothing to display</p></td>
-                    </tr>
-                }
-            } @else {
-                <div class="bg-bg-primary opacity-60 absolute w-full h-full flex justify-center p-5">
-                    <app-spinning-wheel></app-spinning-wheel>
-                </div>
-            }
-        </tbody>
-    </table>
+    <tbody>
+      @if (!loading) {
+      @for (asset of assets.items; track asset.id) {
+      <tr class="cursor-pointer" app-inventory-row [asset]="asset" [assetFields]="assetFields"></tr>
+      }
+      @if (assets.items.length === 0) {
+      <tr>
+        <td [attr.colspan]="headers.length" class="text-center">
+          <p class="p-2">Nothing to display</p>
+        </td>
+      </tr>
+      }}
+      @else {
+      <div class="bg-bg-primary opacity-60 absolute w-full h-full flex justify-center p-5">
+        <app-spinning-wheel></app-spinning-wheel>
+      </div>
+      }
+    </tbody>
+  </table>
 </app-table-wrapper>

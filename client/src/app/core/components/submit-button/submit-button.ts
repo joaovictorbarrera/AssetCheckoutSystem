@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { SpinningWheel } from '../spinning-wheel/spinning-wheel';
+import { Component, Input } from '@angular/core'
+import { SpinningWheel } from '../spinning-wheel/spinning-wheel'
 
 @Component({
   selector: 'app-submit-button',
@@ -8,8 +8,8 @@ import { SpinningWheel } from '../spinning-wheel/spinning-wheel';
 })
 export class SubmitButton {
   @Input() text!: string
-  @Input() loading: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() color: string = 'accent';
-  @Input() type: string = 'submit';
+  @Input() loading = false
+  @Input() disabled = false
+  @Input() color = 'accent'
+  @Input() type = 'submit'
 }

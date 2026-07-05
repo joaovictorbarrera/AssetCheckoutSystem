@@ -1,35 +1,37 @@
-<td>{{asset.assetTag}}</td>
-<td>{{`${asset.name}${asset.isArchived ? ' (Archived)' : ''}`}}</td>
+<td>{{ asset.assetTag }}</td>
+<td>{{ `${asset.name}${asset.isArchived ? ' (Archived)' : ''}` }}</td>
 <td>
-    <app-dropdown
-        #statusDropdown
-        [initialSelection]="asset.status"
-        [list]="assetStatusesList"
-        (dropdownChanged)="handleStatusChange($event)"
-    />
-    @if (showStatusSuccess()) {
-        <span class="text-success">Succesfully Updated Status</span>
-    }
-
+  <app-dropdown
+    #statusDropdown
+    [initialSelection]="asset.status"
+    [list]="assetStatusesList"
+    (dropdownChanged)="handleStatusChange($event)"
+  />
+  @if (showStatusSuccess()) {
+  <span class="text-success">Succesfully Updated Status</span>
+  }
 </td>
-<td>{{asset.userFirstName && asset.userLastName ? `${asset.userFirstName} ${asset.userLastName}` : "-"}}</td>
+<td>
+  {{ asset.userFirstName && asset.userLastName ? `${asset.userFirstName} ${asset.userLastName}` :
+  '-' }}
+</td>
 <td class="capitalize">
-    <app-dropdown
-        [initialSelection]="asset.category"
-        [list]="assetCategoriesList"
-        (dropdownChanged)="handleCategoryChange($event)"
-    />
-    @if (showCategorySuccess()) {
-        <span class="text-success">Succesfully Updated Category</span>
-    }
+  <app-dropdown
+    [initialSelection]="asset.category"
+    [list]="assetCategoriesList"
+    (dropdownChanged)="handleCategoryChange($event)"
+  />
+  @if (showCategorySuccess()) {
+  <span class="text-success">Succesfully Updated Category</span>
+  }
 </td>
 <td>
-    <app-dropdown
-        [initialSelection]="asset.condition"
-        [list]="assetConditionsList"
-        (dropdownChanged)="handleConditionChange($event)"
-    />
-    @if (showConditionSuccess()) {
-        <span class="text-success">Succesfully Updated Condition</span>
-    }
+  <app-dropdown
+    [initialSelection]="asset.condition"
+    [list]="assetConditionsList"
+    (dropdownChanged)="handleConditionChange($event)"
+  />
+  @if (showConditionSuccess()) {
+  <span class="text-success">Succesfully Updated Condition</span>
+  }
 </td>

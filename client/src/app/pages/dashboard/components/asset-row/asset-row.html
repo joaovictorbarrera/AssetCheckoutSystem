@@ -1,17 +1,15 @@
-
-<td>{{asset.assetTag}}</td>
-<td>{{asset.name}}</td>
-<td class="capitalize">{{assetCategoryLabel}}</td>
+<td>{{ asset.assetTag }}</td>
+<td>{{ asset.name }}</td>
+<td class="capitalize">{{ assetCategoryLabel }}</td>
 <td>
-    <span [classList]="asset.status + ' chip'">
-        {{assetStatusLabel}}
-    </span>
+  <span [classList]="asset.status + ' chip'"> {{ assetStatusLabel }} </span>
 </td>
 <td>
-@if (asset.isPendingReturn) {
-    <span class="chip pending">Request Sent</span>
-} @else {
-    <button (click)="handleReturnRequest(); $event.stopPropagation()" class="btn btn-accent">Request Return</button>
-}
+  @if (asset.isPendingReturn) {
+  <span class="chip pending">Request Sent</span>
+  } @else {
+  <button (click)="handleReturnRequest(); $event.stopPropagation()" class="btn btn-accent">
+    Request Return
+  </button>
+  }
 </td>
-

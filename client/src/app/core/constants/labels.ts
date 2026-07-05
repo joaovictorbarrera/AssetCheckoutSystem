@@ -46,5 +46,5 @@ export const Labels = {
     employee: 'Employee',
     assetManager: 'Asset Manager',
     admin: 'Administrator',
-  } as Record<string, string>
-} as const;
+  } as Record<string, string>,
+} as const

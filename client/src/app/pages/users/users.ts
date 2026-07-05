@@ -5,7 +5,9 @@ import { SearchBar } from '../../core/components/search-bar/search-bar'
 import { UsersTable } from './components/users-table/users-table'
 import { TablePagination } from '../../core/components/table-components/table-pagination/table-pagination'
 import { UserService } from '../../core/services/api/user.service'
-import PaginatedResponse, { defaultPaginatedResponse } from '../../core/DTOs/shared/paginated.response'
+import PaginatedResponse, {
+  defaultPaginatedResponse,
+} from '../../core/DTOs/shared/paginated.response'
 import UserDto from '../../core/DTOs/user/user.dto'
 import UserFields from '../../core/DTOs/user/user-fields.dto'
 import { NgIcon } from '@ng-icons/core'
@@ -16,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import LabelValuePair from '../../core/DTOs/shared/label-value-pair'
 import { toLabelValuePairs } from '../../core/utils/label.utils'
 import { Labels } from '../../core/constants/labels'
-import { Dropdown } from "../../core/components/dropdown/dropdown"
+import { Dropdown } from '../../core/components/dropdown/dropdown'
 
 @Component({
   selector: 'app-users',
@@ -42,15 +44,15 @@ export class Users implements OnInit {
     private userService: UserService,
     private drawer: DrawerService,
     private userEventsService: UserEventsService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
   ) {}
 
   ngOnInit(): void {
     this.getFields()
     this.getUsers()
     this.userEventsService.usersChanged$
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe(() => this.getUsers())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.getUsers())
   }
 
   handleRoleChange(role: string) {
@@ -69,7 +71,7 @@ export class Users implements OnInit {
     this.getUsers(true)
   }
 
-  handlePaginationChange(pagination: { pageSize: number, pageNumber: number }) {
+  handlePaginationChange(pagination: { pageSize: number; pageNumber: number }) {
     this.pageSize.set(pagination.pageSize)
     this.pageNumber.set(pagination.pageNumber)
     this.getUsers()
@@ -77,15 +79,16 @@ export class Users implements OnInit {
 
   getFields() {
     this.userService.getFields().subscribe({
-      next: fields => {
+      next: (fields) => {
         this.userFields.set(fields)
         this.rolesList = toLabelValuePairs(fields.roles, Labels.roles)
       },
-      error: err => window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error"),
+      error: (err) =>
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error'),
     })
   }
 
-  getUsers(backToPageOne: boolean = false) {
+  getUsers(backToPageOne = false) {
     if (this.loadingUsers()) return
 
     this.loadingUsers.set(true)
@@ -97,15 +100,17 @@ export class Users implements OnInit {
         pageSize: this.pageSize(),
         searchText: this.searchText(),
         showInactive: this.showInactive(),
-        role: this.selectedRole()
+        role: this.selectedRole(),
       })
       .subscribe({
-        next: users => {
+        next: (users) => {
           this.users.set(users as PaginatedResponse<UserDto>)
           this.loadingUsers.set(false)
         },
-        error: err => {
-          window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
+        error: (err) => {
+          window.alert(
+            `${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error',
+          )
           this.users.set(defaultPaginatedResponse<UserDto>())
           this.loadingUsers.set(false)
         },

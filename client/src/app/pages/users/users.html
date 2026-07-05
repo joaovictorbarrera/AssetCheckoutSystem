@@ -1,35 +1,47 @@
 <app-page-wrapper>
-    <app-page-header>
-        <div class="flex items-center w-full relative">
-            <button (click)="openCreateUser()" class="btn btn-accent flex items-center gap-0.5">
-                <ng-icon name="heroPlus" size="20" />
-                <span class="pb-px">New User</span>
-            </button>
+  <app-page-header>
+    <div class="flex items-center w-full relative">
+      <button (click)="openCreateUser()" class="btn btn-accent flex items-center gap-0.5">
+        <ng-icon name="heroPlus" size="20" />
+        <span class="pb-px">New User</span>
+      </button>
 
-            <h1 class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex gap-2 items-center justify-center">
-                <ng-icon name="heroUser" />Users
-            </h1>
+      <h1
+        class="text-3xl absolute left-1/2 transform -translate-x-1/2 flex gap-2 items-center justify-center"
+      >
+        <ng-icon name="heroUser" />Users
+      </h1>
 
-            <button (click)="getUsers()" class="text-accent ml-auto text-3xl cursor-pointer">
-                <ng-icon name="heroArrowPath"></ng-icon>
-            </button>
-        </div>
-    </app-page-header>
-    <div class="flex gap-5 justify-center p-5 items-end">
-        <app-dropdown
-            class="w-50"
-            [list]="rolesList"
-            [enableAll]="true"
-            (dropdownChanged)="handleRoleChange($event)"
-        />
-
-        <app-search-bar (search)="handleSearch($event)" />
-
-        <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
-            <input class="checkbox" type="checkbox" (change)="handleShowInactive($event)" />
-            <span>Show Inactive</span>
-        </div>
+      <button (click)="getUsers()" class="text-accent ml-auto text-3xl cursor-pointer">
+        <ng-icon name="heroArrowPath"></ng-icon>
+      </button>
     </div>
-    <app-users-table [headers]="headers" [users]="users()" [roles]="userFields().roles" [loading]="loadingUsers()" />
-    <app-table-pagination [name]="'Users'" [colspan]="headers.length" [pagination]="users().pagination" (paginationChanged)="handlePaginationChange($event)" />
+  </app-page-header>
+  <div class="flex gap-5 justify-center p-5 items-end">
+    <app-dropdown
+      class="w-50"
+      [list]="rolesList"
+      [enableAll]="true"
+      (dropdownChanged)="handleRoleChange($event)"
+    />
+
+    <app-search-bar (searchChanged)="handleSearch($event)" />
+
+    <div class="flex gap-2 text-text-muted text-sm items-center mb-3">
+      <input class="checkbox" type="checkbox" (change)="handleShowInactive($event)" />
+      <span>Show Inactive</span>
+    </div>
+  </div>
+  <app-users-table
+    [headers]="headers"
+    [users]="users()"
+    [roles]="userFields().roles"
+    [loading]="loadingUsers()"
+  />
+  <app-table-pagination
+    [name]="'Users'"
+    [colspan]="headers.length"
+    [pagination]="users().pagination"
+    (paginationChanged)="handlePaginationChange($event)"
+  />
 </app-page-wrapper>

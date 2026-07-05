@@ -5,7 +5,7 @@ import UserDto from '../../../../core/DTOs/user/user.dto'
 import { SpinningWheel } from '../../../../core/components/spinning-wheel/spinning-wheel'
 import { UserRow } from '../user-row/user-row'
 import { TableWrapper } from '../../../../core/components/table-components/table-wrapper/table-wrapper'
-import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
+import { DataTable } from '../../../../core/components/table-components/data-table/data-table'
 
 @Component({
   selector: 'app-users-table',
@@ -17,5 +17,5 @@ export class UsersTable {
   @Input() users!: PaginatedResponse<UserDto>
   @Input() headers: string[] = []
   @Input() roles: string[] = []
-  @Input() loading: boolean = false
+  @Input() loading = false
 }

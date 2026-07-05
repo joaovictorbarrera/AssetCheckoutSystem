@@ -1,14 +1,12 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
-import { AssetDetailDto } from '../../../../../DTOs/asset/asset-detail.dto';
-import { DatePipe } from '@angular/common';
-import { SpinningWheel } from '../../../../spinning-wheel/spinning-wheel';
-import { SubmitButton } from '../../../../submit-button/submit-button';
-import { FormsModule, NgForm } from '@angular/forms';
-import AssetFields from '../../../../../DTOs/asset/asset-fields.dto';
-import { DrawerService } from '../../../../../services/util/drawer.service';
-import { AssetEventsService } from '../../../../../services/events/asset-events.service';
-import { AuthService } from '../../../../../services/api/auth.service';
-import { AssetService } from '../../../../../services/api/asset.service';
+import { Component, Input, OnInit, signal } from '@angular/core'
+import { AssetDetailDto } from '../../../../../DTOs/asset/asset-detail.dto'
+import { DatePipe } from '@angular/common'
+import { SubmitButton } from '../../../../submit-button/submit-button'
+import { FormsModule, NgForm } from '@angular/forms'
+import { DrawerService } from '../../../../../services/util/drawer.service'
+import { AssetEventsService } from '../../../../../services/events/asset-events.service'
+import { AuthService } from '../../../../../services/api/auth.service'
+import { AssetService } from '../../../../../services/api/asset.service'
 
 @Component({
   selector: 'app-asset-detail-form',
@@ -30,7 +28,7 @@ export class AssetDetailForm implements OnInit {
     private assetService: AssetService,
     public authService: AuthService,
     private assetEventsService: AssetEventsService,
-    public drawer: DrawerService
+    public drawer: DrawerService,
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +47,10 @@ export class AssetDetailForm implements OnInit {
         this.drawer.close()
         this.assetEventsService.emitAssetsChanged()
       },
-      error: err => {
+      error: (err) => {
         this.loadingArchive.set(false)
-        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-      }
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 
@@ -60,20 +58,24 @@ export class AssetDetailForm implements OnInit {
     if (ngForm.invalid || this.loadingUpdate()) return
 
     this.loadingUpdate.set(true)
-    this.assetService.update(this.assetDetails.id, {
-      assetTag: this.assetTag,
-      name: this.assetName,
-      serialNumber: this.serialNumber
-    }).subscribe({
-      next: () => {
-        this.loadingUpdate.set(false)
-        this.drawer.close()
-        this.assetEventsService.emitAssetsChanged()
-      },
-      error: err => {
-        this.loadingUpdate.set(false)
-        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-      }
-    })
+    this.assetService
+      .update(this.assetDetails.id, {
+        assetTag: this.assetTag,
+        name: this.assetName,
+        serialNumber: this.serialNumber,
+      })
+      .subscribe({
+        next: () => {
+          this.loadingUpdate.set(false)
+          this.drawer.close()
+          this.assetEventsService.emitAssetsChanged()
+        },
+        error: (err) => {
+          this.loadingUpdate.set(false)
+          window.alert(
+            `${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error',
+          )
+        },
+      })
   }
 }

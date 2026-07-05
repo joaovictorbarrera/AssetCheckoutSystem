@@ -29,7 +29,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) {
     window.addEventListener('focus', () => this.onWindowFocus())
   }
@@ -48,14 +48,12 @@ export class AuthService {
     }
   }
 
-  async login(body: any): Promise<string |null> {
+  async login(body: unknown): Promise<string | null> {
     try {
       const res = await firstValueFrom(
-        this.http.post<{ authorizationToken: string }>(
-          `${this.apiUrl}/login`,
-          body,
-          { withCredentials: true }
-        )
+        this.http.post<{ authorizationToken: string }>(`${this.apiUrl}/login`, body, {
+          withCredentials: true,
+        }),
       )
 
       const authToken = res.authorizationToken
@@ -117,27 +115,26 @@ export class AuthService {
 
     this.refreshInProgress = true
 
-    this.http.get<{ authorizationToken: string }>(
-      `${this.apiUrl}/refresh`,
-      {
-        withCredentials: true
-      }
-    ).subscribe({
-      next: res => {
-        const authToken = res.authorizationToken
+    this.http
+      .get<{ authorizationToken: string }>(`${this.apiUrl}/refresh`, {
+        withCredentials: true,
+      })
+      .subscribe({
+        next: (res) => {
+          const authToken = res.authorizationToken
 
-        localStorage.setItem('authorizationToken', authToken)
+          localStorage.setItem('authorizationToken', authToken)
 
-        this.scheduleRefresh(authToken)
-      },
-      error: err => {
-        console.log(err.title)
-        this.logout()
-      },
-      complete: () => {
-        this.refreshInProgress = false
-      }
-    })
+          this.scheduleRefresh(authToken)
+        },
+        error: (err) => {
+          console.log(err.title)
+          this.logout()
+        },
+        complete: () => {
+          this.refreshInProgress = false
+        },
+      })
   }
 
   logout() {
@@ -165,10 +162,8 @@ export class AuthService {
       return this.loadUserPromise
     }
 
-    this.loadUserPromise = firstValueFrom(
-      this.http.get<UserDto>(`${this.apiUrl}/me`)
-    )
-      .then(user => {
+    this.loadUserPromise = firstValueFrom(this.http.get<UserDto>(`${this.apiUrl}/me`))
+      .then((user) => {
         this.currentUser.set(user)
         return user
       })

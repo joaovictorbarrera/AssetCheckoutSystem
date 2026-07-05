@@ -1,15 +1,14 @@
-<span class="flex flex-col relative" (click)="$event.stopPropagation()">
+<span
+  class="flex flex-col relative"
+  tabindex="0"
+  (click)="$event.stopPropagation()"
+  (keydown)="$event.stopPropagation()"
+>
   @if (title) {
-    <span class="text-sm p-1 text-text-muted">
-      {{ title }}
-    </span>
+  <span class="text-sm p-1 text-text-muted"> {{ title }} </span>
   }
 
-  <button
-    type="button"
-    class="dropdown"
-    (click)="toggle()">
-
+  <button type="button" class="dropdown" (click)="toggle()">
     <span>{{ currentLabel }}</span>
 
     <svg
@@ -17,39 +16,39 @@
       [class.rotate-180]="open"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor">
-
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M6 9l6 6 6-6"/>
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6" />
     </svg>
   </button>
 
   @if (open) {
-    <div class="dropdown-menu" [class.dropdown-menu-up]="openUpward()">
-
-      @if (enableAll) {
-        <div
-          class="dropdown-option"
-          [class.selected]="currentValue === 'all'"
-          (click)="select('all')">
-          All
-        </div>
-      }
-
-      @for (pair of list; track pair.value) {
-        <div
-          class="dropdown-option"
-          [class.selected]="pair.value === currentValue"
-          (click)="select(pair.value)">
-
-          {{ pair.label }}
-
-        </div>
-      }
-
+  <div class="dropdown-menu" [class.dropdown-menu-up]="openUpward()">
+    @if (enableAll) {
+    <div
+      class="dropdown-option"
+      role="button"
+      tabindex="0"
+      [class.selected]="currentValue === 'all'"
+      (click)="select('all')"
+      (keydown.enter)="select('all')"
+      (keydown.space)="$event.preventDefault(); select('all')"
+    >
+      All
     </div>
+    } @for (pair of list; track pair.value) {
+    <div
+      class="dropdown-option"
+      role="button"
+      tabindex="0"
+      [class.selected]="pair.value === currentValue"
+      (click)="select(pair.value)"
+      (keydown.enter)="select(pair.value)"
+      (keydown.space)="$event.preventDefault(); select(pair.value)"
+    >
+      {{ pair.label }}
+    </div>
+    }
+  </div>
   }
 </span>

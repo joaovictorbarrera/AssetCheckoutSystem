@@ -1,20 +1,39 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core'
+import { provideRouter } from '@angular/router'
 
-import { routes } from './app.routes';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './core/interceptors/auth-interceptor';
-import { provideIcons } from '@ng-icons/core';
-import { heroArrowPath, heroCalendar, heroCheck, heroChevronLeft, heroChevronRight, heroClipboardDocumentCheck, heroComputerDesktop, heroInboxArrowDown, heroKey, heroListBullet, heroMagnifyingGlass, heroPlus, heroServerStack, heroShieldCheck, heroUser, heroXMark } from '@ng-icons/heroicons/outline';
+import { routes } from './app.routes'
+import { provideHttpClient, withInterceptors } from '@angular/common/http'
+import { authInterceptor } from './core/interceptors/auth-interceptor'
+import { provideIcons } from '@ng-icons/core'
+import {
+  heroArrowPath,
+  heroCalendar,
+  heroCheck,
+  heroChevronLeft,
+  heroChevronRight,
+  heroClipboardDocumentCheck,
+  heroComputerDesktop,
+  heroInboxArrowDown,
+  heroKey,
+  heroListBullet,
+  heroMagnifyingGlass,
+  heroPlus,
+  heroServerStack,
+  heroShieldCheck,
+  heroUser,
+  heroXMark,
+} from '@ng-icons/heroicons/outline'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([
-      authInterceptor
-    ])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideIcons({
       heroMagnifyingGlass,
       heroComputerDesktop,
@@ -31,7 +50,7 @@ export const appConfig: ApplicationConfig = {
       heroCheck,
       heroCalendar,
       heroArrowPath,
-      heroKey
-    })
-  ]
+      heroKey,
+    }),
+  ],
 }

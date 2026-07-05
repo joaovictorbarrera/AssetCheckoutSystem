@@ -1,184 +1,178 @@
 <div class="w-full h-full justify-center items-center relative">
-    <div class="w-full h-full flex flex-col overflow-auto p-8 gap-5 pb-24">
+  <div class="w-full h-full flex flex-col overflow-auto p-8 gap-5 pb-24">
     @if (!this.loadingDetails() && this.requestDetails()) {
-        <header class="w-full">
-            <h2 class="text-2xl font-bold inline capitalize">
-                {{`${requestDetails()!.requestType} Request${requestDetails()!.isArchived ? ' (Archived)' : ''} `}}
-            </h2>
-        </header>
-        <div class="flex w-full flex-col gap-5">
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Request Type</p>
-                <span class="capitalize">{{this.requestDetails()?.requestType}}</span>
-            </div>
+    <header class="w-full">
+      <h2 class="text-2xl font-bold inline capitalize">
+        {{ `${requestDetails()!.requestType} Request${requestDetails()!.isArchived ? ' (Archived)' :
+        ''} ` }}
+      </h2>
+    </header>
+    <div class="flex w-full flex-col gap-5">
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Request Type</p>
+        <span class="capitalize">{{ this.requestDetails()?.requestType }}</span>
+      </div>
 
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Asset Category</p>
-                <span class="capitalize">{{this.requestDetails()?.assetCategory}}</span>
-            </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Asset Category</p>
+        <span class="capitalize">{{ this.requestDetails()?.assetCategory }}</span>
+      </div>
 
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Requested By</p>
-                <span>
-                    {{`${this.requestDetails()?.requestorFirstName} ${this.requestDetails()?.requestorLastName} (${this.requestDetails()?.requestorEmail})`}}
-                </span>
-            </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Requested By</p>
+        <span>
+          {{ `${this.requestDetails()?.requestorFirstName}
+          ${this.requestDetails()?.requestorLastName} (${this.requestDetails()?.requestorEmail})` }}
+        </span>
+      </div>
 
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Reason</p>
-                <span>
-                    {{this.requestDetails()?.reason}}
-                </span>
-            </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Reason</p>
+        <span> {{ this.requestDetails()?.reason }} </span>
+      </div>
 
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Status</p>
-                <span class="capitalize">{{this.requestDetails()?.status}}</span>
-            </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Status</p>
+        <span class="capitalize">{{ this.requestDetails()?.status }}</span>
+      </div>
 
-            @if (this.requestDetails()?.reviewerId) {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Last Actioned By</p>
-                    <span>
-                        {{`${this.requestDetails()?.reviewerFirstName} ${this.requestDetails()?.reviewerLastName} (${this.requestDetails()?.reviewerEmail})`}}
-                    </span>
-                </div>
-            }
+      @if (this.requestDetails()?.reviewerId) {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Last Actioned By</p>
+        <span>
+          {{ `${this.requestDetails()?.reviewerFirstName} ${this.requestDetails()?.reviewerLastName}
+          (${this.requestDetails()?.reviewerEmail})` }}
+        </span>
+      </div>
+      }
 
-            <div class="flex flex-col gap-2">
-                <p class="text-text-secondary">Requested At</p>
-                <span class="capitalize">{{this.requestDetails()?.createdAt | date:'M/d/yy, h:mm a'}}</span>
-            </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Requested At</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.createdAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
 
-            @if (this.requestDetails()?.status === 'returned' || this.requestDetails()?.status === 'fulfilled') {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Asset Name</p>
-                    <span>{{this.requestDetails()?.assignedAssetName}}</span>
-                </div>
+      @if ( this.requestDetails()?.status === 'returned' || this.requestDetails()?.status ===
+      'fulfilled' ) {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Asset Name</p>
+        <span>{{ this.requestDetails()?.assignedAssetName }}</span>
+      </div>
 
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Asset Tag</p>
-                    <span>{{this.requestDetails()?.assignedAssetTag}}</span>
-                </div>
-            }
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Asset Tag</p>
+        <span>{{ this.requestDetails()?.assignedAssetTag }}</span>
+      </div>
+      } @if (this.requestDetails()?.status === 'approved') {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Approved At</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.approvedAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
+      } @if (this.requestDetails()?.status === 'rejected') {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Rejected At</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.rejectedAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
+      } @if (this.requestDetails()?.status === 'fulfilled') {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Fulfilled At</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.fulfilledAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
+      } @if (this.requestDetails()?.status === 'returned') {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Returned At</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.returnedAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
+      } @if (this.requestDetails()?.updatedAt) {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary">Last Updated</p>
+        <span class="capitalize"
+          >{{ this.requestDetails()?.updatedAt | date: 'M/d/yy, h:mm a' }}</span
+        >
+      </div>
+      } @if (authService.isManager && requestDetails()?.status === 'approved') {
+      <div class="flex flex-col gap-2">
+        <p class="text-text-secondary flex gap-1">
+          Assign an asset: @if (loadingAvailableAssets()) {
+          <app-spinning-wheel />
+          }
+        </p>
+        @if (availableAssets().length > 0 || loadingAvailableAssets()) {
+        <app-dropdown [list]="availableAssets()" (dropdownChanged)="assetSelectionChange($event)" />
+        } @else {
+        <span class="text-danger">No available assets</span>
+        }
+      </div>
+      } @if (authService.isManager) {
+      <div class="bg-bg-elevated absolute w-full bottom-0 left-0 flex gap-2 p-5">
+        @if (requestDetails()?.status === 'pending') { @if (requestDetails()?.requestType ===
+        'checkout') {
+        <app-submit-button
+          (click)="approve()"
+          class="w-30"
+          [color]="'success'"
+          [text]="'Approve'"
+          [disabled]="requestDetails()!.isArchived"
+          [loading]="loadingApprove()"
+        />
+        } @else if (requestDetails()?.requestType === 'return') {
+        <app-submit-button
+          (click)="return()"
+          class="w-30"
+          [color]="'success'"
+          [text]="'Return'"
+          [disabled]="requestDetails()!.isArchived"
+          [loading]="loadingReturn()"
+        />
+        }
 
-            @if (this.requestDetails()?.status === "approved") {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Approved At</p>
-                    <span class="capitalize">{{this.requestDetails()?.approvedAt | date:'M/d/yy, h:mm a'}}</span>
-                </div>
-            }
+        <app-submit-button
+          (click)="reject()"
+          class="w-30"
+          [color]="'danger'"
+          [text]="'Reject'"
+          [disabled]="requestDetails()!.isArchived"
+          [loading]="loadingReject()"
+        />
+        } @if (requestDetails()?.status === 'approved') {
+        <app-submit-button
+          (click)="assign()"
+          class="w-30"
+          [color]="'success'"
+          [text]="'Assign'"
+          [disabled]="requestDetails()!.isArchived || !this.selectedAssetId()"
+          [loading]="loadingAssign()"
+        />
+        }
 
-            @if (this.requestDetails()?.status === "rejected") {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Rejected At</p>
-                    <span class="capitalize">{{this.requestDetails()?.rejectedAt | date:'M/d/yy, h:mm a'}}</span>
-                </div>
-            }
-
-            @if (this.requestDetails()?.status === "fulfilled") {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Fulfilled At</p>
-                    <span class="capitalize">{{this.requestDetails()?.fulfilledAt | date:'M/d/yy, h:mm a'}}</span>
-                </div>
-            }
-
-            @if (this.requestDetails()?.status === "returned") {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Returned At</p>
-                    <span class="capitalize">{{this.requestDetails()?.returnedAt | date:'M/d/yy, h:mm a'}}</span>
-                </div>
-            }
-
-            @if (this.requestDetails()?.updatedAt) {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary">Last Updated</p>
-                    <span class="capitalize">{{this.requestDetails()?.updatedAt | date:'M/d/yy, h:mm a'}}</span>
-                </div>
-            }
-
-            @if (authService.isManager && requestDetails()?.status === 'approved') {
-                <div class="flex flex-col gap-2">
-                    <p class="text-text-secondary flex gap-1">
-                        Assign an asset:
-                        @if (loadingAvailableAssets()) {
-                            <app-spinning-wheel />
-                        }
-                    </p>
-                    @if (availableAssets().length > 0 || loadingAvailableAssets()) {
-                        <app-dropdown
-                            [list]="availableAssets()"
-                            (dropdownChanged)="assetSelectionChange($event)"
-                        />
-                    } @else {
-                        <span class="text-danger">No available assets</span>
-                    }
-                </div>
-            }
-
-            @if (authService.isManager) {
-                <div class="bg-bg-elevated absolute w-full bottom-0 left-0 flex gap-2 p-5">
-                    @if (requestDetails()?.status === 'pending') {
-                        @if (requestDetails()?.requestType === 'checkout') {
-                            <app-submit-button
-                                (click)="approve()"
-                                class="w-30"
-                                [color]="'success'"
-                                [text]="'Approve'"
-                                [disabled]="requestDetails()!.isArchived"
-                                [loading]="loadingApprove()"
-                            />
-                        } @else if (requestDetails()?.requestType === 'return') {
-                            <app-submit-button
-                                (click)="return()"
-                                class="w-30"
-                                [color]="'success'"
-                                [text]="'Return'"
-                                [disabled]="requestDetails()!.isArchived"
-                                [loading]="loadingReturn()"
-                            />
-                        }
-
-                        <app-submit-button
-                            (click)="reject()"
-                            class="w-30"
-                            [color]="'danger'"
-                            [text]="'Reject'"
-                            [disabled]="requestDetails()!.isArchived"
-                            [loading]="loadingReject()"
-                        />
-                    }
-
-                    @if (requestDetails()?.status === 'approved') {
-                        <app-submit-button
-                            (click)="assign()"
-                            class="w-30"
-                            [color]="'success'"
-                            [text]="'Assign'"
-                            [disabled]="requestDetails()!.isArchived || !this.selectedAssetId()"
-                            [loading]="loadingAssign()"
-                        />
-                    }
-
-                    <button class="btn btn-cancel w-30" (click)="drawer.close()">Cancel</button>
-                    @if (authService.isAdmin) {
-                        <app-submit-button
-                            (click)="archive()"
-                            [color]="'danger'"
-                            class="w-30"
-                            [text]="'Archive'"
-                            [loading]="loadingArchive()"
-                            [disabled]="requestDetails()!.isArchived"
-                        />
-                    }
-                </div>
-            }
-        </div>
-    } @else {
-        <div class="flex gap-1 items-center">
-            <app-spinning-wheel></app-spinning-wheel>
-            <span>Loading...</span>
-        </div>
-    }
+        <button class="btn btn-cancel w-30" (click)="drawer.close()">Cancel</button>
+        @if (authService.isAdmin) {
+        <app-submit-button
+          (click)="archive()"
+          [color]="'danger'"
+          class="w-30"
+          [text]="'Archive'"
+          [loading]="loadingArchive()"
+          [disabled]="requestDetails()!.isArchived"
+        />
+        }
+      </div>
+      }
     </div>
+    } @else {
+    <div class="flex gap-1 items-center">
+      <app-spinning-wheel></app-spinning-wheel>
+      <span>Loading...</span>
+    </div>
+    }
+  </div>
 </div>

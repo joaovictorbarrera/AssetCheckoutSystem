@@ -1,75 +1,73 @@
 <form
-    class="flex flex-col w-full h-full justify-center items-center p-7 relative"
-    #userForm="ngForm"
-    (ngSubmit)="submit(userForm)"
+  class="flex flex-col w-full h-full justify-center items-center p-7 relative"
+  #userForm="ngForm"
+  (ngSubmit)="submit(userForm)"
 >
-    <div class="flex flex-col gap-8 w-full h-full">
-        <h2 class="text-2xl font-bold inline">Create New Asset</h2>
-        <div class="flex flex-col gap-5">
-            <div class="flex flex-col gap-2">
-                <span>Asset Name *</span>
-                <input
-                    required
-                    name="name"
-                    class="dark-input"
-                    type="text"
-                    placeholder="Dell Inspiron 14"
-                    [(ngModel)]="assetName"
-                />
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <span>Asset Tag *</span>
-                <input
-                    required
-                    name="tag"
-                    class="dark-input"
-                    type="text"
-                    placeholder="TL-001"
-                    [(ngModel)]="assetTag"
-                />
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <span>Serial Number</span>
-                <input
-                    name="serialNumber"
-                    class="dark-input"
-                    type="text"
-                    placeholder="7B8H9X2"
-                    [(ngModel)]="serialNumber"
-                />
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <span>Category *</span>
-                <app-dropdown
-                    [initialSelection]="category()"
-                    [list]="assetCategoriesList"
-                    (dropdownChanged)="handleCategoryChange($event)"
-                />
-            </div>
-
-            <div class="flex flex-col gap-2">
-                <span>Condition *</span>
-                <app-dropdown
-                    [initialSelection]="condition()"
-                    [list]="assetConditionsList"
-                    (dropdownChanged)="handleConditionChange($event)"
-                />
-            </div>
-        </div>
-    </div>
-
-    <div class="self-start flex gap-2">
-        <app-submit-button
-            class="mt-auto w-30"
-            [text]="'Create'"
-            [loading]="this.loading()"
-            [disabled]="!assetTag || !assetName || !category() || !condition()"
+  <div class="flex flex-col gap-8 w-full h-full">
+    <h2 class="text-2xl font-bold inline">Create New Asset</h2>
+    <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
+        <span>Asset Name *</span>
+        <input
+          required
+          name="name"
+          class="dark-input"
+          type="text"
+          placeholder="Dell Inspiron 14"
+          [(ngModel)]="assetName"
         />
-        <button class="btn btn-cancel w-30" (click)="drawer.close()">
-            Cancel
-        </button>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <span>Asset Tag *</span>
+        <input
+          required
+          name="tag"
+          class="dark-input"
+          type="text"
+          placeholder="TL-001"
+          [(ngModel)]="assetTag"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <span>Serial Number</span>
+        <input
+          name="serialNumber"
+          class="dark-input"
+          type="text"
+          placeholder="7B8H9X2"
+          [(ngModel)]="serialNumber"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <span>Category *</span>
+        <app-dropdown
+          [initialSelection]="category()"
+          [list]="assetCategoriesList"
+          (dropdownChanged)="handleCategoryChange($event)"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <span>Condition *</span>
+        <app-dropdown
+          [initialSelection]="condition()"
+          [list]="assetConditionsList"
+          (dropdownChanged)="handleConditionChange($event)"
+        />
+      </div>
     </div>
+  </div>
+
+  <div class="self-start flex gap-2">
+    <app-submit-button
+      class="mt-auto w-30"
+      [text]="'Create'"
+      [loading]="this.loading()"
+      [disabled]="!assetTag || !assetName || !category() || !condition()"
+    />
+    <button class="btn btn-cancel w-30" (click)="drawer.close()">Cancel</button>
+  </div>
 </form>

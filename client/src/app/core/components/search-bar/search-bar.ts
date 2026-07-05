@@ -11,10 +11,10 @@ import { NgIcon } from '@ng-icons/core'
 export class SearchBar {
   searchText = ''
 
-  @Output() search = new EventEmitter<string>()
+  @Output() searchChanged = new EventEmitter<string>()
 
   onSearch() {
-    this.search.emit(this.searchText.trim())
+    this.searchChanged.emit(this.searchText.trim())
   }
 
   onEnter(event: KeyboardEvent) {

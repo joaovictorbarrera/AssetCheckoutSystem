@@ -1,11 +1,11 @@
 th {
-    padding-inline: 1.25rem;
-    padding-block: .75rem;
-    text-align: left;
+  padding-inline: 1.25rem;
+  padding-block: 0.75rem;
+  text-align: left;
 }
 
 :host {
-    position: sticky;
-    z-index: 200;
-    top: 0;
+  position: sticky;
+  z-index: 200;
+  top: 0;
 }

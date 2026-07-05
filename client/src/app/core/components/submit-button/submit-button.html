@@ -1,15 +1,14 @@
 <button
-  [classList]="'btn-'+color+' btn w-full'"
+  [classList]="'btn-' + color + ' btn w-full'"
   [type]="type"
   [disabled]="disabled || loading"
 >
-  @if (!loading) {
-    {{text}}
-  } @else {
-    <span class="flex items-center justify-center gap-2">
-      <app-spinning-wheel />
+  @if (!loading) { {{ text }} }
+  @else {
+  <span class="flex items-center justify-center gap-2">
+    <app-spinning-wheel />
 
-      Loading...
-    </span>
+    Loading...
+  </span>
   }
 </button>

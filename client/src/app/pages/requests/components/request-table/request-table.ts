@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { CheckoutRequestDto } from '../../../../core/DTOs/checkout-request/checkout-request.dto';
-import PaginatedResponse from '../../../../core/DTOs/shared/paginated.response';
-import { TableWrapper } from "../../../../core/components/table-components/table-wrapper/table-wrapper";
-import { TableHeader } from "../../../../core/components/table-components/table-header/table-header";
-import { SpinningWheel } from "../../../../core/components/spinning-wheel/spinning-wheel";
-import { RequestRow } from "../request-row/request-row";
-import { DataTable } from "../../../../core/components/table-components/data-table/data-table";
+import { Component, Input } from '@angular/core'
+import { CheckoutRequestDto } from '../../../../core/DTOs/checkout-request/checkout-request.dto'
+import PaginatedResponse from '../../../../core/DTOs/shared/paginated.response'
+import { TableWrapper } from '../../../../core/components/table-components/table-wrapper/table-wrapper'
+import { TableHeader } from '../../../../core/components/table-components/table-header/table-header'
+import { SpinningWheel } from '../../../../core/components/spinning-wheel/spinning-wheel'
+import { RequestRow } from '../request-row/request-row'
+import { DataTable } from '../../../../core/components/table-components/data-table/data-table'
 
 @Component({
   selector: 'app-request-table',
@@ -19,7 +19,7 @@ export class RequestTable {
   @Input() loading = false
 
   handleCancelled(id: string) {
-    this.requests.items = this.requests.items.filter(r => r.id !== id);
-    this.requests.pagination.totalCount--;
+    this.requests.items = this.requests.items.filter((r) => r.id !== id)
+    this.requests.pagination.totalCount--
   }
 }

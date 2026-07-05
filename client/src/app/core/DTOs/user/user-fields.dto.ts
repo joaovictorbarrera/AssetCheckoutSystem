@@ -1,3 +1,3 @@
 export default interface UserFields {
-    roles: string[]
+  roles: string[]
 }

@@ -1,4 +1,15 @@
-import { afterNextRender, Component, ElementRef, EventEmitter, HostListener, inject, Injector, Input, OnChanges, Output, signal } from '@angular/core'
+import {
+  afterNextRender,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  Input,
+  OnChanges,
+  Output,
+  signal,
+} from '@angular/core'
 import LabelValuePair from '../../DTOs/shared/label-value-pair'
 
 @Component({
@@ -27,13 +38,13 @@ export class Dropdown implements OnChanges {
 
   constructor(
     private elementRef: ElementRef<HTMLElement>,
-    private injector: Injector
+    private injector: Injector,
   ) {}
 
   ngOnChanges(): void {
     if (this.initialSelection) {
       this.currentValue = this.initialSelection
-      this.currentLabel = this.list.find(x => x.value === this.initialSelection)?.label ?? ''
+      this.currentLabel = this.list.find((x) => x.value === this.initialSelection)?.label ?? ''
     }
 
     if (this.enableAll) {
@@ -66,7 +77,8 @@ export class Dropdown implements OnChanges {
 
     this.lastValue = this.currentValue
     this.currentValue = value
-    this.currentLabel = value === 'all' ? 'All' : this.list.find(x => x.value === value)?.label ?? ''
+    this.currentLabel =
+      value === 'all' ? 'All' : (this.list.find((x) => x.value === value)?.label ?? '')
     this.open = false
 
     this.dropdownChanged.emit(value === 'all' ? '' : value)
@@ -74,7 +86,7 @@ export class Dropdown implements OnChanges {
 
   revert() {
     this.currentValue = this.lastValue
-    this.currentLabel = this.list.find(x => x.value === this.currentValue)?.label ?? ''
+    this.currentLabel = this.list.find((x) => x.value === this.currentValue)?.label ?? ''
   }
 
   @HostListener('document:click')
@@ -88,7 +100,9 @@ export class Dropdown implements OnChanges {
 
   updateDirection() {
     const buttonEl = this.elementRef.nativeElement.querySelector('.dropdown') as HTMLElement | null
-    const menuEl = this.elementRef.nativeElement.querySelector('.dropdown-menu') as HTMLElement | null
+    const menuEl = this.elementRef.nativeElement.querySelector(
+      '.dropdown-menu',
+    ) as HTMLElement | null
 
     if (!buttonEl || !menuEl) {
       return

@@ -9,58 +9,58 @@ import AvailableAssetDto from '../../DTOs/asset/available-asset.dto'
 import AssetFields from '../../DTOs/asset/asset-fields.dto'
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AssetService {
-    private readonly apiUrl = `${environment.apiUrl}/assets`
+  private readonly apiUrl = `${environment.apiUrl}/assets`
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getAssets(request: any = {}) {
-        return this.http.get<PaginatedResponse<AssetDto>>(this.apiUrl, {
-            params: request,
-        })
-    }
+  getAssets(request: any = {}) {
+    return this.http.get<PaginatedResponse<AssetDto>>(this.apiUrl, {
+      params: request,
+    })
+  }
 
-    getAvailable(category: string) {
-        return this.http.get<AvailableAssetDto[]>(`${this.apiUrl}/available`, {
-            params: { category },
-        })
-    }
+  getAvailable(category: string) {
+    return this.http.get<AvailableAssetDto[]>(`${this.apiUrl}/available`, {
+      params: { category },
+    })
+  }
 
-    getDetail(id: string) {
-        return this.http.get<AssetDetailDto>(`${this.apiUrl}/${id}`)
-    }
+  getDetail(id: string) {
+    return this.http.get<AssetDetailDto>(`${this.apiUrl}/${id}`)
+  }
 
-    getFields() {
-        return this.http.get<AssetFields>(`${this.apiUrl}/fields`)
-    }
+  getFields() {
+    return this.http.get<AssetFields>(`${this.apiUrl}/fields`)
+  }
 
-    getHistory(id: string) {
-        return this.http.get<AssetHistory[]>(`${this.apiUrl}/${id}/history`)
-    }
+  getHistory(id: string) {
+    return this.http.get<AssetHistory[]>(`${this.apiUrl}/${id}/history`)
+  }
 
-    create(request: any) {
-        return this.http.post<void>(this.apiUrl, request)
-    }
+  create(request: any) {
+    return this.http.post<void>(this.apiUrl, request)
+  }
 
-    update(id: string, request: any) {
-        return this.http.put<AssetDto>(`${this.apiUrl}/${id}`, request)
-    }
+  update(id: string, request: any) {
+    return this.http.put<AssetDto>(`${this.apiUrl}/${id}`, request)
+  }
 
-    archive(id: string) {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`)
-    }
+  archive(id: string) {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`)
+  }
 
-    updateStatus(id: string, status: string) {
-        return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { status })
-    }
+  updateStatus(id: string, status: string) {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/status`, { status })
+  }
 
-    updateCondition(id: string, condition: string) {
-        return this.http.patch<void>(`${this.apiUrl}/${id}/condition`, { condition })
-    }
+  updateCondition(id: string, condition: string) {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/condition`, { condition })
+  }
 
-    updateCategory(id: string, category: string) {
-        return this.http.patch<void>(`${this.apiUrl}/${id}/category`, { category })
-    }
+  updateCategory(id: string, category: string) {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/category`, { category })
+  }
 }

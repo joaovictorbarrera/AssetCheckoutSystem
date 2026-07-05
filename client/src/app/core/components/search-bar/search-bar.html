@@ -1,15 +1,12 @@
 <div class="flex">
-    <input
-        [(ngModel)]="searchText"
-        type="text"
-        class="search-bar"
-        placeholder="Search"
-        (keypress)="onEnter($event)"
-    >
-    <button
-        class="btn rounded-tl-none! rounded-bl-none! search-button"
-        (click)="onSearch()"
-    >
-        <ng-icon name="heroMagnifyingGlass"></ng-icon>
-    </button>
+  <input
+    [(ngModel)]="searchText"
+    type="text"
+    class="search-bar"
+    placeholder="Search"
+    (keypress)="onEnter($event)"
+  />
+  <button class="btn rounded-tl-none! rounded-bl-none! search-button" (click)="onSearch()">
+    <ng-icon name="heroMagnifyingGlass"></ng-icon>
+  </button>
 </div>

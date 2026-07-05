@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-page-header',
@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './page-header.html',
   styleUrl: './page-header.scss',
 })
-export class PageHeader {
-
-}
+export class PageHeader {}

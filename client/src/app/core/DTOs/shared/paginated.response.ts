@@ -1,8 +1,8 @@
-import Pagination from "./pagination";
+import Pagination from './pagination'
 
 export default interface PaginatedResponse<T> {
-    items: T[],
-    pagination: Pagination
+  items: T[]
+  pagination: Pagination
 }
 
 export const defaultPaginatedResponse = <T>(): PaginatedResponse<T> => ({
@@ -15,4 +15,4 @@ export const defaultPaginatedResponse = <T>(): PaginatedResponse<T> => ({
     hasPreviousPage: false,
     hasNextPage: false,
   },
-});
+})

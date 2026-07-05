@@ -8,7 +8,7 @@ import { UserService } from '../../../../core/services/api/user.service'
 import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair'
 import { toLabelValuePairs } from '../../../../core/utils/label.utils'
 import { Labels } from '../../../../core/constants/labels'
-import { NgIcon } from "@ng-icons/core";
+import { NgIcon } from '@ng-icons/core'
 
 @Component({
   selector: 'tr[app-user-row]',
@@ -26,7 +26,10 @@ export class UserRow implements OnInit {
 
   rolesList: LabelValuePair[] = []
 
-  constructor(private authService: AuthService, private userService: UserService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     this.rolesList = toLabelValuePairs(this.roles, Labels.roles)
@@ -41,7 +44,7 @@ export class UserRow implements OnInit {
 
     if (this.isCurrentUser) {
       const confirmed = window.confirm(
-        'Warning: You are about to deactivate your own account. You will lose access immediately. Are you sure?'
+        'Warning: You are about to deactivate your own account. You will lose access immediately. Are you sure?',
       )
       if (!confirmed) {
         checkbox.checked = this.user.isActive
@@ -50,22 +53,22 @@ export class UserRow implements OnInit {
     }
 
     this.userService.updateActive(this.user.id, checkbox.checked).subscribe({
-        next: () => {
-            this.user.isActive = checkbox.checked
-            this.showActiveSuccess.set(true)
-            setTimeout(() => this.showActiveSuccess.set(false), 3000)
-        },
-        error: err => {
-            checkbox.checked = this.user.isActive
-            window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-        }
+      next: () => {
+        this.user.isActive = checkbox.checked
+        this.showActiveSuccess.set(true)
+        setTimeout(() => this.showActiveSuccess.set(false), 3000)
+      },
+      error: (err) => {
+        checkbox.checked = this.user.isActive
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 
   handleRoleChange(role: string) {
     if (this.isCurrentUser) {
       const confirmed = window.confirm(
-        'Warning: You are about to change your own role. As an admin, changing this role may result in loss of access. Are you sure?'
+        'Warning: You are about to change your own role. As an admin, changing this role may result in loss of access. Are you sure?',
       )
       if (!confirmed) {
         this.roleDropdown.revert()
@@ -74,31 +77,38 @@ export class UserRow implements OnInit {
     }
 
     this.userService.updateRole(this.user.id, role).subscribe({
-        next: () => {
-            this.user.role = role as Role
-            this.showRoleSuccess.set(true)
-            setTimeout(() => this.showRoleSuccess.set(false), 3000)
-        },
-        error: err => {
-            this.roleDropdown.revert()
-            window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-        }
+      next: () => {
+        this.user.role = role as Role
+        this.showRoleSuccess.set(true)
+        setTimeout(() => this.showRoleSuccess.set(false), 3000)
+      },
+      error: (err) => {
+        this.roleDropdown.revert()
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 
   getPasswordResetLink() {
-    if (!window.confirm('Are you sure you want to generate a password reset link for this user?')) {
+    const warningMessage = this.isCurrentUser
+      ? 'Warning: Resetting your own password may result in loss of access. Are you sure?'
+      : "Are you sure you want to reset this user's password?"
+    if (!window.confirm(warningMessage)) {
       return
     }
 
     this.userService.getPasswordResetLink(this.user.id).subscribe({
-      next: res => {
-        navigator.clipboard.writeText(res.link)
-        .then(() => window.alert("Password Reset Link copied successfully!"))
+      next: (res) => {
+        navigator.clipboard.writeText(res.link).then(() => {
+          window.alert('Password reset link copied successfully!')
+          if (this.isCurrentUser) {
+            this.authService.logout()
+          }
+        })
       },
-      error: err => {
-        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-      }
+      error: (err) => {
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 }

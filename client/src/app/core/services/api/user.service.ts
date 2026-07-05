@@ -6,36 +6,38 @@ import PaginatedResponse from '../../DTOs/shared/paginated.response'
 import UserFields from '../../DTOs/user/user-fields.dto'
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class UserService {
-    private readonly apiUrl = `${environment.apiUrl}/users`
+  private readonly apiUrl = `${environment.apiUrl}/users`
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    getUsers(request: any = {}) {
-        return this.http.get<PaginatedResponse<UserDto>>(this.apiUrl, {
-            params: request,
-        })
-    }
+  getUsers(request: any = {}) {
+    return this.http.get<PaginatedResponse<UserDto>>(this.apiUrl, {
+      params: request,
+    })
+  }
 
-    getFields() {
-        return this.http.get<UserFields>(`${this.apiUrl}/fields`)
-    }
+  getFields() {
+    return this.http.get<UserFields>(`${this.apiUrl}/fields`)
+  }
 
-    create(request: any) {
-        return this.http.post<void>(this.apiUrl, request)
-    }
+  create(request: any) {
+    return this.http.post<void>(this.apiUrl, request)
+  }
 
-    updateRole(id: string, role: string) {
-        return this.http.patch<void>(`${this.apiUrl}/${id}/role`, { role })
-    }
+  updateRole(id: string, role: string) {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/role`, { role })
+  }
 
-    updateActive(id: string, isActive: boolean) {
-        return this.http.patch<void>(`${this.apiUrl}/${id}/active`, { isActive })
-    }
+  updateActive(id: string, isActive: boolean) {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/active`, { isActive })
+  }
 
-    getPasswordResetLink(id: string) {
-        return this.http.get<{ link: string, expiresAt: string }>(`${this.apiUrl}/${id}/password-reset-link`)
-    }
+  getPasswordResetLink(id: string) {
+    return this.http.get<{ link: string; expiresAt: string }>(
+      `${this.apiUrl}/${id}/password-reset-link`,
+    )
+  }
 }

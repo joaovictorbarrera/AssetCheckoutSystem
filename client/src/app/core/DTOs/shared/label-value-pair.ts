@@ -1,4 +1,4 @@
 export default interface LabelValuePair {
-    label: string,
-    value: string
+  label: string
+  value: string
 }

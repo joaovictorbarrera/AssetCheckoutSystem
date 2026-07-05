@@ -1,11 +1,11 @@
 .history-item {
-    display: flex;
-    gap: .75rem;
-    align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 }
 
 :host {
-    display: flex;
-    flex: 1;
-    min-height: 0;
+  display: flex;
+  flex: 1;
+  min-height: 0;
 }

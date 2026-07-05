@@ -1,27 +1,28 @@
 <app-table-wrapper>
-    <table app-data-table>
-        <thead app-table-header [headers]="headers"></thead>
+  <table app-data-table>
+    <thead app-table-header [headers]="headers"></thead>
 
-        <tbody>
-            @if (!loading) {
-                @for (request of requests.items; track request.id) {
-                    <tr app-request-row
-                        class="cursor-pointer"
-                        [request]="request"
-                        (cancelled)="handleCancelled(request.id)"
-                    >
-                    </tr>
-                }
-                @if (requests.items.length === 0) {
-                    <tr>
-                        <td [attr.colspan]="headers.length" class="text-center"><p class="p-2">Nothing to display</p></td>
-                    </tr>
-                }
-            } @else {
-                <div class="bg-bg-primary opacity-60 absolute w-full h-full flex justify-center p-5">
-                    <app-spinning-wheel></app-spinning-wheel>
-                </div>
-            }
-        </tbody>
-    </table>
+    <tbody>
+      @if (!loading) {
+      @for (request of requests.items; track request.id) {
+      <tr
+        app-request-row
+        class="cursor-pointer"
+        [request]="request"
+        (cancelled)="handleCancelled(request.id)"
+      ></tr>
+      } @if (requests.items.length === 0) {
+      <tr>
+        <td [attr.colspan]="headers.length" class="text-center">
+          <p class="p-2">Nothing to display</p>
+        </td>
+      </tr>
+      }}
+      @else {
+      <div class="bg-bg-primary opacity-60 absolute w-full h-full flex justify-center p-5">
+        <app-spinning-wheel></app-spinning-wheel>
+      </div>
+      }
+    </tbody>
+  </table>
 </app-table-wrapper>

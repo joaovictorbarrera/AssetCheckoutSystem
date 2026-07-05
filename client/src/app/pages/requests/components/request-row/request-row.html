@@ -1,12 +1,21 @@
-<td><span [classList]="request.requestType + ' chip'">{{ requestTypeLabel }}</span></td>
-<td><span [classList]="request.status + ' chip'">{{requestStatusLabel + (request.isArchived ? ' (Archived)' : '')}}</span></td>
-<td>{{request.assignedAssetName && request.assignedAssetTag ? `${request.assignedAssetName} \\ ${request.assignedAssetTag}` : "-"}}</td>
-<td>{{assetCategoryLabel}}</td>
-<td>{{request.createdAt | date:'M/d/yy, h:mm a'}}</td>
 <td>
-    @if(request.status === "pending" || request.status === "approved") {
-        <button class="btn btn-cancel" (click)="handleCancel(); $event.stopPropagation()">Cancel Request</button>
-    } @else {
-        -
-    }
+  <span [classList]="request.requestType + ' chip'">{{ requestTypeLabel }}</span>
+</td>
+<td>
+  <span [classList]="request.status + ' chip'"
+    >{{ requestStatusLabel + (request.isArchived ? ' (Archived)' : '') }}</span
+  >
+</td>
+<td>
+  {{ request.assignedAssetName && request.assignedAssetTag ? `${request.assignedAssetName} \\
+  ${request.assignedAssetTag}` : '-' }}
+</td>
+<td>{{ assetCategoryLabel }}</td>
+<td>{{ request.createdAt | date: 'M/d/yy, h:mm a' }}</td>
+<td>
+  @if (request.status === 'pending' || request.status === 'approved') {
+  <button class="btn btn-cancel" (click)="handleCancel(); $event.stopPropagation()">
+    Cancel Request
+  </button>
+  } @else { - }
 </td>

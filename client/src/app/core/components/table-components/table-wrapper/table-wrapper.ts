@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-table-wrapper',
@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './table-wrapper.html',
   styleUrl: './table-wrapper.scss',
 })
-export class TableWrapper {
-
-}
+export class TableWrapper {}

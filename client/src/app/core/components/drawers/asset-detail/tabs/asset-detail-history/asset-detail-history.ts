@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
-import { AssetService } from '../../../../../services/api/asset.service';
-import AssetHistory from '../../../../../DTOs/asset/asset-history.dto';
-import { DatePipe } from '@angular/common';
-import { NgIcon } from "@ng-icons/core";
-import { SpinningWheel } from "../../../../spinning-wheel/spinning-wheel";
+import { Component, Input, OnInit, signal } from '@angular/core'
+import { AssetService } from '../../../../../services/api/asset.service'
+import AssetHistory from '../../../../../DTOs/asset/asset-history.dto'
+import { DatePipe } from '@angular/common'
+import { NgIcon } from '@ng-icons/core'
+import { SpinningWheel } from '../../../../spinning-wheel/spinning-wheel'
 
 @Component({
   selector: 'app-asset-detail-history',
@@ -29,14 +29,14 @@ export class AssetDetailHistory implements OnInit {
     this.loading.set(true)
 
     this.assetService.getHistory(this.assetId).subscribe({
-      next: history => {
+      next: (history) => {
         this.history.set(history)
         this.loading.set(false)
       },
-      error: err => {
+      error: (err) => {
         this.loading.set(false)
-        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
-      }
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : 'Unknown Error')
+      },
     })
   }
 }
