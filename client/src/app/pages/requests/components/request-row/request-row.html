@@ -13,7 +13,7 @@
 <td>{{ assetCategoryLabel }}</td>
 <td>{{ request.createdAt | date: 'M/d/yy, h:mm a' }}</td>
 <td>
-  @if (request.status === 'pending' || request.status === 'approved') {
+  @if (request.status === 'pending') {
   <button class="btn btn-cancel" (click)="handleCancel(); $event.stopPropagation()">
     Cancel Request
   </button>

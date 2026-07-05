@@ -100,8 +100,7 @@ namespace AssetCheckoutSystem.Services
             if (checkoutRequest.RequestedByUserId != requestor.UserId)
                 return ServiceResult.Forbidden("Request does not belong to you");
 
-            if (checkoutRequest.Status != CheckoutRequestStatus.Pending && 
-                checkoutRequest.Status != CheckoutRequestStatus.Approved)
+            if (checkoutRequest.Status != CheckoutRequestStatus.Pending)
                 return ServiceResult.BadRequest("Only pending requests can be cancelled");
 
             if (checkoutRequest.IsArchived)
