@@ -34,4 +34,8 @@ export class UserService {
     updateActive(id: string, isActive: boolean) {
         return this.http.patch<void>(`${this.apiUrl}/${id}/active`, { isActive })
     }
+
+    getPasswordResetLink(id: string) {
+        return this.http.get<{ link: string, expiresAt: string }>(`${this.apiUrl}/${id}/password-reset-link`)
+    }
 }

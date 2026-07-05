@@ -25,7 +25,7 @@ import { Dropdown } from "../../core/components/dropdown/dropdown"
   styleUrl: './users.scss',
 })
 export class Users implements OnInit {
-  headers = ['Email', 'Name', 'Role', 'Active', 'Last Logged In', 'Created Date']
+  headers = ['Email', 'Name', 'Role', 'Active', 'Last Logged In', 'Created Date', 'Actions']
   users = signal(defaultPaginatedResponse<UserDto>())
   userFields = signal<UserFields>({ roles: [] })
 

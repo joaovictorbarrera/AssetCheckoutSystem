@@ -8,10 +8,11 @@ import { UserService } from '../../../../core/services/api/user.service'
 import LabelValuePair from '../../../../core/DTOs/shared/label-value-pair'
 import { toLabelValuePairs } from '../../../../core/utils/label.utils'
 import { Labels } from '../../../../core/constants/labels'
+import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: 'tr[app-user-row]',
-  imports: [DatePipe, Dropdown],
+  imports: [DatePipe, Dropdown, NgIcon],
   templateUrl: './user-row.html',
   styleUrl: './user-row.scss',
 })
@@ -82,6 +83,21 @@ export class UserRow implements OnInit {
             this.roleDropdown.revert()
             window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
         }
+    })
+  }
+
+  getPasswordResetLink() {
+    if (!window.confirm('Are you sure you want to generate a password reset link for this user?')) {
+      return
+    }
+
+    this.userService.getPasswordResetLink(this.user.id).subscribe({
+      next: res => {
+        window.prompt('Copy the password reset link:', res.link)
+      },
+      error: err => {
+        window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")
+      }
     })
   }
 }

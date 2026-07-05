@@ -27,3 +27,4 @@
 </td>
 <td> {{ user.lastLoginAt ? (user.lastLoginAt | date:'M/d/yy, h:mm a') : "-" }}</td>
 <td>{{ user.createdAt | date:'M/d/yy, h:mm a' }}</td>
+<td (click)="getPasswordResetLink()"><ng-icon name="heroKey" class="text-yellow-500! text-2xl cursor-pointer"></ng-icon></td>
