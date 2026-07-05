@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Data;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Repositories;
+﻿using AssetCheckoutSystem.Data;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
-namespace AssetManagementSystem.Extensions
+namespace AssetCheckoutSystem.Extensions
 {
     public static class ServiceExtensions
     {

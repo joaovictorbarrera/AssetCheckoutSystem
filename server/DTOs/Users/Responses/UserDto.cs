@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Users.Responses
+namespace AssetCheckoutSystem.DTOs.Users.Responses
 {
     public class UserDto
     {

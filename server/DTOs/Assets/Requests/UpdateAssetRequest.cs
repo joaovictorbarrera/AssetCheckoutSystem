@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.Assets.Requests
+namespace AssetCheckoutSystem.DTOs.Assets.Requests
 {
     public class UpdateAssetRequest
     {

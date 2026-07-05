@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.Enums
+﻿namespace AssetCheckoutSystem.Enums
 {
     public enum CheckoutRequestType
     {

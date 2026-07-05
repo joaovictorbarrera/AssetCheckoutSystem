@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Repositories;
-using AssetManagementSystem.Services;
-using AssetManagementSystem.DTOs.Users.Requests;
-using AssetManagementSystem.DTOs.Users.Responses;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.DTOs.Users;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Repositories;
+using AssetCheckoutSystem.Services;
+using AssetCheckoutSystem.DTOs.Users.Requests;
+using AssetCheckoutSystem.DTOs.Users.Responses;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Route("api/users")]

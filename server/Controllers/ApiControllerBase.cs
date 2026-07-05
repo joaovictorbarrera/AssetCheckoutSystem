@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Services;
+﻿using AssetCheckoutSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [ApiController]
     public abstract class ApiControllerBase : ControllerBase

@@ -1,16 +1,16 @@
-﻿using AssetManagementSystem.DTOs.Auth.Internal;
-using AssetManagementSystem.DTOs.Auth.Requests;
-using AssetManagementSystem.DTOs.Auth.Responses;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users;
-using AssetManagementSystem.DTOs.Users.Requests;
-using AssetManagementSystem.DTOs.Users.Responses;
-using AssetManagementSystem.Helpers;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Repositories;
+﻿using AssetCheckoutSystem.DTOs.Auth.Internal;
+using AssetCheckoutSystem.DTOs.Auth.Requests;
+using AssetCheckoutSystem.DTOs.Auth.Responses;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.DTOs.Users;
+using AssetCheckoutSystem.DTOs.Users.Requests;
+using AssetCheckoutSystem.DTOs.Users.Responses;
+using AssetCheckoutSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Repositories;
 using Azure.Core;
 
-namespace AssetManagementSystem.Services
+namespace AssetCheckoutSystem.Services
 {
     public class UserService
     {

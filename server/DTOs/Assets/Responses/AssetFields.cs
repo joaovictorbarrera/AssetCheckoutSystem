@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Enums;
-using AssetManagementSystem.Helpers;
+﻿using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Helpers;
 
-namespace AssetManagementSystem.DTOs.Assets.Responses
+namespace AssetCheckoutSystem.DTOs.Assets.Responses
 {   
     public class AssetFields
     {

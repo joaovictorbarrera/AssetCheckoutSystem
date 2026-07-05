@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Assets.Responses
+﻿namespace AssetCheckoutSystem.DTOs.Assets.Responses
 {
     public class AvailableAsset
     {

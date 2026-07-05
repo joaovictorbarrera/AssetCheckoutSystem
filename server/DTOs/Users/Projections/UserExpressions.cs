@@ -1,9 +1,9 @@
-﻿using AssetManagementSystem.DTOs.Users.Responses;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.DTOs.Users.Responses;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
 using System.Linq.Expressions;
 
-namespace AssetManagementSystem.DTOs.Users.Projections
+namespace AssetCheckoutSystem.DTOs.Users.Projections
 {
     public class UserExpressions
     {

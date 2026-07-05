@@ -1,8 +1,8 @@
-﻿using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.Assets.Requests
+namespace AssetCheckoutSystem.DTOs.Assets.Requests
 {
     public class GetAssetsRequest : PaginatedRequest
     {

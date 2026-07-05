@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.Auth.Requests
+namespace AssetCheckoutSystem.DTOs.Auth.Requests
 {
     public class LoginRequest
     {

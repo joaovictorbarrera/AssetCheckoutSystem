@@ -1,16 +1,16 @@
-﻿using AssetManagementSystem.Data;
-using AssetManagementSystem.DTOs.Assets.Projections;
-using AssetManagementSystem.DTOs.Assets.Requests;
-using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Helpers;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Data;
+using AssetCheckoutSystem.DTOs.Assets.Projections;
+using AssetCheckoutSystem.DTOs.Assets.Requests;
+using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace AssetManagementSystem.Models.Repositories
+namespace AssetCheckoutSystem.Models.Repositories
 {
     public class AssetRepository
     {

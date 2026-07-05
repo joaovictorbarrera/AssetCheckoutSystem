@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Users.Responses
+﻿namespace AssetCheckoutSystem.DTOs.Users.Responses
 {
     public class PasswordResetLink
     {

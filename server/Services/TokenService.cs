@@ -2,12 +2,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.DTOs.Auth.Responses;
-using AssetManagementSystem.DTOs.Auth.Internal;
-using AssetManagementSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.DTOs.Auth.Responses;
+using AssetCheckoutSystem.DTOs.Auth.Internal;
+using AssetCheckoutSystem.Helpers;
 
-namespace AssetManagementSystem.Services
+namespace AssetCheckoutSystem.Services
 {
     public class TokenService
     {

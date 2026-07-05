@@ -1,7 +1,7 @@
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Models.Repositories;
-using AssetManagementSystem.Repositories;
-using AssetManagementSystem.Services;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Models.Repositories;
+using AssetCheckoutSystem.Repositories;
+using AssetCheckoutSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

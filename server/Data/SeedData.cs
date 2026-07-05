@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
 
-namespace AssetManagementSystem.Data
+namespace AssetCheckoutSystem.Data
 {
     public static class SeedData
     {

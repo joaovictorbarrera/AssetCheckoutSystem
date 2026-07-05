@@ -1,18 +1,18 @@
-﻿using AssetManagementSystem.Data;
-using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.DTOs.CheckoutRequests;
-using AssetManagementSystem.DTOs.CheckoutRequests.Projections;
-using AssetManagementSystem.DTOs.CheckoutRequests.Requests;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Helpers;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Data;
+using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.DTOs.CheckoutRequests;
+using AssetCheckoutSystem.DTOs.CheckoutRequests.Projections;
+using AssetCheckoutSystem.DTOs.CheckoutRequests.Requests;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace AssetManagementSystem.Models.Repositories
+namespace AssetCheckoutSystem.Models.Repositories
 {
     public class CheckoutRequestRepository
     {

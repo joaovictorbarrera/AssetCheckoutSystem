@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AssetManagementSystem.Enums;
+using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Users.Requests
+namespace AssetCheckoutSystem.DTOs.Users.Requests
 {
     public class CreateUserRequest
     {

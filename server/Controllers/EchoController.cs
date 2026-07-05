@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [ApiController]
     public class EchoController : ControllerBase

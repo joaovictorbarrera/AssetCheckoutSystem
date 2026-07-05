@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.Pagination
+namespace AssetCheckoutSystem.DTOs.Pagination
 {
     public class PaginatedRequest
     {

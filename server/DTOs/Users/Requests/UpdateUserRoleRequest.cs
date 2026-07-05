@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Users
+namespace AssetCheckoutSystem.DTOs.Users
 {
     public class UpdateUserRoleRequest
     {

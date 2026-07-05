@@ -1,8 +1,8 @@
-﻿using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
 using System.Security.Claims;
 
-namespace AssetManagementSystem.Helpers
+namespace AssetCheckoutSystem.Helpers
 {
     public class RolesHelper
     {

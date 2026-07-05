@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Pagination
+﻿namespace AssetCheckoutSystem.DTOs.Pagination
 {
     public class PaginationMetadata
     {

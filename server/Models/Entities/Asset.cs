@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.Models.Entities
+namespace AssetCheckoutSystem.Models.Entities
 {
     public class Asset
     {

@@ -1,15 +1,15 @@
-﻿using AssetManagementSystem.DTOs.Assets.Requests;
-using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users.Internal;
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Helpers;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Services;
+﻿using AssetCheckoutSystem.DTOs.Assets.Requests;
+using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.DTOs.Users.Internal;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [Authorize]
     [Route("api/assets")]

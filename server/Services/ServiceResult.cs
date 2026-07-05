@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.Services
+﻿namespace AssetCheckoutSystem.Services
 {
     public enum ServiceErrorType
     {

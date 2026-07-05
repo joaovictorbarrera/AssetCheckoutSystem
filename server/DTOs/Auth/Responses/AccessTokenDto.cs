@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Auth.Responses
+﻿namespace AssetCheckoutSystem.DTOs.Auth.Responses
 {
     public class AccessTokenDto
     {

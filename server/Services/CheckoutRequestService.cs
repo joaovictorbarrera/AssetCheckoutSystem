@@ -1,13 +1,13 @@
-﻿using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.DTOs.CheckoutRequests;
-using AssetManagementSystem.DTOs.CheckoutRequests.Requests;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users.Internal;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Models.Repositories;
+﻿using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.DTOs.CheckoutRequests;
+using AssetCheckoutSystem.DTOs.CheckoutRequests.Requests;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.DTOs.Users.Internal;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Models.Repositories;
 
-namespace AssetManagementSystem.Services
+namespace AssetCheckoutSystem.Services
 {
     public class CheckoutRequestService
     {

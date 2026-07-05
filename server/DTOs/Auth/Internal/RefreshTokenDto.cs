@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Auth.Internal
+﻿namespace AssetCheckoutSystem.DTOs.Auth.Internal
 {
     public class RefreshTokenDto
     {

@@ -1,9 +1,9 @@
-﻿using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
 using System.Linq.Expressions;
 
-namespace AssetManagementSystem.DTOs.Assets.Projections
+namespace AssetCheckoutSystem.DTOs.Assets.Projections
 {
     public static class AssetExpressions
     {

@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 
-namespace AssetManagementSystem.Helpers
+namespace AssetCheckoutSystem.Helpers
 {
     public static class PaginationHelper
     {

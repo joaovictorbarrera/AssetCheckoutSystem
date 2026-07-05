@@ -1,12 +1,12 @@
-﻿using AssetManagementSystem.DTOs.Auth.Requests;
-using AssetManagementSystem.DTOs.Auth.Responses;
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Services;
+﻿using AssetCheckoutSystem.DTOs.Auth.Requests;
+using AssetCheckoutSystem.DTOs.Auth.Responses;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]

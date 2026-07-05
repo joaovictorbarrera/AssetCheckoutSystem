@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.DTOs.Users.Requests
+﻿namespace AssetCheckoutSystem.DTOs.Users.Requests
 {
     public class UpdateUserActiveRequest
     {

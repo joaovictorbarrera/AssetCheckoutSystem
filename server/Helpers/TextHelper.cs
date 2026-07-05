@@ -1,6 +1,6 @@
 using System;
 
-namespace AssetManagementSystem.Helpers
+namespace AssetCheckoutSystem.Helpers
 {
     public static class TextHelper
     {

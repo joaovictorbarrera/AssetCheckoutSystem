@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Helpers;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Helpers;
 
-namespace AssetManagementSystem.DTOs.CheckoutRequests.Responses
+namespace AssetCheckoutSystem.DTOs.CheckoutRequests.Responses
 {
     public class CheckoutRequestFields
     {

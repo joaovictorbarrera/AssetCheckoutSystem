@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Data;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Data;
+using AssetCheckoutSystem.Models.Entities;
 
-namespace AssetManagementSystem.Extensions
+namespace AssetCheckoutSystem.Extensions
 {
     public static class AppDbContextExtensions
     {

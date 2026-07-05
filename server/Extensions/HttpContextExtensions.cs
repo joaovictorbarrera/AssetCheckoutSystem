@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Models.Entities;
 
-namespace AssetManagementSystem.Extensions
+namespace AssetCheckoutSystem.Extensions
 {
     public static class HttpContextExtensions
     {

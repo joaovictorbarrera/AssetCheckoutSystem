@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace AssetManagementSystem.DTOs.CheckoutRequests.Requests
+namespace AssetCheckoutSystem.DTOs.CheckoutRequests.Requests
 {
     public class CreateCheckoutRequestRequest
     {

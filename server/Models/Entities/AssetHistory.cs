@@ -1,4 +1,4 @@
-﻿namespace AssetManagementSystem.Models.Entities
+﻿namespace AssetCheckoutSystem.Models.Entities
 {
     public class AssetHistory
     {

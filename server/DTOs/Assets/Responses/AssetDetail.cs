@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Assets.Responses
+namespace AssetCheckoutSystem.DTOs.Assets.Responses
 {
     public class AssetDetail
     {

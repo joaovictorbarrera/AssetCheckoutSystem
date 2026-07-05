@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using AssetManagementSystem.Data;
+using AssetCheckoutSystem.Data;
 
 #nullable disable
 
-namespace AssetManagementSystem.Migrations
+namespace AssetCheckoutSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260617004650_SeedAssetsAndRequests")]
@@ -25,7 +25,7 @@ namespace AssetManagementSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.Asset", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.Asset", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,7 +199,7 @@ namespace AssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.AssetHistory", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.AssetHistory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -233,7 +233,7 @@ namespace AssetManagementSystem.Migrations
                     b.ToTable("AssetHistories");
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.CheckoutRequest", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.CheckoutRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -366,7 +366,7 @@ namespace AssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.User", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,41 +423,41 @@ namespace AssetManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.Asset", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.Asset", b =>
                 {
-                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("AssignedToUserId");
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.AssetHistory", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.AssetHistory", b =>
                 {
-                    b.HasOne("AssetManagementSystem.Models.Entities.Asset", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.Asset", null)
                         .WithMany()
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AssetManagementSystem.Models.Entities.CheckoutRequest", b =>
+            modelBuilder.Entity("AssetCheckoutSystem.Models.Entities.CheckoutRequest", b =>
                 {
-                    b.HasOne("AssetManagementSystem.Models.Entities.Asset", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.Asset", null)
                         .WithMany()
                         .HasForeignKey("AssignedAssetId");
 
-                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("RequestedByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssetManagementSystem.Models.Entities.User", null)
+                    b.HasOne("AssetCheckoutSystem.Models.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("ReviewedByUserId");
                 });

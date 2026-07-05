@@ -1,8 +1,8 @@
-﻿using AssetManagementSystem.DTOs.Assets.Responses;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.DTOs.Assets.Responses;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Models.Entities;
 
-namespace AssetManagementSystem.DTOs.CheckoutRequests
+namespace AssetCheckoutSystem.DTOs.CheckoutRequests
 {
     public class CheckoutRequestDetail
     {

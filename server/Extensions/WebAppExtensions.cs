@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AssetManagementSystem.Data;
+using AssetCheckoutSystem.Data;
 
-namespace AssetManagementSystem.Extensions
+namespace AssetCheckoutSystem.Extensions
 {
     public static class WebAppExtensions
     {

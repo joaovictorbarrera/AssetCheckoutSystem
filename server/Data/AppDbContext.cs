@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using AssetManagementSystem.Models.Entities;
+using AssetCheckoutSystem.Models.Entities;
 
-namespace AssetManagementSystem.Data
+namespace AssetCheckoutSystem.Data
 {
     public class AppDbContext : DbContext
     {

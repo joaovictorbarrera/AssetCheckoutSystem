@@ -1,6 +1,6 @@
-﻿using AssetManagementSystem.Enums;
+﻿using AssetCheckoutSystem.Enums;
 
-namespace AssetManagementSystem.DTOs.Assets.Requests
+namespace AssetCheckoutSystem.DTOs.Assets.Requests
 {
     public class GetAvailableAssetsRequest
     {

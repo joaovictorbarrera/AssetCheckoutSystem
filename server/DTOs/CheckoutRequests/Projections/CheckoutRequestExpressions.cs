@@ -1,7 +1,7 @@
-﻿using AssetManagementSystem.Models.Entities;
+﻿using AssetCheckoutSystem.Models.Entities;
 using System.Linq.Expressions;
 
-namespace AssetManagementSystem.DTOs.CheckoutRequests.Projections
+namespace AssetCheckoutSystem.DTOs.CheckoutRequests.Projections
 {
     public static class CheckoutRequestExpressions
     {

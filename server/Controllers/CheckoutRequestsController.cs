@@ -1,16 +1,16 @@
-﻿using AssetManagementSystem.DTOs.CheckoutRequests;
-using AssetManagementSystem.DTOs.CheckoutRequests.Requests;
-using AssetManagementSystem.DTOs.CheckoutRequests.Responses;
-using AssetManagementSystem.DTOs.Pagination;
-using AssetManagementSystem.DTOs.Users.Internal;
-using AssetManagementSystem.Extensions;
-using AssetManagementSystem.Helpers;
-using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Services;
+﻿using AssetCheckoutSystem.DTOs.CheckoutRequests;
+using AssetCheckoutSystem.DTOs.CheckoutRequests.Requests;
+using AssetCheckoutSystem.DTOs.CheckoutRequests.Responses;
+using AssetCheckoutSystem.DTOs.Pagination;
+using AssetCheckoutSystem.DTOs.Users.Internal;
+using AssetCheckoutSystem.Extensions;
+using AssetCheckoutSystem.Helpers;
+using AssetCheckoutSystem.Models.Entities;
+using AssetCheckoutSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AssetManagementSystem.Controllers
+namespace AssetCheckoutSystem.Controllers
 {
     [Authorize]
     [Route("api/checkout-requests")]

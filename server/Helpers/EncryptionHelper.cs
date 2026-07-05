@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace AssetManagementSystem.Helpers
+namespace AssetCheckoutSystem.Helpers
 {
     public static class EncryptionHelper
     {

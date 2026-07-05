@@ -1,8 +1,8 @@
-﻿using AssetManagementSystem.DTOs.Users.Internal;
-using AssetManagementSystem.Enums;
-using AssetManagementSystem.Helpers;
+﻿using AssetCheckoutSystem.DTOs.Users.Internal;
+using AssetCheckoutSystem.Enums;
+using AssetCheckoutSystem.Helpers;
 
-namespace AssetManagementSystem.Models.Entities
+namespace AssetCheckoutSystem.Models.Entities
 {
     public class User
     {

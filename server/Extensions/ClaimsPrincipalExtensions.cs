@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace AssetManagementSystem.Extensions
+namespace AssetCheckoutSystem.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
