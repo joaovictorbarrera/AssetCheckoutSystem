@@ -196,5 +196,30 @@ namespace AssetCheckoutSystem.Extensions
 
             return services;
         }
+
+        public static IServiceCollection AddControllersWithSerialization(this IServiceCollection services)
+        {
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    // Ensure all dates are treated/serialized as UTC
+                    options.SerializerSettings.DateTimeZoneHandling =
+                        Newtonsoft.Json.DateTimeZoneHandling.Utc;
+
+                    // Enforce ISO format
+                    options.SerializerSettings.DateFormatHandling =
+                        Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+
+                    // Enforce enums are string and camel-case
+                    options.SerializerSettings.Converters.Add(
+                        new Newtonsoft.Json.Converters.StringEnumConverter(
+                            new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy(),
+                            allowIntegerValues: false
+                        )
+                    );
+                });
+
+            return services;
+        }
     }
 }

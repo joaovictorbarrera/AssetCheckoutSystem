@@ -5,16 +5,7 @@ using AssetCheckoutSystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers()
-    .AddNewtonsoftJson(options =>
-    {
-        options.SerializerSettings.Converters.Add(
-            new Newtonsoft.Json.Converters.StringEnumConverter(
-                new Newtonsoft.Json.Serialization.CamelCaseNamingStrategy(),
-                allowIntegerValues: false
-            )
-        );
-    });
+builder.Services.AddControllersWithSerialization();
 
 builder.Services.AddScoped<UserRepository>()
                 .AddScoped<AssetRepository>()
