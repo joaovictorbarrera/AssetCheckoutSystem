@@ -93,7 +93,8 @@ export class UserRow implements OnInit {
 
     this.userService.getPasswordResetLink(this.user.id).subscribe({
       next: res => {
-        window.prompt('Copy the password reset link:', res.link)
+        navigator.clipboard.writeText(res.link)
+        .then(() => window.alert("Password Reset Link copied successfully!"))
       },
       error: err => {
         window.alert(`${err.status} error: ` + err.error.title ? err.error.title : "Unknown Error")

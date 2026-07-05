@@ -133,22 +133,17 @@ namespace AssetManagementSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> ResetPassword(Guid userId, string resetToken, DateTime resetTokenExpiresAt)
+        public async Task ResetPassword(User user, string resetToken, DateTime resetTokenExpiresAt)
         {
-            User? user = await GetById(userId);
-            if (user == null || !user.IsActive) return false;
-
             user.PasswordHash = null;
             user.PasswordResetTokenHash = EncryptionHelper.ToSha256(resetToken);
             user.PasswordResetExpiresAt = resetTokenExpiresAt;
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
-
-            return true;
         }
 
-        public async Task<bool> SavePassword(User user, string password)
+        public async Task SavePassword(User user, string password)
         {
             user.PasswordHash = EncryptionHelper.ToSha256(password);
             user.PasswordChangedAt = DateTime.UtcNow;
@@ -156,9 +151,8 @@ namespace AssetManagementSystem.Repositories
             user.RefreshTokenExpiresAt = null;
             user.PasswordResetExpiresAt = null;
             user.PasswordResetTokenHash = null;
-            await _context.SaveChangesAsync();
 
-            return true;
+            await _context.SaveChangesAsync();
         }
     }
 }

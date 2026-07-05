@@ -119,20 +119,23 @@ namespace AssetManagementSystem.Services
         public async Task<ServiceResult<PasswordResetLink>> GeneratePasswordReset(Guid userId)
         {
             const int resetExpirationHours = 24;
-            var frontendURL = _configuration["FrontendURL"];
 
+            User? user = await _userRepository.GetById(userId);
+            if (user == null || !user.IsActive) return ServiceResult<PasswordResetLink>.NotFound();
+
+            var frontendURL = _configuration["FrontendURL"];
             var resetToken = EncryptionHelper.GenerateRandomSha256();
             var resetTokenExpiresAt = DateTime.UtcNow.AddHours(resetExpirationHours);
 
-            bool success = await _userRepository.ResetPassword(userId, resetToken, resetTokenExpiresAt);
+            await _userRepository.ResetPassword(user, resetToken, resetTokenExpiresAt);
 
             var passwordResetLink = new PasswordResetLink()
             {
-                Link = $"{frontendURL}/reset-password?resetToken={resetToken}",
+                Link = $"{frontendURL}/reset-password?resetToken={resetToken}&email={user.EmailAddress}",
                 ExpiresAt = resetTokenExpiresAt
             };
 
-            return success ? ServiceResult<PasswordResetLink>.Success(passwordResetLink) : ServiceResult<PasswordResetLink>.NotFound();
+            return ServiceResult<PasswordResetLink>.Success(passwordResetLink);
         }
 
         public async Task<ServiceResult> ResetPassword(ResetPasswordRequest request)
@@ -145,9 +148,9 @@ namespace AssetManagementSystem.Services
 
             if (!resetTokenValid) return ServiceResult.Unauthorized();
 
-            bool success = await _userRepository.SavePassword(user, request.Password);
+            await _userRepository.SavePassword(user, request.Password);
 
-            return success ? ServiceResult.Success() : ServiceResult.NotFound();
+            return ServiceResult.Success();
         }
     }
 }
