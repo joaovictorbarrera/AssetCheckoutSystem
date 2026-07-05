@@ -134,5 +134,20 @@ namespace AssetManagementSystem.Services
 
             return success ? ServiceResult<PasswordResetLink>.Success(passwordResetLink) : ServiceResult<PasswordResetLink>.NotFound();
         }
+
+        public async Task<ServiceResult> ResetPassword(ResetPasswordRequest request)
+        {
+            User? user = await _userRepository.GetByEmail(request.EmailAddress);
+            if (user == null || !user.IsActive) return ServiceResult.Unauthorized();
+
+            bool resetTokenValid = user.PasswordResetExpiresAt >= DateTime.UtcNow && 
+                                user.PasswordResetTokenHash == EncryptionHelper.ToSha256(request.ResetToken);
+
+            if (!resetTokenValid) return ServiceResult.Unauthorized();
+
+            bool success = await _userRepository.SavePassword(user, request.Password);
+
+            return success ? ServiceResult.Success() : ServiceResult.NotFound();
+        }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using AssetManagementSystem.DTOs.Auth.Requests;
 using AssetManagementSystem.DTOs.Auth.Responses;
-using AssetManagementSystem.DTOs.Users.Internal;
 using AssetManagementSystem.Extensions;
 using AssetManagementSystem.Models.Entities;
-using AssetManagementSystem.Repositories;
 using AssetManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace AssetManagementSystem.Controllers
 {
@@ -39,6 +36,14 @@ namespace AssetManagementSystem.Controllers
 
             var result = await _userService.Refresh(HttpContext.GetCurrentUser(), refreshToken, Response);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        {
+            var result = await _userService.ResetPassword(request)  ;
+            return result.Succeeded ? NoContent() : ToActionResult(result);
         }
 
         [HttpGet("Me")]

@@ -6,6 +6,7 @@ using AssetManagementSystem.DTOs.Users.Requests;
 using AssetManagementSystem.DTOs.Users.Responses;
 using AssetManagementSystem.Enums;
 using AssetManagementSystem.Helpers;
+using AssetManagementSystem.Migrations;
 using AssetManagementSystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -142,6 +143,19 @@ namespace AssetManagementSystem.Repositories
             user.PasswordResetExpiresAt = resetTokenExpiresAt;
             user.UpdatedAt = DateTime.UtcNow;
 
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> SavePassword(User user, string password)
+        {
+            user.PasswordHash = EncryptionHelper.ToSha256(password);
+            user.PasswordChangedAt = DateTime.UtcNow;
+            user.RefreshTokenHash = null;
+            user.RefreshTokenExpiresAt = null;
+            user.PasswordResetExpiresAt = null;
+            user.PasswordResetTokenHash = null;
             await _context.SaveChangesAsync();
 
             return true;
