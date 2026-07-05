@@ -28,13 +28,14 @@ namespace AssetCheckoutSystem.Controllers
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("refresh")]
         public async Task<ActionResult<AccessTokenDto>> Refresh()
         {
             var refreshToken = Request.Cookies["refreshToken"];
             if (refreshToken == null) return Unauthorized();
 
-            var result = await _userService.Refresh(HttpContext.GetCurrentUser(), refreshToken, Response);
+            var result = await _userService.Refresh(refreshToken, Response);
             return result.Succeeded ? Ok(result.Value) : ToActionResult(result);
         }
 
@@ -52,20 +53,6 @@ namespace AssetCheckoutSystem.Controllers
             User user = HttpContext.GetCurrentUser();
 
             return Ok(user);
-        }
-
-        [Authorize(Policy = "AssetManager+")]
-        [HttpGet("AssetManager")]
-        public ActionResult<User> Manager()
-        {
-            return Ok();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("Admin")]
-        public ActionResult<User> Admin()
-        {
-            return Ok();
         }
 
         [HttpGet("Debug")]

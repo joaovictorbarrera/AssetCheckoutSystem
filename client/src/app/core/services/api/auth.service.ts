@@ -16,6 +16,9 @@ export class AuthService {
 
   private loadUserPromise?: Promise<UserDto | null>
 
+  private refreshTimeout?: number
+  private refreshInProgress = false
+
   public get isManager() {
     return this.currentUser()?.role === Role.Admin || this.currentUser()?.role === Role.AssetManager
   }
@@ -24,84 +27,128 @@ export class AuthService {
     return this.currentUser()?.role === Role.Admin
   }
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    window.addEventListener('focus', () => this.onWindowFocus())
+  }
 
   initializeAuth() {
-    const token = localStorage.getItem("authorizationToken")
+    const token = localStorage.getItem('authorizationToken')
 
     if (!token) {
       return
     }
 
-    const payload = JSON.parse(atob(token.split('.')[1]))
-    const expiresAt = payload.exp * 1000
-
-    // Expired or expires within 1 minute
-    if (expiresAt <= Date.now() + 60_000) {
+    if (this.shouldRefresh(token)) {
       this.refreshToken()
     } else {
       this.scheduleRefresh(token)
     }
   }
 
-  async login(body: any): Promise<string | null> {
+  async login(body: any): Promise<string |null> {
     try {
       const res = await firstValueFrom(
-        this.http.post<{authorizationToken: string}>(`${this.apiUrl}/login`, body, { withCredentials: true })
+        this.http.post<{ authorizationToken: string }>(
+          `${this.apiUrl}/login`,
+          body,
+          { withCredentials: true }
+        )
       )
 
       const authToken = res.authorizationToken
 
-      localStorage.setItem(
-        "authorizationToken",
-        authToken
-      )
+      localStorage.setItem('authorizationToken', authToken)
 
       this.scheduleRefresh(authToken)
 
-      this.router.navigate(["/"])
+      this.router.navigate(['/'])
 
       return null
     } catch (err: any) {
-      if (err.status === 401) return "Error logging in with this email or password"
-      else return "Unknown error"
+      if (err.status === 401) {
+        return 'Error logging in with this email or password'
+      }
+
+      return 'Unknown error'
     }
   }
 
-  scheduleRefresh(token: string) {
+  private shouldRefresh(token: string): boolean {
     const payload = JSON.parse(atob(token.split('.')[1]))
     const expiresAt = payload.exp * 1000
 
-    // Need to refresh 1 minute early
-    const delay = expiresAt - Date.now() - 60_000
+    return expiresAt <= Date.now() + 60_000
+  }
 
-    window.setTimeout(() => {
+  private scheduleRefresh(token: string) {
+    if (this.refreshTimeout) {
+      clearTimeout(this.refreshTimeout)
+    }
+
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    const expiresAt = payload.exp * 1000
+
+    const delay = Math.max(expiresAt - Date.now() - 60_000, 0)
+
+    this.refreshTimeout = window.setTimeout(() => {
       this.refreshToken()
     }, delay)
   }
 
+  private onWindowFocus() {
+    const token = localStorage.getItem('authorizationToken')
+
+    if (!token) {
+      return
+    }
+
+    if (this.shouldRefresh(token)) {
+      this.refreshToken()
+    }
+  }
+
   refreshToken() {
-    this.http.get<{authorizationToken: string}>(`${this.apiUrl}/refresh`, {
-      withCredentials: true
-    }).subscribe({
+    if (this.refreshInProgress) {
+      return
+    }
+
+    this.refreshInProgress = true
+
+    this.http.get<{ authorizationToken: string }>(
+      `${this.apiUrl}/refresh`,
+      {
+        withCredentials: true
+      }
+    ).subscribe({
       next: res => {
         const authToken = res.authorizationToken
 
-        localStorage.setItem(
-          "authorizationToken",
-          authToken
-        )
+        localStorage.setItem('authorizationToken', authToken)
 
         this.scheduleRefresh(authToken)
       },
-      error: console.log
+      error: err => {
+        console.log(err.title)
+        this.logout()
+      },
+      complete: () => {
+        this.refreshInProgress = false
+      }
     })
   }
 
   logout() {
+    if (this.refreshTimeout) {
+      clearTimeout(this.refreshTimeout)
+      this.refreshTimeout = undefined
+    }
+
     localStorage.removeItem('authorizationToken')
     this.currentUser.set(null)
-    this.router.navigate(["/login"])
+    this.router.navigate(['/login'])
   }
 
   async loadUser(): Promise<UserDto | null> {
@@ -121,7 +168,7 @@ export class AuthService {
     this.loadUserPromise = firstValueFrom(
       this.http.get<UserDto>(`${this.apiUrl}/me`)
     )
-      .then((user) => {
+      .then(user => {
         this.currentUser.set(user)
         return user
       })

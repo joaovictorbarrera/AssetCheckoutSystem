@@ -9,6 +9,7 @@ using AssetCheckoutSystem.Helpers;
 using AssetCheckoutSystem.Models.Entities;
 using AssetCheckoutSystem.Repositories;
 using Azure.Core;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 namespace AssetCheckoutSystem.Services
 {
@@ -89,11 +90,15 @@ namespace AssetCheckoutSystem.Services
             return ServiceResult<AccessTokenDto>.Success(tokenDto);
         }
 
-        public async Task<ServiceResult<AccessTokenDto>> Refresh(User user, string refreshToken, HttpResponse response)
+        public async Task<ServiceResult<AccessTokenDto>> Refresh(string refreshToken, HttpResponse response)
         {
-            bool validRefreshToken = user.RefreshTokenExpiresAt >= DateTime.UtcNow && user.RefreshTokenHash == EncryptionHelper.ToSha256(refreshToken);
+            User? user = await _userRepository.FindByRefreshTokenHash(EncryptionHelper.ToSha256(refreshToken));
 
-            if (!validRefreshToken) return ServiceResult<AccessTokenDto>.Unauthorized();
+            if (user == null || !user.IsActive) return ServiceResult<AccessTokenDto>.NotFound();
+
+            bool refreshTokenExpired = user.RefreshTokenExpiresAt < DateTime.UtcNow;
+
+            if (refreshTokenExpired) return ServiceResult<AccessTokenDto>.Unauthorized();
 
             AccessTokenDto tokenDto = _tokenService.CreateToken(user);
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();

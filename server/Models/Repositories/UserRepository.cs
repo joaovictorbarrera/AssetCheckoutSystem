@@ -133,11 +133,18 @@ namespace AssetCheckoutSystem.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<User?> FindByRefreshTokenHash(string refreshTokenHash)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.RefreshTokenHash == refreshTokenHash);
+        }
+
         public async Task ResetPassword(User user, string resetToken, DateTime resetTokenExpiresAt)
         {
             user.PasswordHash = null;
             user.PasswordResetTokenHash = EncryptionHelper.ToSha256(resetToken);
             user.PasswordResetExpiresAt = resetTokenExpiresAt;
+            user.RefreshTokenHash = null;
+            user.RefreshTokenExpiresAt = null;
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
@@ -147,8 +154,6 @@ namespace AssetCheckoutSystem.Repositories
         {
             user.PasswordHash = EncryptionHelper.ToSha256(password);
             user.PasswordChangedAt = DateTime.UtcNow;
-            user.RefreshTokenHash = null;
-            user.RefreshTokenExpiresAt = null;
             user.PasswordResetExpiresAt = null;
             user.PasswordResetTokenHash = null;
 
