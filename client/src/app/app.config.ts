@@ -1,5 +1,7 @@
 import {
   ApplicationConfig,
+  inject,
+  provideAppInitializer,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core'
@@ -27,9 +29,11 @@ import {
   heroUser,
   heroXMark,
 } from '@ng-icons/heroicons/outline'
+import { AuthService } from './core/services/api/auth.service'
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAppInitializer(() => inject(AuthService).initializeAuth()),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
@@ -51,6 +55,6 @@ export const appConfig: ApplicationConfig = {
       heroCalendar,
       heroArrowPath,
       heroKey,
-    }),
+    })
   ],
 }

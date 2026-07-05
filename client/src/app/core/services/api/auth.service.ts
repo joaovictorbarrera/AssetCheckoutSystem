@@ -34,17 +34,18 @@ export class AuthService {
     window.addEventListener('focus', () => this.onWindowFocus())
   }
 
-  initializeAuth() {
+  initializeAuth(): Promise<void> {
     const token = localStorage.getItem('authorizationToken')
 
     if (!token) {
-      return
+      return Promise.resolve()
     }
 
     if (this.shouldRefresh(token)) {
-      this.refreshToken()
+      return this.refreshToken()
     } else {
       this.scheduleRefresh(token)
+      return Promise.resolve()
     }
   }
 
@@ -108,32 +109,36 @@ export class AuthService {
     }
   }
 
-  refreshToken() {
+  refreshToken(): Promise<void> {
     if (this.refreshInProgress) {
-      return
+      // wait for current refresh to finish
+      return new Promise((resolve) => {
+        const wait = () => {
+          if (!this.refreshInProgress) resolve()
+          else setTimeout(wait, 50)
+        }
+        wait()
+      })
     }
 
     this.refreshInProgress = true
 
-    this.http
-      .get<{ authorizationToken: string }>(`${this.apiUrl}/refresh`, {
+    return firstValueFrom(
+      this.http.get<{ authorizationToken: string }>(`${this.apiUrl}/refresh`, {
         withCredentials: true,
+      }),
+    )
+      .then((res) => {
+        const authToken = res.authorizationToken
+        localStorage.setItem('authorizationToken', authToken)
+        this.scheduleRefresh(authToken)
       })
-      .subscribe({
-        next: (res) => {
-          const authToken = res.authorizationToken
-
-          localStorage.setItem('authorizationToken', authToken)
-
-          this.scheduleRefresh(authToken)
-        },
-        error: (err) => {
-          console.log(err.title)
-          this.logout()
-        },
-        complete: () => {
-          this.refreshInProgress = false
-        },
+      .catch((err) => {
+        console.log(err?.title ?? err)
+        this.logout()
+      })
+      .finally(() => {
+        this.refreshInProgress = false
       })
   }
 
