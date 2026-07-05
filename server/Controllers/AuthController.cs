@@ -39,8 +39,8 @@ namespace AssetCheckoutSystem.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("reset-password")]
-        public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
             var result = await _userService.ResetPassword(request)  ;
             return result.Succeeded ? NoContent() : ToActionResult(result);

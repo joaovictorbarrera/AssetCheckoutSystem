@@ -10,6 +10,7 @@ import { Login } from './pages/login/login';
 import { roleGuard } from './core/guards/role.guard';
 import { Role } from './core/enums/role';
 import { Review } from './pages/review/review';
+import { ResetPassword } from './pages/reset-password/reset-password';
 
 export const routes: Routes = [
   {
@@ -63,6 +64,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login
+  },
+  {
+    path: 'reset-password',
+    component: ResetPassword
   },
   {
     path: '**',

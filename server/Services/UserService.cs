@@ -63,8 +63,7 @@ namespace AssetCheckoutSystem.Services
         {
             User? user = await _userRepository.GetByEmail(request.EmailAddress);
 
-            //  || user.PasswordHash != EncryptionHelper.ToSha256(request.Password)
-            if (user == null || !user.IsActive)
+            if (user == null || !user.IsActive || user.PasswordHash != EncryptionHelper.ToSha256(request.Password))
             {
                 return ServiceResult<AccessTokenDto>.Unauthorized();
             }

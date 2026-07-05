@@ -62,8 +62,9 @@ export class AuthService {
       this.router.navigate(["/"])
 
       return null
-    } catch {
-      return "Unable to login with this email."
+    } catch (err: any) {
+      if (err.status === 401) return "Error logging in with this email or password"
+      else return "Unknown error"
     }
   }
 
@@ -133,5 +134,9 @@ export class AuthService {
       })
 
     return this.loadUserPromise
+  }
+
+  resetPassword(request: any) {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, request)
   }
 }

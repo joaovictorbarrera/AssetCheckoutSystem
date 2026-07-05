@@ -20,7 +20,8 @@ namespace AssetCheckoutSystem.Data
                 LastLoginAt  = null,
                 CreatedAt    = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 FirstName    = "Admin",
-                LastName     = "User"
+                LastName     = "User",
+                PasswordHash = "0B20E35DE6FF81A819A7190DC4942C816525BDC915D11947D91E34CAA2469D86"
             },
             new User
             {
@@ -31,7 +32,8 @@ namespace AssetCheckoutSystem.Data
                 LastLoginAt  = null,
                 CreatedAt    = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 FirstName    = "Manager",
-                LastName     = "User"
+                LastName     = "User",
+                PasswordHash = "0B20E35DE6FF81A819A7190DC4942C816525BDC915D11947D91E34CAA2469D86"
             },
             new User
             {
@@ -42,7 +44,8 @@ namespace AssetCheckoutSystem.Data
                 LastLoginAt  = null,
                 CreatedAt    = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 FirstName    = "Employee",
-                LastName     = "User"
+                LastName     = "User",
+                PasswordHash = "0B20E35DE6FF81A819A7190DC4942C816525BDC915D11947D91E34CAA2469D86"
             }
         };
 
