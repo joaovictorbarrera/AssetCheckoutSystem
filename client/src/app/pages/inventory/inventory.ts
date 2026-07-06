@@ -65,38 +65,32 @@ export class Inventory implements OnInit {
   handleIncludeArchived(event: Event) {
     const target = event?.target as HTMLInputElement | null
     this.includeArchived.set(target?.checked ?? false)
-    this.pageNumber.set(1)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   handleSearch(searchText: string) {
     this.searchText.set(searchText)
-    this.pageNumber.set(1)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   handleStatusChange(status: string) {
     this.status.set(status)
-    this.pageNumber.set(1)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   handleCategoryChange(category: string) {
     this.category.set(category)
-    this.pageNumber.set(1)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   handleConditionChange(condition: string) {
     this.condition.set(condition)
-    this.pageNumber.set(1)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   handlePaginationChange(pagination: { pageNumber: number; pageSize: number }) {
     this.pageNumber.set(pagination.pageNumber)
-    this.pageSize.set(pagination.pageSize)
-    this.getAssets()
+    this.getAssets(true)
   }
 
   getFields() {
@@ -112,8 +106,10 @@ export class Inventory implements OnInit {
     })
   }
 
-  getAssets() {
+  getAssets(backToPageOne = false) {
     if (this.loadingAssets()) return
+
+    if (backToPageOne) this.pageNumber.set(1)
 
     this.loadingAssets.set(true)
     this.assetService
