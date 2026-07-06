@@ -370,7 +370,7 @@ namespace AssetCheckoutSystem.Migrations
                             RequestType = 1,
                             RequestedByUserId = new Guid("33333333-3333-3333-3333-333333333333"),
                             ReviewedByUserId = new Guid("22222222-2222-2222-2222-222222222222"),
-                            Status = "Approved",
+                            Status = "Pending",
                             UpdatedAt = new DateTime(2025, 2, 6, 0, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
