@@ -86,6 +86,7 @@ option {
 ::-webkit-scrollbar-corner {
   background: var(--bg-primary);
 }
+// END
 
 .chip {
   padding: 8px;
@@ -157,7 +158,6 @@ option {
   transform: rotate(45deg);
 }
 
-// Drawer
 .drawer-backdrop {
   background: rgba(0, 0, 0, 0.45);
 }

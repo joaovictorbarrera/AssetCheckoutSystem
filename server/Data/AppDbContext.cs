@@ -106,6 +106,8 @@ namespace AssetCheckoutSystem.Data
                 entity.HasOne(h => h.User)
                     .WithMany()
                     .HasForeignKey(h => h.UserId);
+
+                entity.HasData(SeedData.AssetHistories);
             });
         }
     }

@@ -428,5 +428,288 @@ namespace AssetCheckoutSystem.Data
                 UpdatedAt           = new DateTime(2025, 2, 10, 0, 0, 0, DateTimeKind.Utc)
             }
         };
+
+        public static AssetHistory[] AssetHistories { get; } =
+        {
+            // ── LAP-001 (Dell Latitude 5440) — Assigned to Employee ──────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000001"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 2, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000002"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000001"),
+                UserId    = ManagerUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Assigned",
+                CreatedAt = new DateTime(2025, 1, 10, 10, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000003"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000001"),
+                UserId    = ManagerUserId,
+                Action    = "Assigned Asset to employee@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 10, 10, 0, 1, DateTimeKind.Utc)
+            },
+
+            // ── LAP-002 (Dell Latitude 5440) — Available ──────────────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000004"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 2, 9, 0, 0, DateTimeKind.Utc)
+            },
+
+            // ── LAP-003 (MacBook Pro 14") — Maintenance ───────────────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000005"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000003"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 3, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c1111111-0000-0000-0000-000000000006"),
+                AssetId   = new Guid("a1111111-0000-0000-0000-000000000003"),
+                UserId    = AdminUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Maintenance",
+                CreatedAt = new DateTime(2025, 1, 3, 9, 1, 0, DateTimeKind.Utc)
+            },
+
+            // ── MON-001 (Dell UltraSharp 27") — Assigned to Manager ──────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000001"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 4, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000002"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Assigned",
+                CreatedAt = new DateTime(2025, 1, 4, 9, 1, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000003"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Assigned Asset to manager@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 4, 9, 1, 1, DateTimeKind.Utc)
+            },
+
+            // ── MON-002 (Dell UltraSharp 27") — Assigned to Employee ─────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000004"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 4, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000005"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Assigned",
+                CreatedAt = new DateTime(2025, 1, 4, 9, 2, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000006"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Assigned Asset to employee@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 4, 9, 2, 1, DateTimeKind.Utc)
+            },
+
+            // ── MON-003 (LG UltraWide 34") — Retired + Archived ──────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000007"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000003"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 5, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000008"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000003"),
+                UserId    = AdminUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Retired",
+                CreatedAt = new DateTime(2025, 1, 5, 9, 1, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c2222222-0000-0000-0000-000000000009"),
+                AssetId   = new Guid("a2222222-0000-0000-0000-000000000003"),
+                UserId    = AdminUserId,
+                Action    = "Archived Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 5, 9, 1, 1, DateTimeKind.Utc)
+            },
+
+            // ── PHN-001 (iPhone 14) — Available (was returned per seed checkout b5555555) ──
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000001"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 6, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000002"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Assigned",
+                CreatedAt = new DateTime(2025, 1, 15, 10, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000003"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Assigned Asset to employee@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 15, 10, 0, 1, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000004"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = ManagerUserId,
+                Action    = "Asset marked as Returned",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 20, 10, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000005"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = ManagerUserId,
+                Action    = "Unassigned Asset from employee@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 20, 10, 0, 1, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000006"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000001"),
+                UserId    = ManagerUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Assigned",
+                NewValue  = "Available",
+                CreatedAt = new DateTime(2025, 1, 20, 10, 0, 2, DateTimeKind.Utc)
+            },
+
+            // ── PHN-002 (iPhone 14) — Available ───────────────────────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c3333333-0000-0000-0000-000000000007"),
+                AssetId   = new Guid("a3333333-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 6, 9, 0, 0, DateTimeKind.Utc)
+            },
+
+            // ── KEY-001 (YubiKey 5C) — Available ──────────────────────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c4444444-0000-0000-0000-000000000001"),
+                AssetId   = new Guid("a4444444-0000-0000-0000-000000000001"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 7, 9, 0, 0, DateTimeKind.Utc)
+            },
+
+            // ── KEY-002 (YubiKey 5C) — Assigned to Employee ───────────────────────────
+            new AssetHistory
+            {
+                Id        = new Guid("c4444444-0000-0000-0000-000000000002"),
+                AssetId   = new Guid("a4444444-0000-0000-0000-000000000002"),
+                UserId    = AdminUserId,
+                Action    = "Created Asset",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 7, 9, 0, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c4444444-0000-0000-0000-000000000003"),
+                AssetId   = new Guid("a4444444-0000-0000-0000-000000000002"),
+                UserId    = ManagerUserId,
+                Action    = "Updated Asset Status",
+                OldValue  = "Available",
+                NewValue  = "Assigned",
+                CreatedAt = new DateTime(2025, 1, 7, 9, 1, 0, DateTimeKind.Utc)
+            },
+            new AssetHistory
+            {
+                Id        = new Guid("c4444444-0000-0000-0000-000000000004"),
+                AssetId   = new Guid("a4444444-0000-0000-0000-000000000002"),
+                UserId    = ManagerUserId,
+                Action    = "Assigned Asset to employee@test.com",
+                OldValue  = null,
+                NewValue  = null,
+                CreatedAt = new DateTime(2025, 1, 7, 9, 1, 1, DateTimeKind.Utc)
+            }
+        };
     }
 }
