@@ -288,7 +288,7 @@ namespace AssetCheckoutSystem.Data
                 UpdatedAt           = new DateTime(2025, 2, 5, 0, 0, 0, DateTimeKind.Utc)
             },
 
-            // ── Approved Return ───────────────────────────────────────────────────
+            // ── Pending Return ───────────────────────────────────────────────────
             new CheckoutRequest  // Employee returning MON-002 (assigned to Employee)
             {
                 Id                  = new Guid("b2222222-0000-0000-0000-000000000002"),
@@ -296,7 +296,7 @@ namespace AssetCheckoutSystem.Data
                 RequestedByUserId   = EmployeeUserId,
                 AssetCategory       = AssetCategory.Monitor,
                 Reason              = "Second monitor for home office, returning now",
-                Status              = CheckoutRequestStatus.Approved,
+                Status              = CheckoutRequestStatus.Pending,
                 ReviewedByUserId    = ManagerUserId,
                 AssignedAssetId     = new Guid("a2222222-0000-0000-0000-000000000002"), // MON-002 → EmployeeUserId
                 IsArchived          = false,
