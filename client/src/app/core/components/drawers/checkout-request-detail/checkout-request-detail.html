@@ -64,28 +64,28 @@
         <p class="text-text-secondary">Asset Tag</p>
         <span>{{ this.requestDetails()?.assignedAssetTag }}</span>
       </div>
-      } @if (this.requestDetails()?.status === 'approved') {
+      } @if (this.requestDetails()?.approvedAt) {
       <div class="flex flex-col gap-2">
         <p class="text-text-secondary">Approved At</p>
         <span class="capitalize"
           >{{ this.requestDetails()?.approvedAt | date: 'M/d/yy, h:mm a' }}</span
         >
       </div>
-      } @if (this.requestDetails()?.status === 'rejected') {
+      } @if (this.requestDetails()?.rejectedAt) {
       <div class="flex flex-col gap-2">
         <p class="text-text-secondary">Rejected At</p>
         <span class="capitalize"
           >{{ this.requestDetails()?.rejectedAt | date: 'M/d/yy, h:mm a' }}</span
         >
       </div>
-      } @if (this.requestDetails()?.status === 'fulfilled') {
+      } @if (this.requestDetails()?.fulfilledAt) {
       <div class="flex flex-col gap-2">
         <p class="text-text-secondary">Fulfilled At</p>
         <span class="capitalize"
           >{{ this.requestDetails()?.fulfilledAt | date: 'M/d/yy, h:mm a' }}</span
         >
       </div>
-      } @if (this.requestDetails()?.status === 'returned') {
+      } @if (this.requestDetails()?.returnedAt) {
       <div class="flex flex-col gap-2">
         <p class="text-text-secondary">Returned At</p>
         <span class="capitalize"
