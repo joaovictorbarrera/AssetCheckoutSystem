@@ -19,6 +19,8 @@ import { AuthService } from '../../core/services/api/auth.service'
 })
 export class ResetPassword implements OnInit {
   loading = signal(false)
+  success = signal(false)
+
   failMessage = signal<string | null>(null)
   validationErrors = signal<string[]>([])
 
@@ -119,7 +121,10 @@ export class ResetPassword implements OnInit {
       .subscribe({
         next: () => {
           this.loading.set(false)
-          this.router.navigate(['/login'])
+          this.success.set(true)
+          this.failMessage.set(null)
+          this.validationErrors.set([])
+          setTimeout(() => this.router.navigate(['/login']), 3000)
         },
         error: (err) => {
           this.loading.set(false)

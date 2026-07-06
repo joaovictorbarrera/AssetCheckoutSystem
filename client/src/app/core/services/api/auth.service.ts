@@ -5,6 +5,7 @@ import { environment } from '../../../../environments/environment'
 import UserDto from '../../DTOs/user/user.dto'
 import { Router } from '@angular/router'
 import { Role } from '../../enums/role'
+import { PageLoadingService } from '../util/page-loading.service'
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private pageLoadingService: PageLoadingService
   ) {
     window.addEventListener('focus', () => this.onWindowFocus())
   }
@@ -42,6 +44,7 @@ export class AuthService {
     }
 
     if (this.shouldRefresh(token)) {
+      this.pageLoadingService.setLoading(true)
       return this.refreshToken()
     } else {
       this.scheduleRefresh(token)
@@ -76,10 +79,14 @@ export class AuthService {
   }
 
   private shouldRefresh(token: string): boolean {
-    const payload = JSON.parse(atob(token.split('.')[1]))
-    const expiresAt = payload.exp * 1000
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      const expiresAt = payload.exp * 1000
 
-    return expiresAt <= Date.now() + 60_000
+      return expiresAt <= Date.now() + 60_000
+    } catch {
+      return true;
+    }
   }
 
   private scheduleRefresh(token: string) {
@@ -139,6 +146,7 @@ export class AuthService {
       })
       .finally(() => {
         this.refreshInProgress = false
+        this.pageLoadingService.setLoading(false)
       })
   }
 

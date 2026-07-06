@@ -19,7 +19,13 @@ export class Login {
   constructor(
     public authService: AuthService,
     public router: Router,
-  ) {}
+  ) {
+    // If a token exists, try sending them to main page
+    // when invalid, user will be logged out and brought back to login
+    if (localStorage.getItem('authorizationToken')) {
+      router.navigate(['/'])
+    }
+  }
 
   async login(event: any) {
     event.preventDefault()

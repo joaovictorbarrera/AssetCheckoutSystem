@@ -8,6 +8,7 @@ export const authGuard: CanActivateChildFn = async () => {
   const router = inject(Router)
   const pageLoading = inject(PageLoadingService)
 
+  pageLoading.setLoading(true)
   const user = await auth.loadUser()
   pageLoading.setLoading(false)
 
