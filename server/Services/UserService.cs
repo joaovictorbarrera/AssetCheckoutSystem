@@ -31,7 +31,7 @@ namespace AssetCheckoutSystem.Services
 
         public async Task<ServiceResult<PagedResponse<UserDto>>> Get(GetUsersRequest request)
         {
-            PagedResponse<UserDto> users = await _userRepository.GetUsersAsync(request);
+            PagedResponse<UserDto> users = await _userRepository.GetUsers(request);
 
             return ServiceResult<PagedResponse<UserDto>>.Success(users);
         }
@@ -41,7 +41,7 @@ namespace AssetCheckoutSystem.Services
             bool userExists = await _userRepository.GetByEmail(request.EmailAddress) != null;
             if (userExists) return ServiceResult<Guid>.BadRequest("Email Address is taken");
 
-            Guid newUserId = await _userRepository.CreateUserAsync(request);
+            Guid newUserId = await _userRepository.CreateUser(request);
 
             return ServiceResult<Guid>.Success(newUserId);
         }
@@ -73,7 +73,7 @@ namespace AssetCheckoutSystem.Services
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
             await _userRepository.SaveRefreshToken(user, refreshTokenDto);
-            await _userRepository.UpdateLastLoginAsync(user.Id);
+            await _userRepository.UpdateLastLogin(user.Id);
 
             response.Cookies.Append(
                 "refreshToken",

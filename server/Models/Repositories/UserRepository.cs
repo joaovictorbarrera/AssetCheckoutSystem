@@ -22,7 +22,7 @@ namespace AssetCheckoutSystem.Repositories
             _context = context;
         }
 
-        public async Task<PagedResponse<UserDto>> GetUsersAsync(GetUsersRequest request)
+        public async Task<PagedResponse<UserDto>> GetUsers(GetUsersRequest request)
         {
             IQueryable<User> query = _context.Users;
 
@@ -69,7 +69,7 @@ namespace AssetCheckoutSystem.Repositories
             };
         }
 
-        public async Task<Guid> CreateUserAsync(CreateUserRequest request)
+        public async Task<Guid> CreateUser(CreateUserRequest request)
         {
             User user = new()
             {
@@ -96,7 +96,7 @@ namespace AssetCheckoutSystem.Repositories
             return _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task UpdateLastLoginAsync(Guid id)
+        public async Task UpdateLastLogin(Guid id)
         {
             await _context.Users
                 .Where(u => u.Id == id)
