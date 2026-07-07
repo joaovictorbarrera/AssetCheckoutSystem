@@ -69,7 +69,7 @@ namespace AssetCheckoutSystem.Services
                 return ServiceResult<AccessTokenDto>.Unauthorized();
             }
 
-            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            AccessTokenDto tokenDto = _tokenService.CreateAccessToken(user);
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
             await _userRepository.SaveRefreshToken(user, refreshTokenDto);
@@ -100,7 +100,7 @@ namespace AssetCheckoutSystem.Services
 
             if (refreshTokenExpired) return ServiceResult<AccessTokenDto>.Unauthorized();
 
-            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            AccessTokenDto tokenDto = _tokenService.CreateAccessToken(user);
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
             await _userRepository.SaveRefreshToken(user, refreshTokenDto);

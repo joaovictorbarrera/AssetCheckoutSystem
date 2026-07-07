@@ -18,7 +18,7 @@ namespace AssetCheckoutSystem.Services
             _configuration = configuration;
         }
 
-        public AccessTokenDto CreateToken(User user)
+        public AccessTokenDto CreateAccessToken(User user)
         {
             string jwtKey = _configuration["JwtKey"]
                 ?? throw new Exception("JwtKey missing from configuration.");
@@ -50,41 +50,6 @@ namespace AssetCheckoutSystem.Services
             };
 
             return tokenDto;
-        }
-
-        public Guid? GetUserIdFromToken(string token)
-        {
-            string jwtKey = _configuration["JwtKey"]
-                ?? throw new Exception("JwtKey missing from configuration.");
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            try
-            {
-                ClaimsPrincipal principal = tokenHandler.ValidateToken(
-                    token,
-                    new TokenValidationParameters
-                    {
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(jwtKey))
-                    },
-                    out _);
-
-                string? userId = principal.FindFirstValue(
-                    ClaimTypes.NameIdentifier);
-
-                return userId == null
-                    ? null
-                    : Guid.Parse(userId);
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public RefreshTokenDto CreateRefreshToken()
