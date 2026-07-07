@@ -131,7 +131,7 @@ namespace AssetCheckoutSystem.Services
             var resetToken = EncryptionHelper.GenerateRandomSha256();
             var resetTokenExpiresAt = DateTime.UtcNow.AddHours(resetExpirationHours);
 
-            await _userRepository.ResetPassword(user, resetToken, resetTokenExpiresAt);
+            await _userRepository.SaveResetToken(user, resetToken, resetTokenExpiresAt);
 
             var passwordResetLink = new PasswordResetLink()
             {

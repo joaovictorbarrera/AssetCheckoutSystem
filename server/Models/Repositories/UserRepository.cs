@@ -138,7 +138,7 @@ namespace AssetCheckoutSystem.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.RefreshTokenHash == refreshTokenHash);
         }
 
-        public async Task ResetPassword(User user, string resetToken, DateTime resetTokenExpiresAt)
+        public async Task SaveResetToken(User user, string resetToken, DateTime resetTokenExpiresAt)
         {
             user.PasswordHash = null;
             user.PasswordResetTokenHash = EncryptionHelper.ToSha256(resetToken);
