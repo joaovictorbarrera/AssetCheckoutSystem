@@ -104,7 +104,7 @@ export class Users implements OnInit {
       })
       .subscribe({
         next: (users) => {
-          this.users.set(users as PaginatedResponse<UserDto>)
+          this.users.set(users)
           this.loadingUsers.set(false)
         },
         error: (err) => {

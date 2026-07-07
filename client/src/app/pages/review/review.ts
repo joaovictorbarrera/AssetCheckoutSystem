@@ -125,7 +125,7 @@ export class Review implements OnInit {
       })
       .subscribe({
         next: (requests) => {
-          this.requests.set(requests as PaginatedResponse<CheckoutRequestDto>)
+          this.requests.set(requests)
           this.loadingRequests.set(false)
         },
         error: (err) => {
