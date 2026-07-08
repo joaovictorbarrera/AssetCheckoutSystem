@@ -125,7 +125,7 @@ export class Inventory implements OnInit {
       })
       .subscribe({
         next: (data) => {
-          this.assets.set(data as PaginatedResponse<AssetDto>)
+          this.assets.set(data)
           this.loadingAssets.set(false)
         },
         error: (err) => {

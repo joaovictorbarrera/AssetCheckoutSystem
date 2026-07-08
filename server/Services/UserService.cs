@@ -31,7 +31,7 @@ namespace AssetCheckoutSystem.Services
 
         public async Task<ServiceResult<PagedResponse<UserDto>>> Get(GetUsersRequest request)
         {
-            PagedResponse<UserDto> users = await _userRepository.GetUsersAsync(request);
+            PagedResponse<UserDto> users = await _userRepository.GetUsers(request);
 
             return ServiceResult<PagedResponse<UserDto>>.Success(users);
         }
@@ -41,7 +41,7 @@ namespace AssetCheckoutSystem.Services
             bool userExists = await _userRepository.GetByEmail(request.EmailAddress) != null;
             if (userExists) return ServiceResult<Guid>.InvalidOperation("Email Address is taken");
 
-            Guid newUserId = await _userRepository.CreateUserAsync(request);
+            Guid newUserId = await _userRepository.CreateUser(request);
 
             return ServiceResult<Guid>.Success(newUserId);
         }
@@ -69,11 +69,11 @@ namespace AssetCheckoutSystem.Services
                 return ServiceResult<AccessTokenDto>.Unauthorized();
             }
 
-            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            AccessTokenDto tokenDto = _tokenService.CreateAccessToken(user);
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
             await _userRepository.SaveRefreshToken(user, refreshTokenDto);
-            await _userRepository.UpdateLastLoginAsync(user.Id);
+            await _userRepository.UpdateLastLogin(user.Id);
 
             response.Cookies.Append(
                 "refreshToken",
@@ -100,7 +100,7 @@ namespace AssetCheckoutSystem.Services
 
             if (refreshTokenExpired) return ServiceResult<AccessTokenDto>.Unauthorized();
 
-            AccessTokenDto tokenDto = _tokenService.CreateToken(user);
+            AccessTokenDto tokenDto = _tokenService.CreateAccessToken(user);
             RefreshTokenDto refreshTokenDto = _tokenService.CreateRefreshToken();
 
             await _userRepository.SaveRefreshToken(user, refreshTokenDto);
@@ -131,7 +131,7 @@ namespace AssetCheckoutSystem.Services
             var resetToken = EncryptionHelper.GenerateRandomSha256();
             var resetTokenExpiresAt = DateTime.UtcNow.AddHours(resetExpirationHours);
 
-            await _userRepository.ResetPassword(user, resetToken, resetTokenExpiresAt);
+            await _userRepository.SaveResetToken(user, resetToken, resetTokenExpiresAt);
 
             var passwordResetLink = new PasswordResetLink()
             {
