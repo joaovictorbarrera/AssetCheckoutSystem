@@ -300,7 +300,7 @@ namespace AssetCheckoutSystem.Data
                 ReviewedByUserId    = ManagerUserId,
                 AssignedAssetId     = new Guid("a2222222-0000-0000-0000-000000000002"), // MON-002 → EmployeeUserId
                 IsArchived          = false,
-                ApprovedAt          = new DateTime(2025, 2, 6, 0, 0, 0, DateTimeKind.Utc),
+                ApprovedAt          = null,
                 RejectedAt          = null,
                 FulfilledAt         = null,
                 ReturnedAt          = null,
