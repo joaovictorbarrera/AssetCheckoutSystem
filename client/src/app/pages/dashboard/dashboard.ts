@@ -6,7 +6,7 @@ import AssetFields from '../../core/DTOs/asset/asset-fields.dto'
 import { Dropdown } from '../../core/components/dropdown/dropdown'
 import { SearchBar } from '../../core/components/search-bar/search-bar'
 import { AssetsTable } from './components/assets-table/assets-table'
-import PaginatedResponse, {
+import {
   defaultPaginatedResponse,
 } from '../../core/DTOs/shared/paginated.response'
 import { AssetDto } from '../../core/DTOs/asset/asset.dto'

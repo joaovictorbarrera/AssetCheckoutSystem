@@ -4,7 +4,7 @@ import { PageWrapper } from '../../core/components/page-components/page-wrapper/
 import { Dropdown } from '../../core/components/dropdown/dropdown'
 import { TablePagination } from '../../core/components/table-components/table-pagination/table-pagination'
 import { CheckoutRequestDto } from '../../core/DTOs/checkout-request/checkout-request.dto'
-import PaginatedResponse, {
+import {
   defaultPaginatedResponse,
 } from '../../core/DTOs/shared/paginated.response'
 import { CheckoutRequestService } from '../../core/services/api/checkout-requests.service'

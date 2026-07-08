@@ -5,7 +5,7 @@ import { SearchBar } from '../../core/components/search-bar/search-bar'
 import { UsersTable } from './components/users-table/users-table'
 import { TablePagination } from '../../core/components/table-components/table-pagination/table-pagination'
 import { UserService } from '../../core/services/api/user.service'
-import PaginatedResponse, {
+import {
   defaultPaginatedResponse,
 } from '../../core/DTOs/shared/paginated.response'
 import UserDto from '../../core/DTOs/user/user.dto'
