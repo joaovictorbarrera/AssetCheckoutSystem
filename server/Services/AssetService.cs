@@ -23,7 +23,7 @@ namespace AssetCheckoutSystem.Services
         {
             bool managerFeatures = request.Inventory || request.IncludeArchived;
             if (managerFeatures && !requestor.IsAssetManager)
-                return ServiceResult<PagedResponse<AssetDto>>.Forbidden("No permission to view all assets");
+                return ServiceResult<PagedResponse<AssetDto>>.AccessDenied("No permission to view all assets");
 
             var result = await _assetRepository.GetAssets(request, requestor.UserId);
 
@@ -35,7 +35,7 @@ namespace AssetCheckoutSystem.Services
             Requestor requestor)
         {
             if (await _assetRepository.IsTagTakenAndNotId(request.AssetTag, Guid.Empty))
-                return ServiceResult<Guid>.BadRequest("Asset Tag is taken");
+                return ServiceResult<Guid>.InvalidOperation("Asset Tag is taken");
 
             Guid newAssetId = await _assetRepository.Create(request, requestor.UserId);
             return ServiceResult<Guid>.Success(newAssetId);
@@ -55,10 +55,10 @@ namespace AssetCheckoutSystem.Services
             AssetDetail? asset = await _assetRepository.GetDetailById(id);
 
             if (asset == null)
-                return ServiceResult<AssetDetail>.NotFound();
+                return ServiceResult<AssetDetail>.ResourceNotFound();
 
             if (asset.UserId != requestor.UserId && !requestor.IsAssetManager)
-                return ServiceResult<AssetDetail>.Forbidden("Asset is not assigned to you");
+                return ServiceResult<AssetDetail>.AccessDenied("Asset is not assigned to you");
 
             return ServiceResult<AssetDetail>.Success(asset);
         }
@@ -69,15 +69,15 @@ namespace AssetCheckoutSystem.Services
             Requestor requestor)
         {
             if (await _assetRepository.IsTagTakenAndNotId(request.AssetTag, id))
-                return ServiceResult<Asset>.BadRequest("Asset Tag is taken");
+                return ServiceResult<Asset>.InvalidOperation("Asset Tag is taken");
 
             Asset? existing = await _assetRepository.GetById(id);
 
             if (existing == null)
-                return ServiceResult<Asset>.NotFound();
+                return ServiceResult<Asset>.ResourceNotFound();
 
             if (existing.IsArchived)
-                return ServiceResult<Asset>.BadRequest("Cannot update archived assets");
+                return ServiceResult<Asset>.InvalidOperation("Cannot update archived assets");
 
             Asset updated = await _assetRepository.UpdateById(existing, request, requestor.UserId);
 
@@ -89,10 +89,10 @@ namespace AssetCheckoutSystem.Services
             Asset? existing = await _assetRepository.GetById(id);
 
             if (existing == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (existing.IsArchived)
-                return ServiceResult.BadRequest("Asset is already archived");
+                return ServiceResult.InvalidOperation("Asset is already archived");
 
             await _assetRepository.ArchiveById(existing, requestor.UserId);
 
@@ -107,13 +107,13 @@ namespace AssetCheckoutSystem.Services
             Asset? asset = await _assetRepository.GetById(id);
 
             if (asset == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (asset.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived assets");
+                return ServiceResult.InvalidOperation("Cannot update archived assets");
 
             if (request.Status == AssetStatus.Assigned)
-                return ServiceResult.BadRequest("Incorrect way to assign");
+                return ServiceResult.InvalidOperation("Incorrect way to assign");
 
             bool shouldUnassign = request.Status == AssetStatus.Available
                 && asset.AssignedToUserId != null;
@@ -135,10 +135,10 @@ namespace AssetCheckoutSystem.Services
             Asset? asset = await _assetRepository.GetById(id);
 
             if (asset == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (asset.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived assets");
+                return ServiceResult.InvalidOperation("Cannot update archived assets");
 
             await _assetRepository.UpdateCondition(asset, request.Condition, requestor.UserId);
 
@@ -153,10 +153,10 @@ namespace AssetCheckoutSystem.Services
             Asset? asset = await _assetRepository.GetById(id);
 
             if (asset == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (asset.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived assets");
+                return ServiceResult.InvalidOperation("Cannot update archived assets");
 
             await _assetRepository.UpdateCategory(asset, request.Category, requestor.UserId);
 
@@ -168,7 +168,7 @@ namespace AssetCheckoutSystem.Services
             Asset? existing = await _assetRepository.GetById(id);
 
             if (existing == null)
-                return ServiceResult<List<AssetHistory>>.NotFound();
+                return ServiceResult<List<AssetHistory>>.ResourceNotFound();
 
             List<AssetHistory> history = await _assetRepository.GetAssetHistory(id);
             return ServiceResult<List<AssetHistory>>.Success(history);

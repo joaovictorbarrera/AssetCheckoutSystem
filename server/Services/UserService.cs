@@ -39,7 +39,7 @@ namespace AssetCheckoutSystem.Services
         public async Task<ServiceResult<Guid>> Create(CreateUserRequest request)
         {
             bool userExists = await _userRepository.GetByEmail(request.EmailAddress) != null;
-            if (userExists) return ServiceResult<Guid>.BadRequest("Email Address is taken");
+            if (userExists) return ServiceResult<Guid>.InvalidOperation("Email Address is taken");
 
             Guid newUserId = await _userRepository.CreateUserAsync(request);
 
@@ -50,14 +50,14 @@ namespace AssetCheckoutSystem.Services
         {
             bool success = await _userRepository.UpdateUserRole(id, request.Role);
 
-            return success ? ServiceResult.Success() : ServiceResult.NotFound();
+            return success ? ServiceResult.Success() : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult> UpdateActive(Guid id, UpdateUserActiveRequest request)
         {
             bool success = await _userRepository.UpdateUserActive(id, request.IsActive);
 
-            return success ? ServiceResult.Success() : ServiceResult.NotFound();
+            return success ? ServiceResult.Success() : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult<AccessTokenDto>> Login(LoginRequest request, HttpResponse response)
@@ -94,7 +94,7 @@ namespace AssetCheckoutSystem.Services
         {
             User? user = await _userRepository.FindByRefreshTokenHash(EncryptionHelper.ToSha256(refreshToken));
 
-            if (user == null || !user.IsActive) return ServiceResult<AccessTokenDto>.NotFound();
+            if (user == null || !user.IsActive) return ServiceResult<AccessTokenDto>.ResourceNotFound();
 
             bool refreshTokenExpired = user.RefreshTokenExpiresAt < DateTime.UtcNow;
 
@@ -125,7 +125,7 @@ namespace AssetCheckoutSystem.Services
             const int resetExpirationHours = 24;
 
             User? user = await _userRepository.GetById(userId);
-            if (user == null || !user.IsActive) return ServiceResult<PasswordResetLink>.NotFound();
+            if (user == null || !user.IsActive) return ServiceResult<PasswordResetLink>.ResourceNotFound();
 
             var frontendURL = _configuration["FrontendURL"];
             var resetToken = EncryptionHelper.GenerateRandomSha256();

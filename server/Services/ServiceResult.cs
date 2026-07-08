@@ -2,9 +2,9 @@
 {
     public enum ServiceErrorType
     {
-        NotFound,
-        Forbidden,
-        BadRequest,
+        ResourceNotFound,
+        AccessDenied,
+        InvalidOperation,
         Unauthorized
     }
 
@@ -22,14 +22,14 @@
         protected static ServiceResult Fail(ServiceErrorType errorType, string? message) =>
             new() { Succeeded = false, ErrorType = errorType, ErrorMessage = message };
 
-        public static ServiceResult NotFound() =>
-            Fail(ServiceErrorType.NotFound, null);
+        public static ServiceResult ResourceNotFound() =>
+            Fail(ServiceErrorType.ResourceNotFound, null);
 
-        public static ServiceResult Forbidden(string message) =>
-            Fail(ServiceErrorType.Forbidden, message);
+        public static ServiceResult AccessDenied(string message) =>
+            Fail(ServiceErrorType.AccessDenied, message);
 
-        public static ServiceResult BadRequest(string message) =>
-            Fail(ServiceErrorType.BadRequest, message);
+        public static ServiceResult InvalidOperation(string message) =>
+            Fail(ServiceErrorType.InvalidOperation, message);
 
         public static ServiceResult Unauthorized() =>
             Fail(ServiceErrorType.Unauthorized, null);
@@ -57,14 +57,14 @@
                     ErrorMessage = message
                 };
 
-        public static new ServiceResult<T> NotFound() =>
-            Fail(ServiceErrorType.NotFound, null);
+        public static new ServiceResult<T> ResourceNotFound() =>
+            Fail(ServiceErrorType.ResourceNotFound, null);
 
-        public static new ServiceResult<T> Forbidden(string message) =>
-            Fail(ServiceErrorType.Forbidden, message);
+        public static new ServiceResult<T> AccessDenied(string message) =>
+            Fail(ServiceErrorType.AccessDenied, message);
 
-        public static new ServiceResult<T> BadRequest(string message) =>
-            Fail(ServiceErrorType.BadRequest, message);
+        public static new ServiceResult<T> InvalidOperation(string message) =>
+            Fail(ServiceErrorType.InvalidOperation, message);
         public static new ServiceResult<T> Unauthorized() =>
             Fail(ServiceErrorType.Unauthorized, null);
     }

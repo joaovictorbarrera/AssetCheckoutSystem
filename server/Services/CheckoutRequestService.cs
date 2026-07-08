@@ -27,7 +27,7 @@ namespace AssetCheckoutSystem.Services
             Requestor requestor)
         {
             if (request.Review && !requestor.IsAssetManager)
-                return ServiceResult<PagedResponse<CheckoutRequestDto>>.Forbidden("No permission to view all requests");
+                return ServiceResult<PagedResponse<CheckoutRequestDto>>.AccessDenied("No permission to view all requests");
 
             var result = await _requestRepository.GetRequests(request, requestor.UserId);
 
@@ -41,22 +41,22 @@ namespace AssetCheckoutSystem.Services
             if (request.RequestType == CheckoutRequestType.Return)
             {
                 if (request.AssetId == null)
-                    return ServiceResult<Guid>.BadRequest(
+                    return ServiceResult<Guid>.InvalidOperation(
                         "Return requests require an AssetId");
 
                 AssetDto? asset = await _assetRepository.GetDtoById(request.AssetId.Value);
 
                 if (asset == null)
-                    return ServiceResult<Guid>.BadRequest(
+                    return ServiceResult<Guid>.InvalidOperation(
                         "Asset does not exist");
 
                 if (asset.AssignedToUserId != requestor.UserId)
-                    return ServiceResult<Guid>.Forbidden(
+                    return ServiceResult<Guid>.AccessDenied(
                         "Asset is not assigned to you");
 
                 if (asset.IsPendingReturn)
                 {
-                    return ServiceResult<Guid>.BadRequest(
+                    return ServiceResult<Guid>.InvalidOperation(
                         "Asset is already pending return");
                 }
             }
@@ -72,10 +72,10 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequestDetail? checkoutRequest = await _requestRepository.GetDetailById(id);
 
             if (checkoutRequest == null)
-                return ServiceResult<CheckoutRequestDetail>.NotFound();
+                return ServiceResult<CheckoutRequestDetail>.ResourceNotFound();
 
             if (!requestor.IsAssetManager && checkoutRequest.RequestorId != requestor.UserId)
-                return ServiceResult<CheckoutRequestDetail>.Forbidden(
+                return ServiceResult<CheckoutRequestDetail>.AccessDenied(
                     "Request does not belong to you");
 
             return ServiceResult<CheckoutRequestDetail>.Success(checkoutRequest);
@@ -87,7 +87,7 @@ namespace AssetCheckoutSystem.Services
 
             return success
                 ? ServiceResult.Success()
-                : ServiceResult.NotFound();
+                : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult> Cancel(Guid id, Requestor requestor)
@@ -95,22 +95,22 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (checkoutRequest.RequestedByUserId != requestor.UserId)
-                return ServiceResult.Forbidden("Request does not belong to you");
+                return ServiceResult.AccessDenied("Request does not belong to you");
 
             if (checkoutRequest.Status != CheckoutRequestStatus.Pending)
-                return ServiceResult.BadRequest("Only pending requests can be cancelled");
+                return ServiceResult.InvalidOperation("Only pending requests can be cancelled");
 
             if (checkoutRequest.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived requests");
+                return ServiceResult.InvalidOperation("Cannot update archived requests");
 
             bool success = await _requestRepository.CancelById(id);
 
             return success
                 ? ServiceResult.Success()
-                : ServiceResult.NotFound();
+                : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult> Approve(Guid id, Requestor requestor)
@@ -118,22 +118,22 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (checkoutRequest.Status != CheckoutRequestStatus.Pending)
-                return ServiceResult.BadRequest("Only pending requests can be approved");
+                return ServiceResult.InvalidOperation("Only pending requests can be approved");
 
             if (checkoutRequest.RequestType != CheckoutRequestType.Checkout)
-                return ServiceResult.BadRequest("Only checkout requests can be approved");
+                return ServiceResult.InvalidOperation("Only checkout requests can be approved");
 
             if (checkoutRequest.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived requests");
+                return ServiceResult.InvalidOperation("Cannot update archived requests");
 
             bool success = await _requestRepository.ApproveById(id, requestor.UserId);
 
             return success
                 ? ServiceResult.Success()
-                : ServiceResult.NotFound();
+                : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult> Reject(Guid id, Requestor requestor)
@@ -141,19 +141,19 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (checkoutRequest.Status != CheckoutRequestStatus.Pending)
-                return ServiceResult.BadRequest("Only pending requests can be rejected");
+                return ServiceResult.InvalidOperation("Only pending requests can be rejected");
 
             if (checkoutRequest.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived requests");
+                return ServiceResult.InvalidOperation("Cannot update archived requests");
 
             bool success = await _requestRepository.RejectById(id, requestor.UserId);
 
             return success
                 ? ServiceResult.Success()
-                : ServiceResult.NotFound();
+                : ServiceResult.ResourceNotFound();
         }
 
         public async Task<ServiceResult> AssignAsset(
@@ -164,24 +164,24 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequest? checkoutRequest = await _requestRepository.GetById(id);
 
             if (checkoutRequest == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (checkoutRequest.Status != CheckoutRequestStatus.Approved)
-                return ServiceResult.BadRequest("Request must be approved");
+                return ServiceResult.InvalidOperation("Request must be approved");
 
             if (checkoutRequest.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived requests");
+                return ServiceResult.InvalidOperation("Cannot update archived requests");
 
             Asset? asset = await _assetRepository.GetById(request.AssetId);
 
             if (asset == null)
-                return ServiceResult.BadRequest("Asset not found");
+                return ServiceResult.InvalidOperation("Asset not found");
 
             if (asset.Status != AssetStatus.Available || asset.IsArchived || asset.AssignedToUserId != null)
-                return ServiceResult.BadRequest("Asset is not available");
+                return ServiceResult.InvalidOperation("Asset is not available");
 
             if (asset.Category != checkoutRequest.AssetCategory)
-                return ServiceResult.BadRequest(
+                return ServiceResult.InvalidOperation(
                     "Asset Category is incompatible with Request Category");
 
             await _requestRepository.AssignAssetById(
@@ -197,28 +197,28 @@ namespace AssetCheckoutSystem.Services
             CheckoutRequest? request = await _requestRepository.GetById(id);
 
             if (request == null)
-                return ServiceResult.NotFound();
+                return ServiceResult.ResourceNotFound();
 
             if (request.RequestType != CheckoutRequestType.Return)
-                return ServiceResult.BadRequest("Only return requests can be returned");
+                return ServiceResult.InvalidOperation("Only return requests can be returned");
 
             if (request.Status != CheckoutRequestStatus.Pending)
-                return ServiceResult.BadRequest(
+                return ServiceResult.InvalidOperation(
                     "Only pending requests can be marked as returned");
 
             if (request.AssignedAssetId == null)
-                return ServiceResult.BadRequest("No asset assigned");
+                return ServiceResult.InvalidOperation("No asset assigned");
 
             if (request.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived requests");
+                return ServiceResult.InvalidOperation("Cannot update archived requests");
 
             Asset? asset = await _assetRepository.GetById(request.AssignedAssetId.Value);
 
             if (asset == null)
-                return ServiceResult.BadRequest("Asset does not exist");
+                return ServiceResult.InvalidOperation("Asset does not exist");
 
             if (asset.IsArchived)
-                return ServiceResult.BadRequest("Cannot update archived assets");
+                return ServiceResult.InvalidOperation("Cannot update archived assets");
 
             bool shouldBeAvailable = asset.Condition != AssetCondition.Damaged && asset.Status != AssetStatus.Maintenance;
 

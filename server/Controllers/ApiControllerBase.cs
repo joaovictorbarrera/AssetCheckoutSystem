@@ -9,13 +9,13 @@ namespace AssetCheckoutSystem.Controllers
         protected ActionResult ToActionResult(ServiceResult result) =>
             result.ErrorType switch
             {
-                ServiceErrorType.NotFound => NotFound(),
+                ServiceErrorType.ResourceNotFound => NotFound(),
                 ServiceErrorType.Unauthorized => Unauthorized(),
-                ServiceErrorType.Forbidden => StatusCode(StatusCodes.Status403Forbidden, new
+                ServiceErrorType.AccessDenied => StatusCode(StatusCodes.Status403Forbidden, new
                 {
                     Title = result.ErrorMessage
                 }),
-                ServiceErrorType.BadRequest => BadRequest(new
+                ServiceErrorType.InvalidOperation => BadRequest(new
                 {
                     Title = result.ErrorMessage
                 }),
